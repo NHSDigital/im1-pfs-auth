@@ -1,12 +1,12 @@
 # ADR-003: Acceptable use of GitHub authentication and authorisation mechanisms
 
->|              | |
->| ------------ | --- |
->| Date         | `04/09/2023` |
->| Status       | `RFC` |
->| Deciders     | `Engineering` |
->| Significance | `Construction techniques` |
->| Owners       | `Amaan Ibn-Nasar, Jacob Gill, Dan Stefaniuk` |
+> |              |                                              |
+> | ------------ | -------------------------------------------- |
+> | Date         | `04/09/2023`                                 |
+> | Status       | `RFC`                                        |
+> | Deciders     | `Engineering`                                |
+> | Significance | `Construction techniques`                    |
+> | Owners       | `Amaan Ibn-Nasar, Jacob Gill, Dan Stefaniuk` |
 
 ---
 
@@ -56,21 +56,18 @@ The aim of this decision record, or more precisely, this guide, is to provide cl
 There are three options available to support automated GitHub Action and Workflow authentication processes:
 
 1. [Built-in authentication](https://docs.github.com/en/actions/security-guides/automatic-token-authentication) using `GITHUB_TOKEN` secret
-
    - ➕ **No set-up required**. It works effortlessly, even for forked repositories.
    - ➕ **The token can only access the repository containing the workflow file**. This token cannot be used to access other private repositories.
    - ➖ **The token can only access a repository containing the workflow file**. If you need to access other private repositories or require write access to other public repositories this token will not be sufficient.
    - ➖ **The token cannot trigger other workflows**. If you have a workflow that creates a release and another workflow that runs when someone creates a release, the first workflow will not trigger the second workflow if it utilises this token based mechanism for authentication.
 
 2. [GitHub PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) (fine-grained Personal Access Token)
-
    - ➕ **Simple to set up**. You can create a [fine-grained personal access token](https://github.com/settings/tokens?type=beta) with a repository scope. Classic personal access token should never be used.
    - ➕ **GitHub PAT provides a more fine-grained permission model** than the built-in `GITHUB_TOKEN`
    - ➕ **The token can trigger other workflows**.
    - ➖ **It is bound to a person**. The owner of the token leaving the organisation can cause your workflow to break.
 
 3. [GitHub App](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps)
-
    - ➕ **You can control which repositories your token has access to** by installing the GitHub App to selected repositories.
    - ➕ **An organisation can own multiple GitHub Apps** and they do not consume a team seat.
    - ➕ **GitHub App provides a more fine-grained permission model** than the built-in `GITHUB_TOKEN`
@@ -240,5 +237,7 @@ graph LR
 ## Footnotes
 
 [^1]: [About creating GitHub Apps](https://docs.github.com/en/apps/creating-github-apps/about-creating-github-apps/about-creating-github-apps)
+
 [^2]: [Managing your personal access tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+
 [^3]: [Publishing and installing a package with GitHub Actions](https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions)

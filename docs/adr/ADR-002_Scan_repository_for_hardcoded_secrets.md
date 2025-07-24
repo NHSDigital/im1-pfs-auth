@@ -1,12 +1,12 @@
 # ADR-002: Scan repository for hard-coded secrets
 
->|              |                                                               |
->| ------------ | ------------------------------------------------------------- |
->| Date         | `05/06/2023`                                                  |
->| Status       | `RFC`                                                         |
->| Deciders     | `Engineering`                                                 |
->| Significance | `Construction techniques`                                     |
->| Owners       | `Dan Stefaniuk, Jon Pearce, Tamara Goldschmidt, Tim Rickwood` |
+> |              |                                                               |
+> | ------------ | ------------------------------------------------------------- |
+> | Date         | `05/06/2023`                                                  |
+> | Status       | `RFC`                                                         |
+> | Deciders     | `Engineering`                                                 |
+> | Significance | `Construction techniques`                                     |
+> | Owners       | `Dan Stefaniuk, Jon Pearce, Tamara Goldschmidt, Tim Rickwood` |
 
 ---
 
@@ -43,7 +43,6 @@ Within NHS England, we are observing an adoption of the `gitleaks` tool, which i
 There are three options presented in this decision record.
 
 1. [Git-secrets](https://github.com/awslabs/git-secrets)
-
    - Repository metadata
      - Contributions
        - Number of contributors: **28**
@@ -69,7 +68,6 @@ There are three options presented in this decision record.
      - Activity of the repository has dropped (last commit a while ago)
 
 2. [Trufflehog](https://github.com/trufflesecurity/trufflehog)
-
    - Repository metadata
      - Contributions
        - Number of contributors: **69**
@@ -94,9 +92,7 @@ There are three options presented in this decision record.
      - [AGPL-3.0](https://choosealicense.com/licenses/agpl-3.0/) licence comes with conditions
 
 3. [Gitleaks](https://github.com/gitleaks/gitleaks)
-
    - Repository metadata
-
      - Contributions
        - Number of contributors: **135**
        - Number of commits: **929**
@@ -104,6 +100,7 @@ There are three options presented in this decision record.
        - Number of Stars & Forks: **13k & 1.2k**
      - Implementation technologies: **Go language**
      - Licence: **[MIT](https://choosealicense.com/licenses/mit/)**
+
    - Features
      - [x] Scan whole history
      - [x] Scan single commit
@@ -126,7 +123,7 @@ The decision is to support Option 3 and endorse the usage of the `gitleaks` tool
 
 ### Rationale
 
-This decision was made with the understanding that the chosen tool must support the NHS England  [Coding in the Open](https://github.com/nhsx/open-source-policy) initiative/policy and also be compatible with usage in private repositories.
+This decision was made with the understanding that the chosen tool must support the NHS England [Coding in the Open](https://github.com/nhsx/open-source-policy) initiative/policy and also be compatible with usage in private repositories.
 
 ## Consequences
 
