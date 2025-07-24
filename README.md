@@ -23,7 +23,8 @@ Use this API to authenticate a NHS login "proxy token" and initiate a session wi
   - [Contacts](#contacts)
   - [Licence](#licence)
 
--------------------------------------
+---
+
 Below this line the documentation still needs to be evaluated and updated
 
 ## Setup
