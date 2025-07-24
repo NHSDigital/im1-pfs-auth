@@ -1,4 +1,4 @@
-<!-- markdownlint-disable-next-line first-line-heading -->
+<!-- markdownlint-disable-next-line first-line-heading/first-line-h1 -->
 
 ## Description
 
