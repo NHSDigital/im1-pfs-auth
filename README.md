@@ -1,22 +1,15 @@
-# Repository Template
+# IM1 Patient Facing Service Auth
 
 [![CI/CD Pull Request](https://github.com/nhs-england-tools/repository-template/actions/workflows/cicd-1-pull-request.yaml/badge.svg)](https://github.com/nhs-england-tools/repository-template/actions/workflows/cicd-1-pull-request.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=repository-template&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=repository-template)
 
-Start with an overview or a brief description of what the project is about and what it does. For example -
+A service enabling proxies to act on behalf of patients, regardless of their GP practice.
 
-Welcome to our repository template designed to streamline your project setup! This robust template provides a reliable starting point for your new projects, covering an essential tech stack and encouraging best practices in documenting.
-
-This repository template aims to foster a user-friendly development environment by ensuring that every included file is concise and adequately self-documented. By adhering to this standard, we can promote increased clarity and maintainability throughout your project's lifecycle. Bundled within this template are resources that pave the way for seamless repository creation. Currently supported technologies are:
-
-- Terraform
-- Docker
-
-Make use of this repository template to expedite your project setup and enhance your productivity right from the get-go. Enjoy the advantage of having a well-structured, self-documented project that reduces overhead and increases focus on what truly matters - coding!
+Use this API to authenticate a NHS login "proxy token" and initiate a session with a supplier system based on ODS code. On a successful match, it returns the new IM1 session details.
 
 ## Table of Contents
 
-- [Repository Template](#repository-template)
+- [IM1 Patient Facing Service Auth](#im1-patient-facing-service-auth)
   - [Table of Contents](#table-of-contents)
   - [Setup](#setup)
     - [Prerequisites](#prerequisites)
@@ -30,6 +23,10 @@ Make use of this repository template to expedite your project setup and enhance 
   - [Contacts](#contacts)
   - [Licence](#licence)
 
+---
+
+Below this line the documentation still needs to be evaluated and updated
+
 ## Setup
 
 By including preferably a one-liner or if necessary a set of clear CLI instructions we improve user experience. This should be a frictionless installation process that works on various operating systems (macOS, Linux, Windows WSL) and handles all the dependencies.
@@ -37,8 +34,8 @@ By including preferably a one-liner or if necessary a set of clear CLI instructi
 Clone the repository
 
 ```shell
-git clone https://github.com/nhs-england-tools/repository-template.git
-cd nhs-england-tools/repository-template
+git clone https://github.com/NHSDigital/im1-pfs-auth.git
+cd im1-pfs-auth
 ```
 
 ### Prerequisites
@@ -81,7 +78,7 @@ After a successful installation, provide an informative example of how this proj
 
 ### Testing
 
-There are `make` tasks for you to configure to run your tests.  Run `make test` to see how they work.  You should be able to use the same entry points for local development as in your CI pipeline.
+There are `make` tasks for you to configure to run your tests. Run `make test` to see how they work. You should be able to use the same entry points for local development as in your CI pipeline.
 
 ## Design
 
@@ -89,7 +86,7 @@ There are `make` tasks for you to configure to run your tests.  Run `make test` 
 
 The [C4 model](https://c4model.com/) is a simple and intuitive way to create software architecture diagrams that are clear, consistent, scalable and most importantly collaborative. This should result in documenting all the system interfaces, external dependencies and integration points.
 
-![Repository Template](./docs/diagrams/Repository_Template_GitHub_Generic.png)
+![Repository Template](./docs/diagrams/Repository_Template.drawio.png)
 
 The source for diagrams should be in Git for change control and review purposes. Recommendations are [draw.io](https://app.diagrams.net/) (example above in [docs](.docs/diagrams/) folder) and [Mermaids](https://github.com/mermaid-js/mermaid). Here is an example Mermaids sequence diagram:
 

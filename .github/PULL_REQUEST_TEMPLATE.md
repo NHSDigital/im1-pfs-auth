@@ -1,4 +1,5 @@
-<!-- markdownlint-disable-next-line first-line-heading -->
+<!-- markdownlint-disable MD041 -->
+
 ## Description
 
 <!-- Describe your changes in detail. -->
