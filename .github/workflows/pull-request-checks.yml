@@ -6,12 +6,12 @@ on:
   pull_request:
     branches: [main]
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   code-checks:
     name: "Run Code Checks"
     uses: ./.github/workflows/code-checks.yml
     permissions:
+      contents: read
       id-token: write
