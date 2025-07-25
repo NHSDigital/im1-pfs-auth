@@ -8,5 +8,6 @@
 *.code-workspace
 !project.code-workspace
 
+*.pyc
 node_modules/
 build/
