@@ -225,7 +225,6 @@ paths:
 components:
   schemas:
     ResponseModel:
-      required: []
       type: object
       properties:
         sessionId:
@@ -245,8 +244,9 @@ components:
           nullable: true
       additionalProperties: false
     ErrorResponseModel:
-      required: [message]
-        type: object
-        properties:
-          message:
-            type: string
+      required: 
+        - message
+      type: object
+      properties:
+        message:
+          type: string
