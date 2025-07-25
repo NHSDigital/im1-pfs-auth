@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "alefragnani.bookmarks",
+    "arahata.linter-actionlint",
     "davidanson.vscode-markdownlint",
     "dbaeumer.vscode-eslint",
     "donjayamanne.githistory",

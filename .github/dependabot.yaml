@@ -1,27 +1,25 @@
 version: 2
 
 updates:
-  - package-ecosystem: "docker"
-    directory: "/"
-    schedule:
-      interval: "daily"
-
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directories:
+      - "/" # Covers .github/workflows
+      - ".github/actions/check-english-usage"
+      - ".github/actions/check-file-format"
+      - ".github/actions/check-github-actions"
+      - ".github/actions/check-markdown-format"
+      - ".github/actions/create-lines-of-code-report"
+      - ".github/actions/perform-static-analysis"
+      - ".github/actions/prettier-commit-checks"
+      - ".github/actions/scan-dependencies"
+      - ".github/actions/scan-secrets"
     schedule:
-      interval: "daily"
-
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "pip"
-    directory: "/"
-    schedule:
-      interval: "daily"
-
-  - package-ecosystem: "terraform"
-    directory: "/"
-    schedule:
-      interval: "daily"
+      interval: "monthly"
+      groups:
+      github-actions:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"

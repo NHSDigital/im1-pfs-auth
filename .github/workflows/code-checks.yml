@@ -1,0 +1,100 @@
+name: "Code Checks"
+
+# Reusable workflow for code checks, used in both pull requests (workflow called) and main branch pushes.
+
+on:
+  push:
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  prettier-checks:
+    name: "Prettier Checks"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Prettier Checks"
+        uses: ./.github/actions/prettier-commit-checks
+
+  actionlint-check:
+    name: "Check GitHub Actions"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+  scan-secrets:
+    name: "Scan secrets"
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Scan secrets"
+        uses: ./.github/actions/scan-secrets
+
+  check-file-format:
+    name: "Check file format (editorconfig)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Check file format"
+        uses: ./.github/actions/check-file-format
+
+  check-markdown-format:
+    name: "Check Markdown format"
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Check Markdown format"
+        uses: ./.github/actions/check-markdown-format
+
+  check-english-usage:
+    name: "Check English usage (vale)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Check English usage"
+        uses: ./.github/actions/check-english-usage
+
+  scan-dependencies:
+    name: "Scan dependencies"
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    timeout-minutes: 2
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Scan dependencies"
+        uses: ./.github/actions/scan-dependencies

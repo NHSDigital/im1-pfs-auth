@@ -1,0 +1,14 @@
+name: "Pull Request Checks"
+
+# This workflow is triggered on pull requests and is the entrypoint for any pull request pipeline.
+
+on:
+  pull_request:
+    branches:
+      - "*"
+
+jobs:
+  code-checks:
+    name: "Run Code Checks"
+    uses: ./.github/workflows/code-checks.yml
+
