@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: "20 14 * * 1"
 
+permissions:
+  contents: read
+
 jobs:
   analyze:
     name: "CodeQL Analysis"
