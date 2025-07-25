@@ -10,7 +10,6 @@ https://nhsd-jira.digital.nhs.uk/browse/NPA-XXXX
 
 <!-- Describe the changes made in this PR. Include the purpose/scope/impact/context of the changes -->
 
-
 - <!-- Add bullet points for changes made -->
 
 ---
