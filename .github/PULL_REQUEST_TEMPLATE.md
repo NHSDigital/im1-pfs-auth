@@ -1,31 +1,48 @@
-<!-- markdownlint-disable MD041 -->
+# Pull Request
 
-## Description
+## 🧾 Ticket Link
 
-<!-- Describe your changes in detail. -->
+https://nhsd-jira.digital.nhs.uk/browse/NPA-XXXX
 
-## Context
+---
 
-<!-- Why is this change required? What problem does it solve? -->
+## 📄 Description/Summary of Changes
 
-## Type of changes
+<!-- Describe the changes made in this PR. Include the purpose/scope/impact/context of the changes -->
 
-<!-- What types of changes does your code introduce? Put an `x` in all the boxes that apply. -->
+- <!-- Add bullet points for changes made -->
 
-- [ ] Refactoring (non-breaking change)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would change existing functionality)
-- [ ] Bug fix (non-breaking change which fixes an issue)
+---
 
-## Checklist
+## 🧪 Developer Testing Carried Out
 
-<!-- Go over all the following points, and put an `x` in all the boxes that apply. -->
+<!-- Describe what tests (automated/unit/manual etc.) have been done for the ticket. Include: -->
+<!-- - Any tests added/updated -->
+<!-- - Evidence that each acceptance criterion from the Jira ticket is met -->
 
-- [ ] I am familiar with the [contributing guidelines](../docs/CONTRIBUTING.md)
-- [ ] I have followed the code style of the project
-- [ ] I have added tests to cover my changes
+- <!-- Add bullet points for tests done -->
+
+---
+
+## ✅ Developer Checklist
+
+<!-- To be completed by the developer -->
+
+- [ ] I have set the PR title to follow the format: `NPA-XXXX: <short-description>`
+- [ ] My branch name follows the convention: `<type>/NPA-XXXX-<short-description>`
+- [ ] My commit messages follow the template: `NPA-XXXX: <short-description>`
 - [ ] I have updated the documentation accordingly
-- [ ] This PR is a result of pair or mob programming
+- [ ] I have set assignees and added appropriate labels
+
+---
+
+## 👀 Reviewer Checklist
+
+<!-- To be completed by the reviewer -->
+
+- [ ] Changes meet the acceptance criteria of the Jira ticket
+- [ ] Code is able to be merged (no conflicts and adheres to coding standards)
+- [ ] Sufficient test evidence is provided (manual and/or automated)
 
 ---
 
