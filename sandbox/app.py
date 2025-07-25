@@ -7,11 +7,11 @@ app = Flask(__name__)
 def hello_world():
     return "<p>Welcome to the IM1 PFS Auth Sandbox</p>"
 
-@app.route("/authentication", methods = [""])
+@app.route("/authentication", methods = ["POST"])
 def authentication() -> Response:
     """Sandbox API for POST /authentication
     
     Returns:
         Response: Response for POST /authentication
     """
-    post_authentication()
+    return post_authentication()
