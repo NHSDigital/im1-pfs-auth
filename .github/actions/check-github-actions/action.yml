@@ -1,0 +1,9 @@
+name: "Check GitHub Actions"
+description: "Check GitHub Actions workflows for correctness and best practices"
+runs:
+  using: "composite"
+  steps:
+    - name: "Run Actionlint to check workflows and actions"
+      uses: docker://rhysd/actionlint:1.7.7
+      with:
+        args: -color
