@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: IM1 PFS Auth API
-  version: '1.0'
+  version: "1.0"
   description: |
     ## Overview
     An intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued "proxy token" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.
@@ -102,7 +102,28 @@ paths:
       tags:
         - sessions
       summary: Begins a session
-      description: Begins a session
+      description: |
+        ## Overview
+
+        A user can authenticate and establish a session with GPIT supplier systems.
+
+        This endpoint:
+          - Verifies the user access token
+          - Extracts the NHS number for the user, NHS number and ODS code of the patient 
+          - Determines which supplier system to forward requests onto
+          - Transforms response  
+
+        ## Access modes
+
+        This endpoint supports the following access modes:
+        - Patient access
+
+        ## Sandbox test scenarios
+
+        | Scenario               | Request                                                                                     | Response                                                    |
+        | ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+        | Successful request     | Valid request with ods code value of A29929 and forward to value of https://example.com     | HTTP Status 201 Success response                            |
+
       parameters:
         - name: Authorization
           in: header
@@ -139,7 +160,7 @@ paths:
           required: true
           schema:
             type: string
-            example: https://example.com/
+            example: https://example.com
         - name: X-ODS-Code
           in: header
           description: The ODS code of the user to start a session with.
@@ -161,22 +182,22 @@ paths:
               ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
             example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
       responses:
-        '201':
+        "201":
           description: The session was created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResponseModel'
+                $ref: "#/components/schemas/ResponseModel"
 components:
   schemas:
     ResponseModel:
       required: []
       type: object
       properties:
-        SessionId:
+        sessionId:
           minLength: 1
           type: string
-        UserPatientLinkToken:
+        userPatientLinkToken:
           type: string
           nullable: true
         suid:
