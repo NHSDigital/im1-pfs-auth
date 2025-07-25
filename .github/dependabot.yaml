@@ -16,10 +16,10 @@ updates:
     schedule:
       interval: "monthly"
       groups:
-      github-actions:
-        applies-to: "version-updates"
-        patterns:
-          - "*"
-        update-types:
-          - "patch"
-          - "minor"
+        github-actions:
+          applies-to: "version-updates"
+          patterns:
+            - "*"
+          update-types:
+            - "patch"
+            - "minor"
