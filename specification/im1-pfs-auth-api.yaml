@@ -122,8 +122,12 @@ paths:
 
         | Scenario               | Request                                                                                     | Response                                                    |
         | ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-        | Successful request     | Valid request with ods code value of A29929 and forward to value of https://example.com     | HTTP Status 201 Success response                            |
+        | Successful request     | Valid request with forward to value of https://example.com and ods code value of A29929     | HTTP Status 201 Success response                            |
 
+        ### Sandbox constraints
+          - Headers that are not required for the scenario are not validated and are disregarded.
+
+        Or perhaps you'd like to try out the sandbox using our 'Try it out' feature.
       parameters:
         - name: Authorization
           in: header
@@ -188,6 +192,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseModel"
+        "4XX":
+          description: |
+            Errors will be returned for the first error encountered in the request. An error occurred as follows:
+
+            | HTTP status | Error code               | Description                                                                                                                               |
+            | ----------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+            | 400         | `MISSING_VALUE`          | Missing header. |
+            | 400         | `INVALID_VALUE`          | Invalid header.                                                                                                   |
+            | 401         | `ACCESS_DENIED`          | Missing or invalid OAuth 2.0 bearer token in request.                                                                                     |
+            | 403         | `FORBIDDEN`              | Access denied to resource.                                                                                                                |
+            | 408         | `TIMEOUT`                | Request timed out.                                                                                                                        |
+            | 429         | `THROTTLED`              | You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits). |
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseModel"
+              examples:
+                missingValueError:
+                  $ref: "./examples/errors.yaml#/MissingValueError"
+                invalidValueError:
+                  $ref: "./examples/errors.yaml#/InvalidValueError"
+                accessDeniedError:
+                  $ref: "./examples/errors.yaml#/AccessDeniedError"
+                forbiddenError:
+                  $ref: "./examples/errors.yaml#/ForbiddenError"
+                timeoutError:
+                  $ref: "./examples/errors.yaml#/TimeoutError"
+                throttledError:
+                  $ref: "./examples/errors.yaml#/ThrottledError"
+                
 components:
   schemas:
     ResponseModel:
@@ -210,3 +244,9 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    ErrorResponseModel:
+      required: [message]
+        type: object
+        properties:
+          message:
+            type: string
