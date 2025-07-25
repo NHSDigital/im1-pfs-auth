@@ -2,6 +2,7 @@
 
 ## 🧾 Ticket Link
 
+<!-- markdownlint-disable-next-line MD034/no-bare-urls -->
 https://nhsd-jira.digital.nhs.uk/browse/NPA-XXXX
 
 ---
