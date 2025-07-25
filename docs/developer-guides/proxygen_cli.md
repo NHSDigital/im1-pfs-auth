@@ -15,7 +15,7 @@ The Proxygen CLI is a dedicated command-line interface tool designed to streamli
 1. Using `uv` run the following command to install the Proxygen CLI:
 
 ```shell
-uv tool install proxygen-cli
+uv pip install proxygen-cli
 ```
 
 2. Configure the CLI by running:
