@@ -15,11 +15,11 @@ updates:
       - ".github/actions/scan-secrets"
     schedule:
       interval: "monthly"
-      groups:
-        github-actions:
-          applies-to: "version-updates"
-          patterns:
-            - "*"
-          update-types:
-            - "patch"
-            - "minor"
+    groups:
+      github-actions:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
