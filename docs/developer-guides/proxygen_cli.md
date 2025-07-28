@@ -21,20 +21,20 @@ uv pip install proxygen-cli
 pip install proxygen-cli
 ```
 
-2. Configure the CLI by running:
+1. Configure the CLI by running:
 
 ```shell
 proxygen settings set api im1-pfs-auth
 ```
 
-3. Set up proxygen credentials and settings
+1. Set up proxygen credentials and settings
 
 Follow the instructions in the [APIM Documentation](https://nhsd-confluence.digital.nhs.uk/spaces/APM/pages/804495095/Proxygen+CLI+user+guide#ProxygenCLIuserguide-Configuringsettingsandcredentials) to set up your credentials and settings.
 
 > [!NOTE]
 > proxygen-cli doesn't use `-h` to display help. Instead, use `--help` to see available commands and options.
 
-4. Verify the installation by running:
+1. Verify the installation by running:
 
 ```shell
 proxygen pytest-nhsd-apim get-token
