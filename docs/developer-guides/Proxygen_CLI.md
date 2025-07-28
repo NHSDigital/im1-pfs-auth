@@ -7,6 +7,7 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
 - [proxygen CLI](#proxygen-cli)
   - [Table of Contents](#table-of-contents)
   - [Installation and Configuration](#installation-and-configuration)
+  - [Secrets](#secrets)
 
 [APIM Documentation](https://nhsd-confluence.digital.nhs.uk/spaces/APM/pages/804495095/Proxygen+CLI+user+guide#ProxygenCLIuserguide-Settingupsettingsandcredentials)
 
@@ -47,3 +48,7 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
    ```shell
    proxygen pytest-nhsd-apim get-token
    ```
+
+## Secrets
+
+Secrets used for machine access are stored in Validated Relationships Service's (VRS) AWS Prod Secrets Manager with the prefix `im1-pfs-auth/proxygen/<secret>`. As well the private key is available in GitHub Secrets under the name `PROXYGEN_PRIVATE_KEY`.
