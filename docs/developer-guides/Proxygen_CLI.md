@@ -1,6 +1,6 @@
 # Proxygen CLI
 
-The Proxygen CLI is a dedicated command-line interface tool designed to streamline the interaction between producers and the Proxy Generator service. It provides producers with a convenient and intuitive way to deploy API instances, manage API specifications, manage secrets, and deploy them within specific environments without needing to directly interact with the API platform.
+The proxygen CLI is a dedicated command-line interface tool designed to streamline the interaction between producers and the Proxy Generator service. It provides producers with a convenient and intuitive way to deploy API instances, manage API specifications, manage secrets, and deploy them within specific environments without needing to directly interact with the API platform.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ The Proxygen CLI is a dedicated command-line interface tool designed to streamli
 
 ## Installation and Configuration
 
-1. Using your favourite Python package manager, install the Proxygen CLI:
+1. Using your favourite Python package manager, install the proxygen CLI:
 
 ```shell
 # UV
