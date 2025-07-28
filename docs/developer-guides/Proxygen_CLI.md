@@ -18,6 +18,9 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
    ```shell
    # UV
    uv pip install proxygen-cli
+   ```
+   If your favourite Python package manager fails to install the package, you can use `pip` as a fallback:
+   ```shell
    # PIP
    pip install proxygen-cli
    ```
