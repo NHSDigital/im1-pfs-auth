@@ -15,7 +15,7 @@ MD024:
 
 # https://github.com/DavidAnson/markdownlint/blob/main/doc/md029.md
 MD029:
-  style: one_or_ordered
+  style: ordered
 
 # https://github.com/DavidAnson/markdownlint/blob/main/doc/md033.md
 MD033: false
