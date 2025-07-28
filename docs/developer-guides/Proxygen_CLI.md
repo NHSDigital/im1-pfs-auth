@@ -1,10 +1,10 @@
-# Proxygen CLI
+# proxygen CLI
 
 The proxygen CLI is a dedicated command-line interface tool designed to streamline the interaction between producers and the Proxy Generator service. It provides producers with a convenient and intuitive way to deploy API instances, manage API specifications, manage secrets, and deploy them within specific environments without needing to directly interact with the API platform.
 
 ## Table of Contents
 
-- [Proxygen CLI](#proxygen-cli)
+- [proxygen CLI](#proxygen-cli)
   - [Table of Contents](#table-of-contents)
   - [Installation and Configuration](#installation-and-configuration)
 
