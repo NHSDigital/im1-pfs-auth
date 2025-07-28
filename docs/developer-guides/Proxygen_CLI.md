@@ -43,7 +43,7 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
 
 4. Set up proxygen credentials and settings
 
-   Follow the instructions in the [APIM Documentation](https://nhsd-confluence.digital.nhs.uk/spaces/APM/pages/804495095/Proxygen+CLI+user+guide#ProxygenCLIuserguide-Configuringsettingsandcredentials) to set up your credentials and settings.
+   Complete steps 2.2 from instructions in the [APIM Documentation](https://nhsd-confluence.digital.nhs.uk/spaces/APM/pages/804495095/Proxygen+CLI+user+guide#ProxygenCLIuserguide-Configuringsettingsandcredentials) to set up your credentials and settings.
 
    > [!NOTE]
    > proxygen-cli doesn't use `-h` to display help. Instead, use `--help` to see available commands and options.
