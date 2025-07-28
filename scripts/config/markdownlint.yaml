@@ -13,6 +13,10 @@ MD013: false
 MD024:
   siblings_only: true
 
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/md029.md
+MD029:
+  style: one_or_ordered
+
 # https://github.com/DavidAnson/markdownlint/blob/main/doc/md033.md
 MD033: false
 
