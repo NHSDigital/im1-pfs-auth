@@ -4,6 +4,8 @@ info:
   version: "1.0"
   description: |
     ## Overview
+    ![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.svg)
+
     An intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued "proxy token" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.
 
     You can:
