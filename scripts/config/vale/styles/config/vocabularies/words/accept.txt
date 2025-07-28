@@ -12,6 +12,7 @@ Octokit
 onboarding
 Podman
 Proxygen
+proxygen
 Python
 sed
 Syft
