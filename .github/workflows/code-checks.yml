@@ -99,6 +99,19 @@ jobs:
       - name: "Check English usage"
         uses: ./.github/actions/check-english-usage
 
+  check-uv-lock:
+    name: "Check pyproject.toml is locked"
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Check uv lock"
+        uses: ./.github/actions/check-uv-lock
+
   run-tests:
     name: "Run All Tests"
     runs-on: ubuntu-latest
