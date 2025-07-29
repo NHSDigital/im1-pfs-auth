@@ -1,0 +1,16 @@
+name: "Compile spec"
+description: Compile spec
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22
+    - name: Install dependencies
+      shell: bash
+      run: npm install
+    - name: Compile OAS spec
+      shell: bash
+      run: make spec-compile
