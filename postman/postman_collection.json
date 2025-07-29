@@ -1,11 +1,11 @@
 {
   "info": {
-    "_postman_id": "23c25e47-4055-4c2b-b41f-a57630a28d52",
-    "name": "IM1 PFS Auth Service Sandbox 28/08/2025",
-    "description": "This Postman collection includes example scenarios for each of the IM1 PFS Auth API endpoints, covering both valid and invalid request scenarios.\n\nThe collection is pointed towards the IM1 PFS Auth API sandbox environment, which will return a specific example response based on the request sent. All data shown in the requests or responses is test data.\n\nOur sandbox environment only covers the scenarios listed in the Postman collection and is open access. It does not allow you to test authorisation or any scenarios beyond the ones documented.\n\nFull specification is available at {link to be added here}",
+    "_postman_id": "ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9",
+    "name": "IM1 PFS Auth Service Sandbox 29/08/2025",
+    "description": "This Postman collection includes example scenarios for each of the IM1 PFS Auth API endpoints, covering both valid and invalid request scenarios.\n\nThe collection is pointed towards the IM1 PFS Auth API sandbox environment, which will return a specific example response based on the request sent. All data shown in the requests or responses is test data.\n\nOur sandbox environment only covers the scenarios listed in the Postman collection and is open access. It does not allow you to test authorisation or any scenarios beyond the ones documented.\n\nFull specification is available at [https://github.com/NHSDigital/im1-pfs-auth](https://github.com/NHSDigital/im1-pfs-auth).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "44536620",
-    "_collection_link": "https://www.postman.com/ellie-bound1-b2ea016f/im1-pfs-auth-service-sandbox-28-08-2025/collection/xxb9yvu/im1-pfs-auth-service-sandbox-28-08-2025?action=share&source=collection_link&creator=44536620"
+    "_collection_link": "https://www.postman.com/ellie-bound1-b2ea016f/workspace/im1-pfs-auth-service-sandbox-28-08-2025/collection/44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9?action=share&source=collection_link&creator=44536620"
   },
   "item": [
     {
