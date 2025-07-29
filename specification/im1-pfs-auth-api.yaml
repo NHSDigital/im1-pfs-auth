@@ -88,8 +88,9 @@ info:
     * only covers a limited set of scenarios
     * is open access, so does not allow you to test authorisation
 
-    # TODO!!!!
-    [<img src="https://run.pstmn.io/button.svg" alt="Import Postman Here" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9%26entityType%3Dcollection%26workspaceId%3D1359a924-ad5c-4da1-bcb5-669187b3efea)
+    [![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/postman/postman_collection.json)
+
+    Import the  postman collection to run requests against sandbox.
 
     ## Onboarding
     You must get your software onboarded before it can go live.
@@ -125,6 +126,8 @@ paths:
         - Patient access
 
         ## Sandbox test scenarios
+
+        See the postman collection for example requests.
 
         | Scenario               | Request                                                                                     | Response                                                    |
         | ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
