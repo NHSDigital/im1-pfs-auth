@@ -9,6 +9,6 @@ runs:
     - name: Install dependencies
       run: uv sync --all-extras
       shell: bash
-    - name: Run Ruff format
+    - name: Run Ruff Check
       shell: bash
-      run: uv run ruff format .
+      run: uv run ruff check .

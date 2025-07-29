@@ -20,6 +20,19 @@ def test_hello_world__success(client: FlaskClient) -> None:
     )
 
 
+@pytest.mark.parametrize("path", ["/_status", "/_ping", "/health"])
+def test_health_success(path: str, client: FlaskClient) -> None:
+    # Act
+    actual_result = client.get(path)
+
+    # Assert
+    assert 200 == actual_result.status_code
+    assert {
+        "status": "online",
+        "message": "IM1 PFS Auth API Sandbox is running",
+    } == actual_result.get_json()
+
+
 def test_post_authentication__success(client: FlaskClient) -> None:
     # Arrange
     headers = {"X-Forward-To": "https://example.com", "X-ODS-Code": "A29929"}
