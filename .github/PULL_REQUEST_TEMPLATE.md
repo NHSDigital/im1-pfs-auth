@@ -29,7 +29,7 @@ https://nhsd-jira.digital.nhs.uk/browse/NPA-XXXX
 <!-- To be completed by the developer -->
 
 - [ ] I have set the PR title to follow the format: `NPA-XXXX: <short-description>`
-- [ ] My branch name follows the convention: `<type>/NPA-XXXX-<short-description>`
+- [ ] My branch name follows the convention: `<type>/NPA-XXXX/<short-description>`
 - [ ] My commit messages follow the template: `NPA-XXXX: <short-description>`
 - [ ] I have updated the documentation accordingly
 - [ ] I have set assignees and added appropriate labels
