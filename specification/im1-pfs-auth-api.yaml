@@ -71,15 +71,15 @@ info:
     ## Open source
     You might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:
 
-    | Resource                         | Description                                                                                                  | Links                                                                                                                                                          |
-    | -------------------------------- | ------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | IM1 PFS Auth API | Source code for the API proxy, sandbox and specification.                                                    | [GitHub repo](TODO)                                                                               |
+    | Resource         | Description                                               | Links                                                     |
+    | ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |
+    | IM1 PFS Auth API | Source code for the API proxy, sandbox and specification. | [GitHub repo](https://github.com/NHSDigital/im1-pfs-auth) |
 
     ## Environments and testing
-    | Environment       | Base URL                                                                             |
-    | ----------------- | ------------------------------------------------------------------------------------ |
-    | Sandbox           | `TODO`                |
-    | Integration test  | `TODO`                    |
+    | Environment       | Base URL                                           |
+    | ----------------- | -------------------------------------------------- |
+    | Sandbox           | `https://sandbox.api.service.nhs.uk/im1-pfs-auth/` |
+    | Integration test  | `https://int.api.service.nhs.uk/im1-pfs-auth/`     |
 
     ### Sandbox testing
     Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing)
@@ -113,9 +113,9 @@ paths:
 
         This endpoint:
           - Verifies the user access token
-          - Extracts the NHS number for the user, NHS number and ODS code of the patient 
+          - Extracts the NHS number for the user, NHS number and ODS code of the patient
           - Determines which supplier system to forward requests onto
-          - Transforms response  
+          - Transforms response
 
         ## Access modes
 
@@ -225,7 +225,7 @@ paths:
                   $ref: "./examples/errors.yaml#/TimeoutError"
                 throttledError:
                   $ref: "./examples/errors.yaml#/ThrottledError"
-                
+
 components:
   schemas:
     ResponseModel:
@@ -248,7 +248,7 @@ components:
           nullable: true
       additionalProperties: false
     ErrorResponseModel:
-      required: 
+      required:
         - message
       type: object
       properties:

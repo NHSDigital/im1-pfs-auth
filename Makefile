@@ -3,15 +3,17 @@ clean:
 	rm -rf build
 	rm -rf dist
 
+install:
+	uv sync --all-extras
+	npm install
 
 lint:
 	npm run lint
-	ruff format sandbox/
+	uv run ruff check sandbox/
 
-install:
-	uv pip compile pyproject.toml --extra dev
-	npm install
-
+format:
+	npm run format
+	uv run ruff format sandbox/
 # Locally runs sandbox application
 run:
 	FLASK_APP=sandbox.app flask run --port 8000
