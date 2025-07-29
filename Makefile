@@ -26,8 +26,8 @@ sandbox-debug-run:
 sandbox-docker-run:
 	docker run -p 9000:9000 "im1-pfs-auth-sandbox"
 
-test:
-	uv run pytest
+sandbox-test:
+	uv run pytest --cov=sandbox --cov-fail-under=80
 
 spec-compile: clean
 	mkdir -p build

@@ -7,7 +7,7 @@ runs:
       shell: bash
     - run: pip install uv
       shell: bash
-    - run: make install
+    - run: uv sync --all-extras
       shell: bash
-    - run: make test
+    - run: make sandbox-test
       shell: bash

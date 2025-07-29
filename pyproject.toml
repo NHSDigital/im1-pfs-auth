@@ -12,7 +12,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "pytest>=8.4.1",
-  "ruff>=0.12.5"
+  "pytest-cov>=6.2.1",
+  "coverage>=7.10.1",
+  "ruff>=0.12.5",
 ]
 
 [tool.uv]
