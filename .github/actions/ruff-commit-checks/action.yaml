@@ -1,5 +1,6 @@
-name: Run Tests
-description: Installs pytest and runs tests
+name: "Ruff Commit Checks"
+description: Run Ruff checks
+
 runs:
   using: "composite"
   steps:
@@ -8,5 +9,6 @@ runs:
     - name: Install dependencies
       run: uv sync --all-extras
       shell: bash
-    - run: make sandbox-test
+    - name: Run Ruff format
       shell: bash
+      run: uv run ruff format .

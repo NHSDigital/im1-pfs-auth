@@ -25,6 +25,18 @@ jobs:
       - name: "Prettier Checks"
         uses: ./.github/actions/prettier-commit-checks
 
+  ruff-checks:
+    name: "Ruff Checks"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Ruff Checks"
+        uses: ./.github/actions/ruff-commit-checks
+
   actionlint-check:
     name: "Check GitHub Actions"
     runs-on: ubuntu-latest
