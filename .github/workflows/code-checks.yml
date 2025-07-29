@@ -48,7 +48,7 @@ jobs:
           persist-credentials: false
 
   scan-secrets:
-    name: "Scan secrets"
+    name: "Scan Secrets"
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -57,11 +57,11 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: "Scan secrets"
+      - name: "Scan Secrets"
         uses: ./.github/actions/scan-secrets
 
   check-file-format:
-    name: "Check file format (editorconfig)"
+    name: "Check File Format (editorconfig)"
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -70,11 +70,11 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: "Check file format"
+      - name: "Check File Format"
         uses: ./.github/actions/check-file-format
 
   check-markdown-format:
-    name: "Check Markdown format"
+    name: "Check Markdown Format"
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -83,11 +83,11 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: "Check Markdown format"
+      - name: "Check Markdown Format"
         uses: ./.github/actions/check-markdown-format
 
   check-english-usage:
-    name: "Check English usage (vale)"
+    name: "Check English Usage (vale)"
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -96,11 +96,11 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: "Check English usage"
+      - name: "Check English Usage"
         uses: ./.github/actions/check-english-usage
 
   check-uv-lock:
-    name: "Check pyproject.toml is locked"
+    name: "Check pyproject.toml is Locked"
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
@@ -109,7 +109,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: "Check uv lock"
+      - name: "Check uv Lock"
         uses: ./.github/actions/check-uv-lock
 
   run-tests:
@@ -126,7 +126,7 @@ jobs:
         uses: ./.github/actions/run-tests
 
   scan-dependencies:
-    name: "Scan dependencies"
+    name: "Scan Dependencies"
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -138,8 +138,24 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: "Scan dependencies"
+      - name: "Scan Dependencies"
         uses: ./.github/actions/scan-dependencies
+
+  build-sandbox:
+    name: "Build Sandbox"
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    timeout-minutes: 2
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Build Sandbox"
+        uses: ./.github/actions/build-sandbox
 
   compile-spec:
     name: "Compile OAS Spec"
