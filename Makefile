@@ -9,23 +9,30 @@ install:
 
 lint:
 	npm run lint
-	uv run ruff check sandbox/
+	uv run ruff check .
 
 format:
 	npm run format
-	uv run ruff format sandbox/
-# Locally runs sandbox application
-run:
-	FLASK_APP=sandbox.app flask run --port 8000
+	uv run ruff format .
+
+sandbox-build:
+	cp pyproject.toml sandbox/
+	cp uv.lock sandbox/
+	docker build -t "im1-pfs-auth-sandbox" --no-cache sandbox/
+
+sandbox-debug-run:
+	FLASK_APP=sandbox.api.app flask run --port 8000
+
+sandbox-docker-run:
+	docker run -p 9000:9000 "im1-pfs-auth-sandbox"
 
 test:
 	pytest
 
 
-#Creates the fully expanded OAS spec in json
-publish: clean
+spec-compile: clean
 	mkdir -p build
-	npm run publish
+	npm run spec-compile
 
 
 ${VERBOSE}.SILENT: \

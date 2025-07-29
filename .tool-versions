@@ -5,6 +5,7 @@ vale 3.12.0
 gitleaks 8.28.0
 python 3.13.5
 actionlint 1.7.7
+uv 0.8.3
 
 # ==============================================================================
 # The section below is reserved for Docker image versions.

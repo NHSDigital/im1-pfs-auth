@@ -1,10 +1,10 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   title: IM1 PFS Auth API
-  version: "1.0"
+  version: "0.1"
   description: |
     ## Overview
-    ![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.svg)
+    ![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)
 
     An intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued "proxy token" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.
 
@@ -88,7 +88,8 @@ info:
     * only covers a limited set of scenarios
     * is open access, so does not allow you to test authorisation
 
-    [<img src="https://run.pstmn.io/button.svg" alt="Run In Postman" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9%26entityType%3Dcollection%26workspaceId%3D1359a924-ad5c-4da1-bcb5-669187b3efea)
+    # TODO!!!!
+    [<img src="https://run.pstmn.io/button.svg" alt="Import Postman Here" style="width: 128px; height: 32px;">](https://app.getpostman.com/run-collection/44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9%26entityType%3Dcollection%26workspaceId%3D1359a924-ad5c-4da1-bcb5-669187b3efea)
 
     ## Onboarding
     You must get your software onboarded before it can go live.
@@ -100,6 +101,7 @@ info:
 
 servers:
   - url: /int
+  - url: /sandbox
 paths:
   /authentication:
     post:
@@ -202,8 +204,8 @@ paths:
 
             | HTTP status | Error code               | Description                                                                                                                               |
             | ----------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-            | 400         | `MISSING_VALUE`          | Missing header. |
-            | 400         | `INVALID_VALUE`          | Invalid header.                                                                                                   |
+            | 400         | `MISSING_VALUE`          | Missing header.                                                                                                                           |
+            | 400         | `INVALID_VALUE`          | Invalid header.                                                                                                                           |
             | 401         | `ACCESS_DENIED`          | Missing or invalid OAuth 2.0 bearer token in request.                                                                                     |
             | 403         | `FORBIDDEN`              | Access denied to resource.                                                                                                                |
             | 408         | `TIMEOUT`                | Request timed out.                                                                                                                        |
@@ -225,7 +227,20 @@ paths:
                   $ref: "./examples/errors.yaml#/TimeoutError"
                 throttledError:
                   $ref: "./examples/errors.yaml#/ThrottledError"
+        "5XX":
+          description: |
+            Errors will be returned for the first error encountered in the request. An error occurred as follows:
 
+            | HTTP status | Error code              | Description                                       |
+            | ----------- | ----------------------- | ------------------------------------------------- |
+            | 500         | `SERVER_ERROR`          | An unexpected internal server error has occurred. |
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseModel"
+              examples:
+                missingValueError:
+                  $ref: "./examples/errors.yaml#/ServerError"
 components:
   schemas:
     ResponseModel:
@@ -247,6 +262,7 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+
     ErrorResponseModel:
       required:
         - message

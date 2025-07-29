@@ -5,11 +5,16 @@ description = "IM1 PFS Auth API"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "flask",
+    "flask>=3.1.1",
+    "gunicorn>=23.0.0",
 ]
 
 [project.optional-dependencies]
 dev = [
-  "pytest",
-  "ruff"
+  "pytest>=8.4.1",
+  "ruff>=0.12.5"
 ]
+
+[tool.uv]
+required-version = "~=0.8.0"
+package = false

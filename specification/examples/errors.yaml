@@ -28,3 +28,8 @@ TimeoutError:
   description: The request was unsuccessful due to timeout.
   value:
     message: "Request timed out."
+ServerError:
+  summary: Server Error
+  description: The request was unsuccessful due to server error.
+  value:
+    message: "Server error."

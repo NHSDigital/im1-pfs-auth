@@ -5,8 +5,7 @@
   "scripts": {
     "lint": "node_modules/.bin/openapi-generator-cli validate -i specification/im1-pfs-auth-api.yaml",
     "format": "./node_modules/.bin/prettier --write .",
-    "publish": "./node_modules/.bin/openapi-generator-cli generate -i specification/im1-pfs-auth-api.yaml --generator-key v3.0  -g openapi -o build && rm openapitools.json && mv build/openapi.json build/im1-pfs-auth-api.json",
-    "check-licenses": "node_modules/.bin/license-checker --failOn GPL --failOn LGPL"
+    "spec-compile": "./node_modules/.bin/openapi-generator-cli generate -i specification/im1-pfs-auth-api.yaml --generator-key v3.0  -g openapi -o build && rm openapitools.json && mv build/openapi.json build/im1-pfs-auth-api.json"
   },
   "author": "NHS Digital",
   "license": "MIT",
