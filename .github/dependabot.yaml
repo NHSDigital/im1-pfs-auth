@@ -26,41 +26,41 @@ updates:
 
   - package-ecosystem: "pip"
     directories:
-        - "/"
+      - "/"
     open-pull-requests-limit: 1
     versioning-strategy: auto
     ignore:
-        - dependency-name: "*"
-          update-types:
-              ["version-update:semver-minor", "version-update:semver-patch"]
+      - dependency-name: "*"
+        update-types:
+          ["version-update:semver-minor", "version-update:semver-patch"]
     schedule:
-        interval: "weekly"
-        day: "monday"
-        time: "09:00"
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
     commit-message:
-        prefix: "pip "
-        include: scope
+      prefix: "pip "
+      include: scope
     groups:
-        python-dependencies:
-            patterns:
-                - "*"
+      python-dependencies:
+        patterns:
+          - "*"
 
   - package-ecosystem: "npm"
     directory: "/"
     open-pull-requests-limit: 1
     versioning-strategy: auto
     ignore:
-        - dependency-name: "*"
-          update-types:
-              ["version-update:semver-minor", "version-update:semver-patch"]
+      - dependency-name: "*"
+        update-types:
+          ["version-update:semver-minor", "version-update:semver-patch"]
     schedule:
-        interval: "weekly"
-        day: "monday"
-        time: "09:00"
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
     commit-message:
-        prefix: "npm "
-        include: scope
+      prefix: "npm "
+      include: scope
     groups:
-        npm-dependencies:
-            patterns:
-                - "*"
+      npm-dependencies:
+        patterns:
+          - "*"
