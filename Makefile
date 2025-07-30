@@ -40,15 +40,17 @@ deploy-ci:
 select-spec-configuration:
 ifeq ($(ENVIRONMENT), $(filter $(ENVIRONMENT), internal-dev internal-dev-sandbox ))
 	@ $(MAKE) select-x-nhsd-apim-configuration
+	@ $(MAKE) set-hosted-container-version
 else
 	@ echo ERROR: $$ENVIRONMENT is not a valid environment. Please use one of [sandbox, internal-dev, int, ref, prod]
 	@ exit 1;
 endif
 
+# Select the NHS API Platform configuration for the specified environment
 select-x-nhsd-apim-configuration:
 	cp -f specification/x-nhsd-apim/x-nhsd-apim-$$ENVIRONMENT.yaml specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
-	@ $(MAKE) set-hosted-container-version
 
+# Set the container version in the generated specification file
 set-hosted-container-version:
 	sed -i '' 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
 
