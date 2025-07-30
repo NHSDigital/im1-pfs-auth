@@ -101,14 +101,17 @@ info:
     For help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).
 
 servers:
-  - url: /int
-  - url: /sandbox
+  - url: https://int.api.service.nhs.uk/im1-pfs-auth/
+  - url: https://sandbox.api.service.nhs.uk/im1-pfs-auth/
+
 paths:
   /authentication:
     post:
       tags:
         - sessions
       summary: Begins a session
+      security:
+        - nhs-login-p9: []
       description: |
         ## Overview
 
@@ -219,17 +222,17 @@ paths:
                 $ref: "#/components/schemas/ErrorResponseModel"
               examples:
                 missingValueError:
-                  $ref: "./examples/errors.yaml#/MissingValueError"
+                  externalValue: "./examples/errors.yaml#/MissingValueError"
                 invalidValueError:
-                  $ref: "./examples/errors.yaml#/InvalidValueError"
+                  externalValue: "./examples/errors.yaml#/InvalidValueError"
                 accessDeniedError:
-                  $ref: "./examples/errors.yaml#/AccessDeniedError"
+                  externalValue: "./examples/errors.yaml#/AccessDeniedError"
                 forbiddenError:
-                  $ref: "./examples/errors.yaml#/ForbiddenError"
+                  externalValue: "./examples/errors.yaml#/ForbiddenError"
                 timeoutError:
-                  $ref: "./examples/errors.yaml#/TimeoutError"
+                  externalValue: "./examples/errors.yaml#/TimeoutError"
                 throttledError:
-                  $ref: "./examples/errors.yaml#/ThrottledError"
+                  externalValue: "./examples/errors.yaml#/ThrottledError"
         "5XX":
           description: |
             Errors will be returned for the first error encountered in the request. An error occurred as follows:
@@ -243,8 +246,13 @@ paths:
                 $ref: "#/components/schemas/ErrorResponseModel"
               examples:
                 serverError:
-                  $ref: "./examples/errors.yaml#/ServerError"
+                  externalValue: "./examples/errors.yaml#/ServerError"
+
 components:
+  securitySchemes:
+    nhs-login-p9:
+      $ref: "https://proxygen.prod.api.platform.nhs.uk/components/securitySchemes/nhs-login-p9"
+
   schemas:
     ResponseModel:
       type: object
@@ -273,3 +281,19 @@ components:
       properties:
         message:
           type: string
+
+x-nhsd-apim:
+  monitoring: true
+  temporary: true
+  access:
+    - title: P9 User Restricted Access
+      grants:
+        nhs-login-p9: []
+      visible: false
+  ratelimiting:
+    proxy:
+      limit: 2
+      timeunit: second
+    app-default:
+      limit: 2
+      timeunit: second

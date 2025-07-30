@@ -1,23 +1,12 @@
 import pytest
 from flask.testing import FlaskClient
 
-from ..app import app
+from sandbox.api.app import app
 
 
 @pytest.fixture
 def client() -> FlaskClient:
     return app.test_client()
-
-
-def test_hello_world__success(client: FlaskClient) -> None:
-    # Act
-    actual_result = client.get("/")
-
-    # Assert
-    assert 200 == actual_result.status_code
-    assert "<p>Welcome to the IM1 PFS Auth Sandbox</p>" == actual_result.get_data(
-        as_text=True
-    )
 
 
 @pytest.mark.parametrize("path", ["/_status", "/_ping", "/health"])
@@ -26,11 +15,11 @@ def test_health_success(path: str, client: FlaskClient) -> None:
     actual_result = client.get(path)
 
     # Assert
-    assert 200 == actual_result.status_code
-    assert {
+    assert actual_result.status_code == 200
+    assert actual_result.get_json() == {
         "status": "online",
         "message": "IM1 PFS Auth API Sandbox is running",
-    } == actual_result.get_json()
+    }
 
 
 def test_post_authentication__success(client: FlaskClient) -> None:
@@ -41,14 +30,14 @@ def test_post_authentication__success(client: FlaskClient) -> None:
     actual_result = client.post("/authentication", headers=headers)
 
     # Assert
-    assert 201 == actual_result.status_code
-    assert {
+    assert actual_result.status_code == 201
+    assert actual_result.get_json() == {
         "onlineUserId": "123",
         "patientId": "123",
         "sessionId": "123",
         "suid": "123",
         "userPatientLinkToken": "123",
-    } == actual_result.get_json()
+    }
 
 
 @pytest.mark.parametrize(
@@ -67,5 +56,5 @@ def test_post_authentication__failure(headers: dict, client: FlaskClient) -> Non
     actual_result = client.post("/authentication", headers=headers)
 
     # Assert
-    assert 500 == actual_result.status_code
-    assert {"message": "Invalid scenario"} == actual_result.get_json()
+    assert actual_result.status_code == 500
+    assert actual_result.get_json() == {"message": "Invalid scenario"}

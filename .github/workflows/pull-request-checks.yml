@@ -11,7 +11,21 @@ permissions: {}
 jobs:
   code-checks:
     name: "Run Code Checks"
-    uses: ./.github/workflows/code-checks.yml
+    uses: ./.github/workflows/reusable-code-checks.yml
     permissions:
       contents: read
       id-token: write
+
+  deploy:
+    name: "Deploy Pull Request Environment"
+    uses: ./.github/workflows/reusable-deploy.yml
+    needs: code-checks
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    with:
+      environment: "internal-dev"
+      additional_path: "pr-${{ github.event.number }}"
+    secrets:
+      PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
+      PROXYGEN_CLIENT_SECRET: ${{ secrets.PROXYGEN_CLIENT_SECRET }}
+      PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
+      PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}

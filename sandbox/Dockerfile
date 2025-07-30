@@ -11,7 +11,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /sandbox
 
-RUN uv sync --project=sandbox/pyproject.toml
+RUN uv sync --project=sandbox/pyproject.toml --only-group=sandbox
 
 EXPOSE 9000
 
