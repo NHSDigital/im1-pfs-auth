@@ -1,0 +1,63 @@
+name: Deploy Environment
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        description: "The environment to deploy to., e.g. 'internal-dev', 'internal-qa', 'int"
+        # Sandbox not supported in this workflow
+        required: true
+        type: string
+      additional_path:
+        description: "Additional path to append to the deployment URL, e.g. 'pr-x'"
+        required: false
+        type: string
+      # temporary_deployment: # TODO: Use variable to set if this is a temporary deployment
+      #   description: "Whether this is a temporary deployment, e.g. for a pull request, temporary deployment will be cleared after 3 days"
+      #   required: true
+      #   type: boolean
+    secrets:
+      PROXYGEN_CLIENT_ID:
+        required: true
+        description: "Client ID for Proxygen CLI"
+      PROXYGEN_CLIENT_SECRET:
+        required: true
+        description: "Client Secret for Proxygen CLI"
+      PROXYGEN_KEY_ID:
+        required: true
+        description: "Key ID for Proxygen CLI"
+      PROXYGEN_PRIVATE_KEY:
+        required: true
+        description: "Private key for Proxygen CLI"
+
+permissions: {}
+
+jobs:
+  # TODO: Add build step
+  deploy:
+    name: "Deploy Environment"
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: https://${{ inputs.environment }}.api.platform.nhs.uk/${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Python Dependencies
+        uses: ./.github/actions/setup-python-dependencies
+      - name: "Setup proxygen"
+        uses: ./.github/actions/setup-proxygen
+        with:
+          PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
+          PROXYGEN_CLIENT_SECRET: ${{ secrets.PROXYGEN_CLIENT_SECRET }}
+          PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
+          PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
+
+      - name: Deploy environment
+        run: make deploy-ci
+        env:
+          ENVIRONMENT: ${{ inputs.environment }}
+          PROXYGEN_URL_PATH: ${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}

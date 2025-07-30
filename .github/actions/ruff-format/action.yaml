@@ -11,4 +11,4 @@ runs:
       shell: bash
     - name: Run Ruff Format
       shell: bash
-      run: uv run ruff format .
+      run: uv run ruff format . --check
