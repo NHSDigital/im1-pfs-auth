@@ -51,7 +51,7 @@ jobs:
           persist-credentials: false
       - name: Setup Python Dependencies
         uses: ./.github/actions/setup-python-dependencies
-      - name: "Setup proxygen"
+      - name: Setup proxygen
         uses: ./.github/actions/setup-proxygen
         with:
           PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
