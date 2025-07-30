@@ -20,11 +20,32 @@ deploy:
 		echo "Example: PROXYGEN_URL_PATH=\"im1-pfs-auth\""; \
 		exit 1; \
 	fi
+	make select-spec-configuration
 	proxygen instance deploy "$(ENVIRONMENT)" "$(PROXYGEN_URL_PATH)" specification/im1-pfs-auth-api.yaml $(PROXYGEN_ARGS)
 
 # Deploy environment from CI
 deploy-ci:
 	make deploy PROXYGEN_ARGS="--no-confirm"
+
+# ==============================================================================
+# Spec Commands
+# ==============================================================================
+
+# Select the appropriate specification configuration based on the environment/version
+select-spec-configuration:
+ifeq ($(ENVIRONMENT), $(filter $(ENVIRONMENT), internal-dev internal-dev-sandbox ))
+	@ $(MAKE) select-x-nhsd-apim-configuration
+else
+	@ echo ERROR: $$ENVIRONMENT is not a valid environment. Please use one of [sandbox, internal-dev, int, ref, prod]
+	@ exit 1;
+endif
+
+select-x-nhsd-apim-configuration:
+	cp -f specification/x-nhsd-apim/x-nhsd-apim-$$ENVIRONMENT.yaml specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
+	@ $(MAKE) set-hosted-container-version
+
+set-hosted-container-version:
+	sed -i '' 's|TAG_TO_BE_REPLACED|$(VERSION)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
 
 # ==============================================================================
 # Sandbox Commands

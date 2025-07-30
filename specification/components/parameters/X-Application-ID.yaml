@@ -1,0 +1,6 @@
+name: X-Application-ID
+in: header
+description: The identity of the subsidiary.
+required: true
+schema:
+  type: string

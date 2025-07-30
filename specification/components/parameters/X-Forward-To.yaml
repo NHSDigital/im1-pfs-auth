@@ -1,0 +1,7 @@
+name: X-Forward-To
+in: header
+description: The base URL to forward requests to.
+required: true
+schema:
+  type: string
+  example: https://example.com
