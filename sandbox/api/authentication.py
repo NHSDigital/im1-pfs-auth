@@ -1,8 +1,8 @@
-from flask import jsonify, make_response, Response, request
+from flask import Response, jsonify, make_response, request
 
 
 def post_authentication() -> Response:
-    """Sandbox API for POST /authentication
+    """Sandbox API for POST /authentication.
 
     Returns:
         Response: Response for POST /authentication
@@ -20,7 +20,6 @@ def post_authentication() -> Response:
             "patientId": "123",
         }
         return make_response(jsonify(data), 201)
-    else:
-        # Failure
-        data = {"message": "Invalid scenario"}
-        return make_response(jsonify(data), 500)
+    # Failure
+    data = {"message": "Invalid scenario"}
+    return make_response(jsonify(data), 500)
