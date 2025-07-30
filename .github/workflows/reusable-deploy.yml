@@ -64,4 +64,4 @@ jobs:
         env:
           ENVIRONMENT: ${{ inputs.environment }}
           PROXYGEN_URL_PATH: ${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}
-          VERSION: latest # TODO: Use a specific version tag or commit hash
+          CONTAINER_TAG: latest # TODO: Use a specific version tag or commit hash

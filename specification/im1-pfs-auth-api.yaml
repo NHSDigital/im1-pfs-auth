@@ -141,12 +141,12 @@ paths:
 
         Or perhaps you'd like to try out the sandbox using our 'Try it out' feature.
       parameters:
-        - $ref: './components/parameters/Authorization.yaml'
-        - $ref: './components/parameters/X-Application-ID.yaml'
-        - $ref: './components/parameters/X-Request-ID.yaml'
-        - $ref: './components/parameters/X-Forward-To.yaml'
-        - $ref: './components/parameters/X-ODS-Code.yaml'
-        - $ref: './components/parameters/X-Correlation-ID.yaml'
+        - $ref: "./components/parameters/Authorization.yaml"
+        - $ref: "./components/parameters/X-Application-ID.yaml"
+        - $ref: "./components/parameters/X-Request-ID.yaml"
+        - $ref: "./components/parameters/X-Forward-To.yaml"
+        - $ref: "./components/parameters/X-ODS-Code.yaml"
+        - $ref: "./components/parameters/X-Correlation-ID.yaml"
       responses:
         "201":
           description: The session was created successfully
