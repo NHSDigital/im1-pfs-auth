@@ -109,7 +109,7 @@ sandbox-test:
 # Spec Commands
 # ==============================================================================
 
-spec-compile: clean
+spec-compile:
 	mkdir -p build
 	npm run spec-compile
 
