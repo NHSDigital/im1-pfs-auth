@@ -52,7 +52,11 @@ select-x-nhsd-apim-configuration:
 
 # Set the container version in the generated specification file
 set-hosted-container-version:
-	sed -i '' 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
+	@if [ "$$(uname)" = "Darwin" ]; then
+		sed -i '' 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml;
+	else
+		sed -i 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml;
+	fi
 
 # ==============================================================================
 # Sandbox Commands
