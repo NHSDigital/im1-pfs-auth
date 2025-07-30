@@ -1,5 +1,17 @@
 include scripts/init.mk
 
+install:
+	uv sync --all-extras
+	npm install
+
+lint:
+	npm run lint
+	uv run ruff check .
+
+format:
+	npm run format
+	uv run ruff format .
+
 # ==============================================================================
 # Deploy API Commands
 # ==============================================================================
@@ -62,22 +74,27 @@ set-hosted-container-version:
 # Sandbox Commands
 # ==============================================================================
 
-install:
-	uv sync --all-extras
-	npm install
-
-lint:
-	npm run lint
-	uv run ruff check .
-
-format:
-	npm run format
-	uv run ruff format .
-
 sandbox-build:
 	cp pyproject.toml sandbox/
 	cp uv.lock sandbox/
-	docker build -t "im1-pfs-auth-sandbox" --no-cache sandbox/
+	docker buildx -t "im1-pfs-auth-sandbox" --no-cache sandbox/
+
+sandbox-tag:
+	docker tag im1-pfs-auth-sandbox ecr/im1-pfs-auth-sandbox:latest
+
+sandbox-push:
+	docker push ecr/im1-pfs-auth-sandbox:latest
+
+proxygen-docker-login: 
+	make setup-proxygen-credentials
+	proxygen docker get-login | bash
+
+sandbox-publish:
+	make proxygen-docker-login
+	make sandbox-build
+	make sandbox-tag
+	make sandbox-push
+	
 
 sandbox-debug-run:
 	FLASK_APP=sandbox.api.app flask run --port 8000
@@ -87,6 +104,10 @@ sandbox-docker-run:
 
 sandbox-test:
 	uv run pytest --cov=sandbox --cov-fail-under=80
+
+# ==============================================================================
+# Spec Commands
+# ==============================================================================
 
 spec-compile: clean
 	mkdir -p build
