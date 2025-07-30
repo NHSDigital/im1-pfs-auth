@@ -1,5 +1,8 @@
 name: Deploy Environment
 
+concurrency:
+  group: deploy-${{ inputs.environment }}-${{ inputs.additional_path || 'default' }}
+
 on:
   workflow_call:
     inputs:
