@@ -1,0 +1,13 @@
+name: "Setup Python Dependencies"
+description: "Setup Python dependencies for the project"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install uv based on the version defined in pyproject.toml
+      uses: astral-sh/setup-uv@v6
+      with:
+        version-file: "pyproject.toml"
+    - name: Install Python dependencies
+      run: uv sync --all-extras
+      shell: bash

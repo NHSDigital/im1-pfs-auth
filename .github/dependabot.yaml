@@ -27,36 +27,40 @@ updates:
   - package-ecosystem: "uv"
     directories:
       - "/"
-    open-pull-requests-limit: 1
-    versioning-strategy: auto
-    ignore:
-      - dependency-name: "*"
-        update-types:
-          ["version-update:semver-minor", "version-update:semver-patch"]
     schedule:
       interval: "monthly"
-    commit-message:
-      prefix: "pip "
-      include: scope
     groups:
-      python-dependencies:
+      uv-dependencies:
+        applies-to: "version-updates"
         patterns:
           - "*"
+        update-types:
+          - "patch"
+          - "minor"
 
   - package-ecosystem: "npm"
     directory: "/"
     open-pull-requests-limit: 1
-    versioning-strategy: auto
-    ignore:
-      - dependency-name: "*"
-        update-types:
-          ["version-update:semver-minor", "version-update:semver-patch"]
     schedule:
       interval: "monthly"
-    commit-message:
-      prefix: "npm "
-      include: scope
     groups:
       npm-dependencies:
+        applies-to: "version-updates"
         patterns:
           - "*"
+        update-types:
+          - "patch"
+          - "minor"
+
+  - package-ecosystem: "docker"
+    directory: "/sandbox"
+    schedule:
+      interval: "monthly"
+    groups:
+      docker-images:
+        applies-to: "version-updates"
+        patterns:
+          - "*"
+        update-types:
+          - "patch"
+          - "minor"
