@@ -9,7 +9,6 @@ def client() -> FlaskClient:
     return app.test_client()
 
 
-
 @pytest.mark.parametrize("path", ["/_status", "/_ping", "/health"])
 def test_health_success(path: str, client: FlaskClient) -> None:
     # Act

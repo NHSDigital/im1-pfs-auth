@@ -1,7 +1,34 @@
-#Removes build/ + dist/ directories
-clean:
-	rm -rf build
-	rm -rf dist
+include scripts/init.mk
+
+# ==============================================================================
+# Deploy API Commands
+# ==============================================================================
+
+# Deploy environment
+deploy:
+# Mandatory arguments:
+# ENVIRONMENT: The environment to deploy to (e.g., internal-dev, internal-qa, int)
+# PROXYGEN_URL_PATH: The URL path for the API (e.g., im1-pfs-auth)
+	@echo "Deploying API to the NHS API Platform..."
+	if [ -z "$(ENVIRONMENT)" ]; then \
+		echo "No ENVIRONMENT provided. Use 'make deploy ENVIRONMENT=\"<env>\"' to specify environment."; \
+		echo "Available environments include: internal-dev, internal-qa, int"; \
+		exit 1; \
+	fi
+	if [ -z "$(PROXYGEN_URL_PATH)" ]; then \
+		echo "No PROXYGEN_URL_PATH provided. Use 'make deploy PROXYGEN_URL_PATH=\"<path>\"' to specify URL path."; \
+		echo "Example: PROXYGEN_URL_PATH=\"im1-pfs-auth\""; \
+		exit 1; \
+	fi
+	proxygen instance deploy "$(ENVIRONMENT)" "$(PROXYGEN_URL_PATH)" specification/im1-pfs-auth-api.yaml $(PROXYGEN_ARGS)
+
+# Deploy environment from CI
+deploy-ci:
+	make deploy PROXYGEN_ARGS="--no-confirm"
+
+# ==============================================================================
+# Sandbox Commands
+# ==============================================================================
 
 install:
 	uv sync --all-extras
@@ -33,10 +60,10 @@ spec-compile: clean
 	mkdir -p build
 	npm run spec-compile
 
-
 ${VERBOSE}.SILENT: \
 	build \
 	clean \
 	config \
 	dependencies \
 	deploy \
+	deploy-ci \

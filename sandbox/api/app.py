@@ -4,6 +4,7 @@ from .authentication import post_authentication
 
 app = Flask(__name__)
 
+
 @app.route("/_status", methods=["GET"])
 @app.route("/_ping", methods=["GET"])
 @app.route("/health", methods=["GET"])
