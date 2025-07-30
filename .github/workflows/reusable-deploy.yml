@@ -1,5 +1,8 @@
 name: Deploy Environment
 
+concurrency:
+  group: deploy-${{ inputs.environment }}-${{ inputs.additional_path || 'default' }}
+
 on:
   workflow_call:
     inputs:
@@ -42,7 +45,7 @@ jobs:
       url: https://${{ inputs.environment }}.api.platform.nhs.uk/${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
           persist-credentials: false
