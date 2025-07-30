@@ -1,0 +1,275 @@
+openapi: 3.0.3
+info:
+  title: IM1 PFS Auth API
+  version: "0.1"
+  description: |
+    ## Overview
+    ![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)
+
+    An intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued "proxy token" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.
+
+    You can:
+
+    - Authenticate a user and initiate a session with the approporiate supplier
+
+    ## Who can use this API
+    This API can only be used where there is a legal basis to do so. Make sure you have this and a valid use case before
+    you go too far with your development by [contacting us](https://digital.nhs.uk/developer/help-and-support)
+
+    You must do this before you can go live (see 'Onboarding' below).
+
+    ## API status and roadmap
+    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses), meaning:
+    - we will be making breaking changes
+
+    ## Technology
+    This API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).
+
+    ## Network access
+    This API is available on the internet.
+
+    For more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).
+
+    ## Security and authorisation
+
+    This API supports [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis) access type with the following access modes:
+
+    | Access mode                   | Access type            |
+    |-------------------------------|------------------------|
+    | Patient access                | User-restricted        |
+
+    For more information on access modes and how to use them, see the developer [security and authorisation guide](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation).
+
+    ### User-restricted access
+
+    User-restricted access meaning an end user must be present, authenticated and authorised.
+
+    #### Patient access mode
+    If the end user is a patient then you must use this access mode.
+
+    [Review all patient access modes](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#patient-access-mode)
+
+    Validated Relationships Service API checks the patient is P9 verified and has a high [vector of trust](https://nhsconnect.github.io/nhslogin/vectors-of-trust/) (VOT).
+
+    Allowed vectors of trust are:
+    - `P9.Cp.Cd`
+    - `P9.Cp.Ck`
+    - `P9.Cm`
+
+    ## Headers
+    This API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. X-Request-Id, x-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.
+
+    ## Errors
+    We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
+
+    * 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action
+    * 400 to 499 if it failed because of a client error by your application
+    * 500 to 599 if it failed because of an error on our server
+
+    Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
+
+    ## Open source
+    You might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:
+
+    | Resource         | Description                                               | Links                                                     |
+    | ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |
+    | IM1 PFS Auth API | Source code for the API proxy, sandbox and specification. | [GitHub repo](https://github.com/NHSDigital/im1-pfs-auth) |
+
+    ## Environments and testing
+    | Environment       | Base URL                                           |
+    | ----------------- | -------------------------------------------------- |
+    | Sandbox           | `https://sandbox.api.service.nhs.uk/im1-pfs-auth/` |
+    | Integration test  | `https://int.api.service.nhs.uk/im1-pfs-auth/`     |
+
+    ### Sandbox testing
+    Our [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing)
+
+    * is for early developer testing
+    * only covers a limited set of scenarios
+    * is open access, so does not allow you to test authorisation
+
+    [![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/postman/postman_collection.json)
+
+    Import the  postman collection to run requests against sandbox.
+
+    ## Onboarding
+    You must get your software onboarded before it can go live.
+
+    For more details, contact us at [england.vrs-team@nhs.net](mailto:england.vrs-team@nhs.net).
+
+    ## Contact us
+    For help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).
+
+servers:
+  - url: /int
+  - url: /sandbox
+paths:
+  /authentication:
+    post:
+      tags:
+        - sessions
+      summary: Begins a session
+      description: |
+        ## Overview
+
+        A user can authenticate and establish a session with GPIT supplier systems.
+
+        This endpoint:
+          - Verifies the user access token
+          - Extracts the NHS number for the user, NHS number and ODS code of the patient
+          - Determines which supplier system to forward requests onto
+          - Transforms response
+
+        ## Access modes
+
+        This endpoint supports the following access modes:
+        - Patient access
+
+        ## Sandbox test scenarios
+
+        See the postman collection for example requests.
+
+        | Scenario               | Request                                                                                     | Response                                                    |
+        | ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+        | Successful request     | Valid request with forward to value of https://example.com and ods code value of A29929     | HTTP Status 201 Success response                            |
+
+        ### Sandbox constraints
+          - Headers that are not required for the scenario are not validated and are disregarded.
+
+        Or perhaps you'd like to try out the sandbox using our 'Try it out' feature.
+      parameters:
+        - name: Authorization
+          in: header
+          description: >-
+            An [OAuth 2.0 bearer
+            token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).
+          required: true
+          schema:
+            type: string
+            format: ^Bearer\ [[:ascii:]]+$
+            example: Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM
+        - name: X-Application-ID
+          in: header
+          description: The identity of the subsidiary.
+          required: true
+          schema:
+            type: string
+        - name: X-Request-ID
+          in: header
+          description: >-
+            An ID which you can use to track transactions across multiple
+            systems. Must be a universally unique identifier (UUID) (ideally
+            version 4). Mirrored back in a response header.
+          required: true
+          schema:
+            type: string
+            format: uuid
+            pattern: >-
+              ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+        - name: X-Forward-To
+          in: header
+          description: The base URL to forward requests to.
+          required: true
+          schema:
+            type: string
+            example: https://example.com
+        - name: X-ODS-Code
+          in: header
+          description: The ODS code of the user to start a session with.
+          required: true
+          schema:
+            type: string
+            example: A29929
+        - name: X-Correlation-ID
+          in: header
+          description: >-
+            An optional ID which you can use to track transactions across
+            multiple systems. Must be a universally unique identifier (UUID)
+            (ideally version 4). Mirrored back in a response header.
+          required: false
+          schema:
+            type: string
+            format: uuid
+            pattern: >-
+              ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+            example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA
+      responses:
+        "201":
+          description: The session was created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseModel"
+        "4XX":
+          description: |
+            Errors will be returned for the first error encountered in the request. An error occurred as follows:
+
+            | HTTP status | Error code               | Description                                                                                                                               |
+            | ----------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+            | 400         | `MISSING_VALUE`          | Missing header.                                                                                                                           |
+            | 400         | `INVALID_VALUE`          | Invalid header.                                                                                                                           |
+            | 401         | `ACCESS_DENIED`          | Missing or invalid OAuth 2.0 bearer token in request.                                                                                     |
+            | 403         | `FORBIDDEN`              | Access denied to resource.                                                                                                                |
+            | 408         | `TIMEOUT`                | Request timed out.                                                                                                                        |
+            | 429         | `THROTTLED`              | You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits). |
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseModel"
+              examples:
+                missingValueError:
+                  $ref: "./examples/errors.yaml#/MissingValueError"
+                invalidValueError:
+                  $ref: "./examples/errors.yaml#/InvalidValueError"
+                accessDeniedError:
+                  $ref: "./examples/errors.yaml#/AccessDeniedError"
+                forbiddenError:
+                  $ref: "./examples/errors.yaml#/ForbiddenError"
+                timeoutError:
+                  $ref: "./examples/errors.yaml#/TimeoutError"
+                throttledError:
+                  $ref: "./examples/errors.yaml#/ThrottledError"
+        "5XX":
+          description: |
+            Errors will be returned for the first error encountered in the request. An error occurred as follows:
+
+            | HTTP status | Error code              | Description                                       |
+            | ----------- | ----------------------- | ------------------------------------------------- |
+            | 500         | `SERVER_ERROR`          | An unexpected internal server error has occurred. |
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseModel"
+              examples:
+                serverError:
+                  $ref: "./examples/errors.yaml#/ServerError"
+components:
+  schemas:
+    ResponseModel:
+      type: object
+      properties:
+        sessionId:
+          minLength: 1
+          type: string
+        userPatientLinkToken:
+          type: string
+          nullable: true
+        suid:
+          type: string
+          nullable: true
+        onlineUserId:
+          type: string
+          nullable: true
+        patientId:
+          type: string
+          nullable: true
+      additionalProperties: false
+
+    ErrorResponseModel:
+      required:
+        - message
+      type: object
+      properties:
+        message:
+          type: string

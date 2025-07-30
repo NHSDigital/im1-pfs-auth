@@ -1,32 +1,38 @@
-# This file is for you! Edit it to implement your own hooks (make targets) into
-# the project as automated steps to be executed on locally and in the CD pipeline.
+#Removes build/ + dist/ directories
+clean:
+	rm -rf build
+	rm -rf dist
 
-include scripts/init.mk
+install:
+	uv sync --all-extras
+	npm install
 
-# ==============================================================================
+lint:
+	npm run lint
+	uv run ruff check .
 
-# Example CI/CD targets are: dependencies, build, publish, deploy, clean, etc.
+format:
+	npm run format
+	uv run ruff format .
 
-dependencies: # Install dependencies needed to build and test the project @Pipeline
-	# TODO: Implement installation of your project dependencies
+sandbox-build:
+	cp pyproject.toml sandbox/
+	cp uv.lock sandbox/
+	docker build -t "im1-pfs-auth-sandbox" --no-cache sandbox/
 
-build: # Build the project artefact @Pipeline
-	# TODO: Implement the artefact build step
+sandbox-debug-run:
+	FLASK_APP=sandbox.api.app flask run --port 8000
 
-publish: # Publish the project artefact @Pipeline
-	# TODO: Implement the artefact publishing step
+sandbox-docker-run:
+	docker run -p 9000:9000 "im1-pfs-auth-sandbox"
 
-deploy: # Deploy the project artefact to the target environment @Pipeline
-	# TODO: Implement the artefact deployment step
+sandbox-test:
+	uv run pytest --cov=sandbox --cov-fail-under=80
 
-clean:: # Clean-up project resources (main) @Operations
-	# TODO: Implement project resources clean-up step
+spec-compile: clean
+	mkdir -p build
+	npm run spec-compile
 
-config:: # Configure development environment (main) @Configuration
-	# TODO: Use only 'make' targets that are specific to this project, e.g. you may not need to install Node.js
-	make _install-dependencies
-
-# ==============================================================================
 
 ${VERBOSE}.SILENT: \
 	build \

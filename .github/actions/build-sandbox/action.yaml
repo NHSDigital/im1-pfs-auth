@@ -1,0 +1,9 @@
+name: "Build Sandbox"
+description: Build Sandbox
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build Sandbox
+      shell: bash
+      run: make sandbox-build

@@ -1,0 +1,22 @@
+[project]
+name = "im1-pfs-auth"
+version = "0.1.0"
+description = "IM1 PFS Auth API"
+readme = "README.md"
+requires-python = "~=3.13"
+dependencies = [
+    "flask~=3.1.1",
+    "gunicorn~=23.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest~=8.4.1",
+  "pytest-cov~=6.2.1",
+  "coverage~=7.10.1",
+  "ruff~=0.12.5",
+]
+
+[tool.uv]
+required-version = "~=0.8.0"
+package = false

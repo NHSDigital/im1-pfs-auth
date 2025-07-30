@@ -1,0 +1,14 @@
+name: "Check uv lock"
+description: Check uv lock
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@v6
+    - name: Install dependencies
+      run: uv sync --all-extras
+      shell: bash
+    - name: Run uv lock check
+      shell: bash
+      run: uv lock --check
