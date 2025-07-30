@@ -9,6 +9,7 @@ deploy:
 # Mandatory arguments:
 # ENVIRONMENT: The environment to deploy to (e.g., internal-dev, internal-qa, int)
 # PROXYGEN_URL_PATH: The URL path for the API (e.g., im1-pfs-auth)
+# CONTAINER_TAG: The version of the API to deploy (e.g., latest, v1.0.0, commit hash)
 	@echo "Deploying API to the NHS API Platform..."
 	if [ -z "$(ENVIRONMENT)" ]; then \
 		echo "No ENVIRONMENT provided. Use 'make deploy ENVIRONMENT=\"<env>\"' to specify environment."; \
@@ -18,6 +19,10 @@ deploy:
 	if [ -z "$(PROXYGEN_URL_PATH)" ]; then \
 		echo "No PROXYGEN_URL_PATH provided. Use 'make deploy PROXYGEN_URL_PATH=\"<path>\"' to specify URL path."; \
 		echo "Example: PROXYGEN_URL_PATH=\"im1-pfs-auth\""; \
+		exit 1; \
+	fi
+	if [ -z "$(CONTAINER_TAG)" ]; then \
+		echo "No CONTAINER_TAG provided. Use 'make deploy CONTAINER_TAG=\"<version>\"' to specify version."; \
 		exit 1; \
 	fi
 	make select-spec-configuration
@@ -45,7 +50,7 @@ select-x-nhsd-apim-configuration:
 	@ $(MAKE) set-hosted-container-version
 
 set-hosted-container-version:
-	sed -i '' 's|TAG_TO_BE_REPLACED|$(VERSION)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
+	sed -i '' 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
 
 # ==============================================================================
 # Sandbox Commands

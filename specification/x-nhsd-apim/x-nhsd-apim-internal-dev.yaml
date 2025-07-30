@@ -19,6 +19,6 @@ target:
     - name: im1-pfs-auth
       image:
         name: im1-pfs-auth
-        tag: TAG_TO_BE_REPLACED
+        tag: CONTAINER_TAG_TO_BE_REPLACED
       environment:
         LOG_LEVEL: info
