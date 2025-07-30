@@ -242,7 +242,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponseModel"
               examples:
-                missingValueError:
+                serverError:
                   $ref: "./examples/errors.yaml#/ServerError"
 components:
   schemas:

@@ -1,5 +1,5 @@
-name: "Ruff Commit Checks"
-description: Run Ruff checks
+name: "Ruff Format"
+description: Run Ruff format
 
 runs:
   using: "composite"
@@ -9,6 +9,6 @@ runs:
     - name: Install dependencies
       run: uv sync --all-extras
       shell: bash
-    - name: Run Ruff Check
+    - name: Run Ruff Format
       shell: bash
-      run: uv run ruff check .
+      run: uv run ruff format .
