@@ -9,5 +9,5 @@ runs:
       run: uv sync --all-groups
       shell: bash
     - name: Run Unit Tests
-      run: make sandbox-test
+      run: make sandbox-unit-test
       shell: bash

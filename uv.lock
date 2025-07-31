@@ -120,6 +120,10 @@ version = "0.1.0"
 source = { virtual = "." }
 
 [package.dev-dependencies]
+app = [
+    { name = "flask" },
+    { name = "gunicorn" },
+]
 dev = [
     { name = "coverage" },
     { name = "pytest" },
@@ -134,6 +138,10 @@ sandbox = [
 [package.metadata]
 
 [package.metadata.requires-dev]
+app = [
+    { name = "flask", specifier = "~=3.1.1" },
+    { name = "gunicorn", specifier = "~=23.0.0" },
+]
 dev = [
     { name = "coverage", specifier = "~=7.10.1" },
     { name = "pytest", specifier = "~=8.4.1" },

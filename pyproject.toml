@@ -40,3 +40,6 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.ruff.lint.isort]
+known-local-folder = ["tests", "api", "app", "sandbox"]
