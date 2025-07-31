@@ -1,0 +1,10 @@
+name: X-Correlation-ID
+in: header
+description: >-
+  An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.
+required: false
+schema:
+  type: string
+  format: uuid
+  pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+  example: 11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA

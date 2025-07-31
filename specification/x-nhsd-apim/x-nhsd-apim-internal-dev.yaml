@@ -1,0 +1,24 @@
+monitoring: true
+temporary: true
+access:
+  - title: P9 User Restricted Access
+    grants:
+      nhs-login-p9: []
+    visible: false
+ratelimiting:
+  proxy:
+    limit: 2
+    timeunit: second
+  app-default:
+    limit: 2
+    timeunit: second
+target:
+  type: hosted
+  healthcheck: /_status
+  containers:
+    - name: im1-pfs-auth
+      image:
+        name: im1-pfs-auth
+        tag: CONTAINER_TAG_TO_BE_REPLACED
+      environment:
+        LOG_LEVEL: info

@@ -1,0 +1,7 @@
+name: X-ODS-Code
+in: header
+description: The ODS code of the user to start a session with.
+required: true
+schema:
+  type: string
+  example: A29929

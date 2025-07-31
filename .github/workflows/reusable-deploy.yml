@@ -51,7 +51,7 @@ jobs:
           persist-credentials: false
       - name: Setup Python Dependencies
         uses: ./.github/actions/setup-python-dependencies
-      - name: "Setup proxygen"
+      - name: Setup proxygen
         uses: ./.github/actions/setup-proxygen
         with:
           PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
@@ -64,3 +64,4 @@ jobs:
         env:
           ENVIRONMENT: ${{ inputs.environment }}
           PROXYGEN_URL_PATH: ${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}
+          CONTAINER_TAG: latest # TODO: Use a specific version tag or commit hash
