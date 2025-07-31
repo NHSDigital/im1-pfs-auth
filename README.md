@@ -11,6 +11,7 @@ TODO: Add section on getting local environment set up and on deployment
 
 - [IM1 Patient Facing Service Auth](#im1-patient-facing-service-auth)
   - [Table of Contents](#table-of-contents)
+  - [Repository Structure](#repository-structure)
   - [Setup](#setup)
     - [Prerequisites](#prerequisites)
     - [Configuration](#configuration)
@@ -18,7 +19,6 @@ TODO: Add section on getting local environment set up and on deployment
     - [Diagrams](#diagrams)
   - [Contributing](#contributing)
   - [Licence](#licence)
-
 
 ## Repository Structure
 
@@ -49,7 +49,7 @@ The following software packages, or their equivalents, are expected to be instal
 
 ### Configuration
 
-Installation and configuration of the toolchain dependencies.
+Installation of the toolchain dependencies.
 
 ```shell
 make install

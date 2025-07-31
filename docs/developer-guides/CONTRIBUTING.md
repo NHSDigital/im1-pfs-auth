@@ -4,15 +4,15 @@
 > Some of the documentation and links in this file are specific to the maintainers of this repository and are only available to NHS England staff.
 
 - [Contribution Guidelines](#contribution-guidelines)
-    - [Raising an Issue](#raising-an-issue)
-    - [Contributing code](#contributing-code)
-        - [Merge responsibility](#merge-responsibility)
-        - [Branch naming](#branch-naming)
-            - [Developers within the NHS](#developers-within-the-nhs)
-            - [Developers outside of the NHS](#developers-outside-of-the-nhs)
-        - [Commit messages](#commit-messages)
-            - [Developers within the NHS](#developers-within-the-nhs-1)
-            - [Developers outside of the NHS](#developers-outside-of-the-nhs-1)
+  - [Raising an Issue](#raising-an-issue)
+  - [Contributing code](#contributing-code)
+    - [Merge responsibility](#merge-responsibility)
+    - [Branch naming](#branch-naming)
+      - [Developers within the NHS](#developers-within-the-nhs)
+      - [Developers outside of the NHS](#developers-outside-of-the-nhs)
+    - [Commit messages](#commit-messages)
+      - [Developers within the NHS](#developers-within-the-nhs-1)
+      - [Developers outside of the NHS](#developers-outside-of-the-nhs-1)
 
 ## Raising an Issue
 
@@ -56,7 +56,7 @@ Branch names should be of the format:
 
 Commit messages should be formatted as follows:
 
-```
+```gitcommit
 APM-NNN Summary of changes
 
 Longer description of changes if explaining rationale is necessary,
@@ -67,7 +67,7 @@ limited to 80 columns and spanning as many lines as you need.
 
 Commit messages should be formatted as follows:
 
-```
+```gitcommit
 Summary of changes
 
 Longer description of changes if explaining rationale is necessary,
