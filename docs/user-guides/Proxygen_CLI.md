@@ -4,7 +4,6 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
 
 ## Table of Contents
 
-<!-- markdownlint-disable-next-line MD051 -->
 - [proxygen CLI](#proxygen-cli)
   - [Table of Contents](#table-of-contents)
   - [Installation and Configuration](#installation-and-configuration)

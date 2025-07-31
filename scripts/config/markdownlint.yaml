@@ -22,3 +22,6 @@ MD033: false
 
 # https://github.com/DavidAnson/markdownlint/blob/main/doc/md034.md
 MD034: false
+
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/md051.md
+MD051: false
