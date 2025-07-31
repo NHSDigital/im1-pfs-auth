@@ -1,5 +1,5 @@
 [A-Z]+s
-apigee
+[Aa]pigee
 Bitwarden
 bot
 Cyber
@@ -12,7 +12,7 @@ OAuth
 Octokit
 onboarding
 Podman
-proxygen
+[Pp]roxygen
 Python
 sed
 Syft
