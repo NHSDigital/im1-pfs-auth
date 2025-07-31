@@ -23,7 +23,21 @@ jobs:
       contents: read
       id-token: write
 
-  deploy-sandbox:
+  deploy-dev-app:
+    name: "Deploy Pull Request App Environment"
+    uses: ./.github/workflows/reusable-deploy.yml
+    needs: core-code-checks
+    if: ${{ github.actor != 'dependabot[bot]' }}
+    with:
+      environment: "internal-dev"
+      additional_path: "pr-${{ github.event.number }}"
+      type_of_deployment: "app"
+    secrets:
+      PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
+      PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
+      PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
+
+  deploy-dev-sandbox:
     name: "Deploy Pull Request Sandbox Environment"
     uses: ./.github/workflows/reusable-deploy.yml
     needs: core-code-checks

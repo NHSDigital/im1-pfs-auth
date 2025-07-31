@@ -13,6 +13,26 @@ format:
 	uv run ruff format .
 
 # ==============================================================================
+# General Commands
+# ==============================================================================
+
+install:
+	uv sync --all-extras
+	npm install
+
+lint:
+	npm run lint
+	uv run ruff check .
+
+format:
+	npm run format
+	uv run ruff format .
+
+spec-compile: clean
+	mkdir -p build
+	npm run spec-compile
+
+# ==============================================================================
 # Deploy API Commands
 # ==============================================================================
 
@@ -71,17 +91,35 @@ set-hosted-container-version:
 	fi
 
 # ==============================================================================
+# App Commands
+# ==============================================================================
+
+app-build:
+	cp pyproject.toml app/
+	cp uv.lock app/
+	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load app/
+
+app-push:
+	proxygen docker get-login | bash
+	docker push $(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)
+
+app-debug-run:
+	FLASK_APP=app.api.app flask run --port 8000
+
+app-docker-run:
+	docker run -p 9000:9000 "im1-pfs-auth-app"
+
+app-unit-test:
+	uv run pytest --cov=app --cov-fail-under=80
+
+# ==============================================================================
 # Sandbox Commands
 # ==============================================================================
 
 sandbox-build:
 	cp pyproject.toml sandbox/
 	cp uv.lock sandbox/
-	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load sandbox/
-
-sandbox-push:
-	proxygen docker get-login | bash
-	docker push $(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)
+	docker build -t "im1-pfs-auth-sandbox" sandbox
 
 sandbox-debug-run:
 	FLASK_APP=sandbox.api.app flask run --port 8000
@@ -89,7 +127,7 @@ sandbox-debug-run:
 sandbox-docker-run:
 	docker run -p 9000:9000 "im1-pfs-auth"
 
-sandbox-test:
+sandbox-unit-test:
 	uv run pytest --cov=sandbox --cov-fail-under=80
 
 # ==============================================================================
@@ -99,6 +137,8 @@ sandbox-test:
 spec-compile:
 	mkdir -p build
 	npm run spec-compile
+
+# ==============================================================================s
 
 ${VERBOSE}.SILENT: \
 	build \
