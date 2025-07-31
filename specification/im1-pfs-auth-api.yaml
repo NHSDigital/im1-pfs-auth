@@ -247,14 +247,3 @@ x-nhsd-apim:
     app-default:
       limit: 2
       timeunit: second
-  target:
-    type: hosted
-    healthcheck: /_status
-    containers:
-      - name: im1-pfs-auth-api
-        image:
-          name: im1-pfs-auth-api
-          tag: latest
-        environment:
-          LOG_LEVEL: info
-          NODE_ENV: development

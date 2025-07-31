@@ -31,6 +31,7 @@ jobs:
     with:
       environment: "internal-dev"
       additional_path: "pr-${{ github.event.number }}"
+      type_of_deployment: "sandbox"
     secrets:
       PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
       PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}

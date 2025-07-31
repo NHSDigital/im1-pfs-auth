@@ -1,3 +1,0 @@
-api: im1-pfs-auth
-endpoint_url: https://proxygen.prod.api.platform.nhs.uk
-spec_output_format: yaml
