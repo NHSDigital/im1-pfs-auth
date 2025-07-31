@@ -13,6 +13,24 @@ format:
 	uv run ruff format .
 
 # ==============================================================================
+# Proxygen Commands
+# ==============================================================================
+
+proxygen-setup-credentials:
+	mkdir -p ~/.proxygen
+	echo "$$PROXYGEN_PRIVATE_KEY" > ~/.proxygen/im1-pfs-auth.pem
+	( \
+	  echo "client_id: \"$$PROXYGEN_CLIENT_ID\""; \
+	  echo "private_key_path: im1-pfs-auth.pem"; \
+	  echo "key_id: \"$$PROXYGEN_KEY_ID\""; \
+	) > ~/.proxygen/credentials.yaml
+
+
+proxygen-docker-login: 
+	proxygen-setup-credentials
+	proxygen docker get-login | bash
+
+# ==============================================================================
 # Deploy API Commands
 # ==============================================================================
 
@@ -77,23 +95,22 @@ set-hosted-container-version:
 sandbox-build:
 	cp pyproject.toml sandbox/
 	cp uv.lock sandbox/
-	docker buildx -t "im1-pfs-auth-sandbox" --no-cache sandbox/
+	docker buildx -t "im1-pfs-auth-sandbox" sandbox/
 
 sandbox-tag:
-	docker tag im1-pfs-auth-sandbox ecr/im1-pfs-auth-sandbox:latest
+	docker tag im1-pfs-auth-sandbox $(PROXYGEN_DOCKER_REGISTRY_URL):sandbox-$(CONTAINER_TAG)
 
 sandbox-push:
-	docker push ecr/im1-pfs-auth-sandbox:latest
+	docker push PROXYGEN_DOCKER_REGISTRY_URL:CONTAINER_TAG
 
-proxygen-docker-login: 
-	make setup-proxygen-credentials
-	proxygen docker get-login | bash
-
-sandbox-publish:
-	make proxygen-docker-login
-	make sandbox-build
-	make sandbox-tag
-	make sandbox-push
+sandbox-deploy:
+# Mandatory arguments:
+# CONTAINER_TAG: The version of the API to deploy (e.g., latest, v1.0.0, commit hash)
+# PROXYGEN_DOCKER_REGISTRY_URL: The URL path for the docker registry (e.g. {apim_aws_account_id}.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth-sandbox)
+	proxygen-docker-login
+	sandbox-build
+	sandbox-tag
+	sandbox-push
 	
 
 sandbox-debug-run:
