@@ -20,9 +20,10 @@ def test_authentication_post(client: FlaskClient) -> None:
 
     # Assert
     assert actual_result.status_code == 200
-    assert actual_result.get_data() == (
-        b'{"message": "Hello from the IM1 PFS Auth API!", "hello": "world"}'
-    )
+    assert actual_result.get_json() == {
+        "message": "Hello from the IM1 PFS Auth API!",
+        "hello": "world",
+    }
 
 
 @patch("app.api.app.getenv", side_effect=Exception("Test exception"))
@@ -38,4 +39,4 @@ def test_authentication_post_exception(
 
     # Assert
     assert actual_result.status_code == 500
-    assert b'{"error": "Exception"}' in actual_result.get_data()
+    assert actual_result.get_json() == {"error": "Exception: Exception"}

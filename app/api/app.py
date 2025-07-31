@@ -1,7 +1,6 @@
-from json import dumps
 from os import getenv
 
-from flask import Flask, Response
+from flask import Flask, Response, jsonify, make_response
 
 app = Flask(__name__)
 
@@ -15,13 +14,10 @@ def authentication() -> Response:
     """
     try:
         getenv("AUTHENTICATION_API_KEY")  # Useless call to test the exception handling
-        return Response(
-            dumps({"message": "Hello from the IM1 PFS Auth API!", "hello": "world"}),
-            status=200,
+        return make_response(
+            jsonify(message="Hello from the IM1 PFS Auth API!", hello="world"), 200
         )
 
     except Exception as e:
         app.logger.exception("Error in POST /authentication")
-        return Response(
-            dumps({"error": type(e).__name__}), status=500
-        )  # Temporarily return error name
+        return make_response(jsonify(error=f"Exception: {type(e).__name__}"), 500)
