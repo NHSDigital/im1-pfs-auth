@@ -1,6 +1,9 @@
+from unittest.mock import MagicMock, patch
+
 import pytest
-from app.api.app import app
 from flask.testing import FlaskClient
+
+from app.api.app import app
 
 
 @pytest.fixture
@@ -17,22 +20,22 @@ def test_authentication_post(client: FlaskClient) -> None:
 
     # Assert
     assert actual_result.status_code == 200
-    assert actual_result.get_json() == {
-        "message": "Hello from the application API!",
-        "hello": "world",
-    }
+    assert actual_result.get_data() == (
+        b'{"message": "Hello from the IM1 PFS Auth API!", "hello": "world"}'
+    )
 
 
-def test_authentication_post__error(client: FlaskClient) -> None:
-    """Test the POST /authentication endpoint errors produce a 500 response."""
+@patch("app.api.app.getenv", side_effect=Exception("Test exception"))
+def test_authentication_post_exception(
+    _mock_getenv: MagicMock, client: FlaskClient
+) -> None:
+    """Test the POST /authentication endpoint with an exception."""
     # Arrange
     path = "/authentication"
+
     # Act
     actual_result = client.post(path)
 
     # Assert
     assert actual_result.status_code == 500
-    assert actual_result.get_json() == {
-        "status": "error",
-        "message": "An error occurred: Internal Server Error",
-    }
+    assert b'{"error": "Exception"}' in actual_result.get_data()

@@ -98,7 +98,7 @@ app-docker-run:
 	docker run -p 9000:9000 "im1-pfs-auth-app"
 
 app-unit-test:
-	uv run pytest --cov=app --cov-fail-under=80
+	uv run pytest app --cov=app --cov-fail-under=80
 
 # ==============================================================================
 # Sandbox Commands
@@ -120,7 +120,7 @@ sandbox-docker-run:
 	docker run -p 9000:9000 "im1-pfs-auth"
 
 sandbox-unit-test:
-	uv run pytest --cov=sandbox --cov-fail-under=80
+	uv run pytest sandbox --cov=sandbox --cov-fail-under=80
 
 # ==============================================================================s
 
