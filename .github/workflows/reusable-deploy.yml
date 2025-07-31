@@ -19,6 +19,10 @@ on:
       #   description: "Whether this is a temporary deployment, e.g. for a pull request, temporary deployment will be cleared after 3 days"
       #   required: true
       #   type: boolean
+      type_of_deployment:
+        description: "Type of deployment, e.g. 'app', 'sandbox'"
+        required: true
+        type: string
     secrets:
       PROXYGEN_CLIENT_ID:
         required: true
@@ -33,8 +37,34 @@ on:
 permissions: {}
 
 jobs:
-  # TODO: Add build step
-  deploy:
+  build-container:
+    name: "Build Container"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: "Build ${{inputs.type_of_deployment}} container"
+        run: make ${{inputs.type_of_deployment}}-build
+  push-container:
+    name: "Push Container"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: "Push ${{inputs.type_of_deployment}} container"
+        run: make ${{inputs.type_of_deployment}}-push
+        env:
+          CONTAINER_TAG: ${{inputs.type_of_deployment}}-${{ github.sha }}
+          PROXYGEN_DOCKER_REGISTRY_URL: 958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth
+  deploy-environment:
     name: "Deploy Environment"
     runs-on: ubuntu-latest
     environment:
