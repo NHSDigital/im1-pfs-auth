@@ -13,4 +13,4 @@ RUN rm pyproject.toml uv.lock
 
 EXPOSE 9000
 
-CMD ["uv", "run", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
+CMD ["uv", "run", "--no-sync", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
