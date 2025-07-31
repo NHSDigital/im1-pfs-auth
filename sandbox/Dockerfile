@@ -1,18 +1,16 @@
 FROM python:3.13.5-alpine
 
-RUN apk update && \
-    apk upgrade && \
-    apk add --no-cache python3 && \
-    apk add --no-cache curl build-base
-
-COPY . /sandbox
-
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-WORKDIR /sandbox
+COPY . /app/
+RUN find /app -type d -name "test*" -exec rm -rf {} + && \
+    find /app -type f -name "test*" -exec rm -f {} +
 
-RUN uv sync --project=sandbox/pyproject.toml --only-group=sandbox
+WORKDIR /app
+
+RUN uv sync --project=app/pyproject.toml --only-group=sandbox
+RUN rm pyproject.toml uv.lock
 
 EXPOSE 9000
 
-CMD ["uv", "run", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
+CMD ["uv", "run", "--no-sync", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]

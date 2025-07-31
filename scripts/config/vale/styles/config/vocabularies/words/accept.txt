@@ -20,3 +20,5 @@ Terraform
 toolchain
 Trufflehog
 uv
+pyproject
+Gunicorn
