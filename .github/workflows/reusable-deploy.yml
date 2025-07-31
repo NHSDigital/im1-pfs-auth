@@ -23,9 +23,6 @@ on:
       PROXYGEN_CLIENT_ID:
         required: true
         description: "Client ID for Proxygen CLI"
-      PROXYGEN_CLIENT_SECRET:
-        required: true
-        description: "Client Secret for Proxygen CLI"
       PROXYGEN_KEY_ID:
         required: true
         description: "Key ID for Proxygen CLI"
