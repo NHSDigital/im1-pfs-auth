@@ -1,19 +1,19 @@
-# Deploy to Apigee
+# Deploy to apigee
 
 ## Table of Contents
 
-- [Deploy to Apigee](#deploy-to-apigee)
+- [Deploy to apigee](#deploy-to-apigee)
   - [Table of Contents](#table-of-contents)
-  - [How to deploy to Apigee](#how-to-deploy-to-apigee)
+  - [How to deploy to apigee](#how-to-deploy-to-apigee)
 
-## How to deploy to Apigee
+## How to deploy to apigee
 
 1. Ensure you have the [proxygen CLI](#proxygen-cli) installed and configured. If you haven't done this yet, follow the instructions in our [Proxygen CLI developer guide](./Proxygen_CLI.md#installation-and-configuration).
 
 2. Build the container image necessary for the deployment
    TODO: Add instructions for building the container image.
 
-3. Deploy the API to Apigee using the proxygen CLI:
+3. Deploy the API to apigee using the proxygen CLI:
 
    > [!TIP]
    > Deploying in CI? Use the `make deploy-ci` target instead. This will skip the interactive prompts.
