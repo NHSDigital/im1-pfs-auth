@@ -29,7 +29,7 @@ docker-run: # Run Docker image - optional: docker_dir|dir=[path to the image dir
 	make _docker cmd="run" \
 		dir=$(or ${docker_dir}, ${dir})
 
-clean:: # Remove Docker resources (docker) - optional: docker_dir|dir=[path to the image directory where the Dockerfile is located, default is '.'] @Operations
+docker-clean:: # Remove Docker resources (docker) - optional: docker_dir|dir=[path to the image directory where the Dockerfile is located, default is '.'] @Operations
 	make _docker cmd="clean" \
 		dir=$(or ${docker_dir}, ${dir})
 
