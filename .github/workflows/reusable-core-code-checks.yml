@@ -14,7 +14,6 @@ permissions:
   id-token: write
 
 jobs:
-
   actionlint-check:
     name: "Check GitHub Actions"
     runs-on: ubuntu-latest
