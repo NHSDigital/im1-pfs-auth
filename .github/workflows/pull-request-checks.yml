@@ -9,9 +9,16 @@ on:
 permissions: {}
 
 jobs:
-  code-checks:
-    name: "Run Code Checks"
-    uses: ./.github/workflows/reusable-code-checks.yml
+  core-code-checks:
+    name: "Run Core Code Checks"
+    uses: ./.github/workflows/reusable-core-code-checks.yml
+    permissions:
+      contents: read
+      id-token: write
+
+  additional-code-checks:
+    name: "Run Additional Code Checks"
+    uses: ./.github/workflows/reusable-additional-code-checks.yml
     permissions:
       contents: read
       id-token: write
@@ -19,7 +26,7 @@ jobs:
   deploy:
     name: "Deploy Pull Request Environment"
     uses: ./.github/workflows/reusable-deploy.yml
-    needs: code-checks
+    needs: core-code-checks
     if: ${{ github.actor != 'dependabot[bot]' }}
     with:
       environment: "internal-dev"
