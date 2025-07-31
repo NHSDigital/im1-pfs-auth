@@ -15,17 +15,17 @@
 
 3. Deploy the API to Apigee using the proxygen CLI:
 
+   > [!TIP]
+   > Deploying in CI? Use the `make deploy-ci` target instead. This will skip the interactive prompts.
+
    ```shell
    make deploy ENVIRONMENT="<environment>" PROXYGEN_URL_PATH="<api-name>" CONTAINER_TAG="<container-tag>"
    ```
 
-    Arguments:
+   Arguments:
    - `ENVIRONMENT`: The environment to deploy to (e.g., `internal-dev`, `sandbox`, `prod`). If your environment is not supported the command will fail as part of the validation.
    - `PROXYGEN_URL_PATH`: The URL path for the API (e.g., `/im1-pfs-auth`, `/im1-pfs-auth-pr-1`).
    - `CONTAINER_TAG`: The tag for the container image (e.g., `latest`, `v1.0.0`).
 
-    > [!NOTE]
-    > If you're deploying to prod, you will need machine access credentials for proxygen. See the [Proxygen CLI Secrets](./Proxygen_CLI.md#secrets) section for more information on how to set up these credentials.
-
-    > [!TIP]
-    > Deploying in CI? Use the `make deploy-ci` target instead. This will skip the interactive prompts.
+   > [!NOTE]
+   > If you're deploying to prod, you will need machine access credentials for proxygen. See the [Proxygen CLI Secrets](./Proxygen_CLI.md#secrets) section for more information on how to set up these credentials.

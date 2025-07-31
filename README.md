@@ -5,7 +5,7 @@
 
 A service enabling proxies to act on behalf of patients, regardless of their GP practice.
 
-Use this API to authenticate a NHS login "proxy token" and initiate a session with a supplier system based on ODS code. On a successful match, it returns the new IM1 session details.
+Use this API to authenticate an NHS login "proxy token" and initiate a session with a supplier system based on ODS code. On a successful match, it returns the new IM1 session details.
 
 ## Table of Contents
 
@@ -122,7 +122,7 @@ Provide a way to contact the owners of this project. It can be a team, an indivi
 
 ## Licence
 
-> The [LICENCE.md](./LICENCE.md) file will need to be updated with the correct year and owner
+This project is licensed under the MIT License - see the [LICENCE](./LICENCE.md) file for details.
 
 Unless stated otherwise, the codebase is released under the MIT License. This covers both the codebase and any sample code in the documentation.
 
