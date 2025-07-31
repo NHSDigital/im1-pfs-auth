@@ -5,9 +5,6 @@ inputs:
   PROXYGEN_CLIENT_ID:
     description: "Client ID for Proxygen CLI"
     required: true
-  PROXYGEN_CLIENT_SECRET:
-    description: "Client Secret for Proxygen CLI"
-    required: true
   PROXYGEN_KEY_ID:
     description: "Key ID for Proxygen CLI"
     required: true
@@ -39,7 +36,6 @@ runs:
     - name: Update Proxygen Credentials
       run: |
         sed -i "s|CLIENT_ID_TO_BE_REPLACED|${{ inputs.PROXYGEN_CLIENT_ID }}|" ~/.proxygen/credentials.yaml
-        sed -i "s|CLIENT_SECRET_TO_BE_REPLACED|${{ inputs.PROXYGEN_CLIENT_SECRET }}|" ~/.proxygen/credentials.yaml
         sed -i "s|KEY_ID_TO_BE_REPLACED|${{ inputs.PROXYGEN_KEY_ID }}|" ~/.proxygen/credentials.yaml
         sed -i "s|PRIVATE_KEY_PATH_TO_BE_REPLACED|private_key.pem|" ~/.proxygen/credentials.yaml
       shell: bash
