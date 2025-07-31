@@ -24,7 +24,7 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
       - name: "Prettier Checks"
-        uses: ./.github/actions/prettier-commit-checks
+        uses: ./.github/actions/prettier-checks
 
   ruff-checks:
     name: "Ruff Checks"
