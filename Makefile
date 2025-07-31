@@ -95,7 +95,7 @@ set-hosted-container-version:
 sandbox-build:
 	cp pyproject.toml sandbox/
 	cp uv.lock sandbox/
-	docker buildx -t "im1-pfs-auth-sandbox" sandbox/
+	docker buildx build -t "im1-pfs-auth-sandbox" sandbox/
 
 sandbox-tag:
 	docker tag im1-pfs-auth-sandbox $(PROXYGEN_DOCKER_REGISTRY_URL):sandbox-$(CONTAINER_TAG)
