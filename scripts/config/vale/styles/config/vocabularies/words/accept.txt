@@ -1,5 +1,6 @@
 [A-Z]+s
 apigee
+Apigee
 Bitwarden
 bot
 Cyber
@@ -13,7 +14,7 @@ Octokit
 onboarding
 Podman
 proxygen
-
+Proxygen
 Python
 sed
 Syft
