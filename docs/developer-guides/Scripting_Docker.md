@@ -37,12 +37,12 @@ Docker is a tool for developing, shipping and running applications inside contai
 
 Here are some key features built into this repository's Docker files:
 
-✅ Alpine base	Minimal footprint
+✅ Alpine base Minimal footprint
 🧪 Removes test files, reduces size, cleans up
-⚡ Uses uv	Fast, modern dependency management
-📁 Isolated install	Uses [tool.poetry.group.{app}] dependencies only
-🔒 Deletes pyproject	Avoids leaking source metadata
-🔥 Gunicorn with uv run	clean and fast app start
+⚡ Uses uv Fast, modern dependency management
+📁 Isolated install Uses [tool.poetry.group.{app}] dependencies only
+🔒 Deletes pyproject Avoids leaking source metadata
+🔥 Gunicorn with uv run clean and fast app start
 
 ## Key files
 
@@ -63,9 +63,8 @@ Steps to run Sandbox in a Docker container is as follows:
 
 Run the following command to build a Docker image tagged with sandbox application name
 
-
 ```shell
-make sandbox-build 
+make sandbox-build
 ```
 
 #### Run the Docker Container
@@ -77,7 +76,6 @@ make sandbox-docker-run
 ```
 
 Test it out by making requests to port 9000
-
 
 ### Platform architecture
 

@@ -83,9 +83,9 @@ sandbox-tag:
 	docker tag im1-pfs-auth-sandbox $(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)
 
 sandbox-push:
-	sandbox-tag
+	make sandbox-tag
 	docker push PROXYGEN_DOCKER_REGISTRY_URL:CONTAINER_TAG
-	
+
 sandbox-debug-run:
 	FLASK_APP=sandbox.api.app flask run --port 8000
 
