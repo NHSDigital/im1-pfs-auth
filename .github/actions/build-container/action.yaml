@@ -1,0 +1,17 @@
+name: "Build Container"
+description: Build Container
+
+inputs:
+  type_of_deployment:
+    description: "Type of deployment (app or sandbox)"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build Container
+      shell: bash
+      run: make ${{ inputs.type_of_deployment }}-build
+      env:
+        PROXYGEN_DOCKER_REGISTRY_URL: example.com/${{ inputs.type_of_deployment }}
+        CONTAINER_TAG: ${{ github.sha }}

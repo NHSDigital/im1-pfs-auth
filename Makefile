@@ -1,17 +1,5 @@
 include scripts/init.mk
 
-install:
-	uv sync --all-extras
-	npm install
-
-lint:
-	npm run lint
-	uv run ruff check .
-
-format:
-	npm run format
-	uv run ruff format .
-
 # ==============================================================================
 # General Commands
 # ==============================================================================
@@ -27,10 +15,6 @@ lint:
 format:
 	npm run format
 	uv run ruff format .
-
-spec-compile: clean
-	mkdir -p build
-	npm run spec-compile
 
 # ==============================================================================
 # Deploy API Commands
@@ -90,6 +74,10 @@ set-hosted-container-version:
 		sed -i 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml;
 	fi
 
+spec-compile:
+	mkdir -p build
+	npm run spec-compile
+
 # ==============================================================================
 # App Commands
 # ==============================================================================
@@ -119,7 +107,11 @@ app-unit-test:
 sandbox-build:
 	cp pyproject.toml sandbox/
 	cp uv.lock sandbox/
-	docker build -t "im1-pfs-auth-sandbox" sandbox
+	docker build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load sandbox/
+
+sandbox-push:
+	proxygen docker get-login | bash
+	docker push $(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)
 
 sandbox-debug-run:
 	FLASK_APP=sandbox.api.app flask run --port 8000
@@ -129,14 +121,6 @@ sandbox-docker-run:
 
 sandbox-unit-test:
 	uv run pytest --cov=sandbox --cov-fail-under=80
-
-# ==============================================================================
-# Spec Commands
-# ==============================================================================
-
-spec-compile:
-	mkdir -p build
-	npm run spec-compile
 
 # ==============================================================================s
 

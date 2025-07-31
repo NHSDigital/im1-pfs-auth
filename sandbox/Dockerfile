@@ -8,11 +8,7 @@ RUN find /app -type d -name "test*" -exec rm -rf {} + && \
 
 WORKDIR /app
 
-<<<<<<< HEAD
 RUN uv sync --project=app/pyproject.toml --only-group=sandbox
-=======
-RUN uv sync --project=app/pyproject.toml --only-group=app
->>>>>>> cbb820a (NPA-5232: Add app container)
 RUN rm pyproject.toml uv.lock
 
 EXPOSE 9000
