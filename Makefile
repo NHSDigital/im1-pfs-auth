@@ -77,20 +77,17 @@ set-hosted-container-version:
 sandbox-build:
 	cp pyproject.toml sandbox/
 	cp uv.lock sandbox/
-	docker buildx build -t "im1-pfs-auth-sandbox" sandbox/
-
-sandbox-tag:
-	docker tag im1-pfs-auth-sandbox $(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)
+	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load sandbox/
 
 sandbox-push:
-	make sandbox-tag
-	docker push PROXYGEN_DOCKER_REGISTRY_URL:CONTAINER_TAG
+	proxygen docker get-login | bash
+	docker push $(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)
 
 sandbox-debug-run:
 	FLASK_APP=sandbox.api.app flask run --port 8000
 
 sandbox-docker-run:
-	docker run -p 9000:9000 "im1-pfs-auth-sandbox"
+	docker run -p 9000:9000 "im1-pfs-auth"
 
 sandbox-test:
 	uv run pytest --cov=sandbox --cov-fail-under=80

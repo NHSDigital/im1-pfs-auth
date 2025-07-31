@@ -7,3 +7,6 @@ runs:
     - name: Build Sandbox
       shell: bash
       run: make sandbox-build
+      env:
+        PROXYGEN_DOCKER_REGISTRY_URL: example.com/sandbox
+        CONTAINER_TAG: ${{ github.sha }}

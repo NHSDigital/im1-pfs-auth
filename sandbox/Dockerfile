@@ -15,4 +15,4 @@ RUN uv sync --project=sandbox/pyproject.toml --only-group=sandbox
 
 EXPOSE 9000
 
-CMD ["uv", "run", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
+CMD ["uv", "run", "--no-sync", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
