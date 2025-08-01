@@ -15,8 +15,22 @@ TODO: Add section on getting local environment set up and on deployment
   - [Setup](#setup)
     - [Prerequisites](#prerequisites)
     - [Configuration](#configuration)
+  - [Usage](#usage)
+    - [Repository Structure](#repository-structure-1)
+    - [Key Components](#key-components)
+      - [Apigee](#apigee)
+      - [App](#app)
+      - [Sandbox](#sandbox)
+    - [Usage TODO](#usage-todo)
+      - [Deployment](#deployment)
+        - [Deployment Limits](#deployment-limits)
+    - [Testing](#testing)
   - [Design](#design)
     - [Diagrams](#diagrams)
+    - [Modularity](#modularity)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
+>>>>>>> 49e1675 (NPA-5232: Improve documentation)
   - [Contributing](#contributing)
   - [Licence](#licence)
 
@@ -55,6 +69,57 @@ Installation of the toolchain dependencies.
 make install
 ```
 
+## Usage
+
+### Repository Structure
+
+- `app` contains the backend application code for the API.
+- `docs` contains the documentation for the API, including user guides, developer guides, and design documents.
+- `postman` contains Postman collections for users to trial the sandbox environment.
+- `proxygen` contains support files for the [proxygen CLI](./docs/user-guides/Proxygen_CLI.md).
+- `sandbox` contains a flask application that is used to simulate the backend service for the API. When deployed the sandbox will be accessible without authentication.
+- `scripts` contains scripts that are used to automate the development and deployment processes. As well as configuration files for tools the project uses.
+- `specification` contains the OpenAPI specification for the API.
+- `tests` contains the tests for the API.
+
+### Key Components
+
+There are several key components in this project that are essential for its operation:
+
+#### Apigee
+
+Apigee is the API management platform used to deploy and manage the API. It provides features such as security, analytics, and monitoring for our API.
+
+#### App
+
+The app is the core component of the API, containing the business logic and data access layers. It is responsible for the processing of requests and responses, such as validating the NHS login proxy token and initiating a session with the supplier system based on ODS code.
+
+#### Sandbox
+
+The sandbox is a testing environment that simulates the behaviour of the API without affecting the production environment. It allows developers to experiment with `im1-pfs-auth` APIs without onboarding or authenticating their requests.
+
+### Usage TODO
+
+After a successful installation, provide an informative example of how this project can be used. Additional code snippets, screenshots and demos work well in this space. You may also link to the other documentation resources, e.g. the [User Guide](./docs/user-guide.md) to demonstrate more use cases and to show more features.
+
+#### Deployment
+
+The application is deployed mainly using [proxygen cli](./docs/user-guides/Proxygen_CLI.md). Proxygen cli manages all the infrastructure and deployment of the application.
+
+For the API to be functional a docker container must be pushed to APIM's container registry. This container will then be referenced in the proxygen deployment make command to deploy the Apigee API Proxy with the correct backend container.
+
+```mermaid
+sequenceDiagram
+    User->>+Apigee: API request
+    Apigee->>Backend Container: Internal forwarding
+```
+
+For more information on how to deploy the application, please refer to the [Apigee Deployment Guide](./docs/user-guides/Deployment_Guide.md).
+
+##### Deployment Limits
+
+Deployment limits information can be found in [confluence](https://nhsd-confluence.digital.nhs.uk/spaces/APM/pages/678899059/Deploying+your+API+with+Proxy+Generator#DeployingyourAPIwithProxyGenerator-APIconfig)
+
 ### Testing
 
 There are multiple layers of testing which can be run from a local machine.
@@ -82,6 +147,14 @@ sequenceDiagram
     IM1-PFS-Auth->>IM1-PFS-Auth: transform response
     IM1-PFS-Auth-->>-Patient Facing Application: Success
 ```
+
+Here is a diagram showing the internal interactions within the API platform as well as where each component is hosted.
+
+![API Flow Diagram](./docs/diagrams/API_Flow_Diagram.drawio.png)
+
+### Modularity
+
+Most of the projects are built with customisability and extendability in mind. At a minimum, this can be achieved by implementing service level configuration options and settings. The intention of this section is to show how this can be used. If the system processes data, you could mention here for example how the input is prepared for testing - anonymised, synthetic or live data.
 
 ## Contributing
 

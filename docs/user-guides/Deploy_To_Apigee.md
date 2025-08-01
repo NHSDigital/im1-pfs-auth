@@ -11,7 +11,19 @@
 1. Ensure you have the [proxygen CLI](#proxygen-cli) installed and configured. If you haven't done this yet, follow the instructions in our [Proxygen CLI developer guide](./Proxygen_CLI.md#installation-and-configuration).
 
 2. Build the container image necessary for the deployment
-   TODO: Add instructions for building the container image.
+
+   Build application container image:
+   ```shell
+   make app-build PROXYGEN_DOCKER_REGISTRY_URL="958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth" CONTAINER_TAG=<tag>
+   ```
+
+   Build sandbox container image:
+   ```shell
+   make sandbox-build PPROXYGEN_DOCKER_REGISTRY_URL="958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth" CONTAINER_TAG=<tag>
+   ```
+
+   Each command builds a Docker image tagged with the specified `CONTAINER_TAG` and pushes it to the specified `PROXYGEN_DOCKER_REGISTRY_URL`. The `<tag>` tag is a placeholder; you can replace it with any meaningful tag for your deployment. Generally, this is the <app/sandbox>-<commit sha>
+
 
 3. Deploy the API to apigee using the proxygen CLI:
 
