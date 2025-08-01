@@ -50,12 +50,3 @@ jobs:
       PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
       PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
       PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
-
-  generate-postman-collection:
-    name: "Deploy Pull Request Sandbox Environment"
-    uses: ./.github/workflows/reuseable-generate-postman-collection.yml
-    needs: core-code-checks
-    if: ${{ github.actor != 'dependabot[bot]' }}
-    with:
-      environment: "internal-dev-sandbox"
-      additional_path: "pr-${{ github.event.number }}"
