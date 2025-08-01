@@ -79,6 +79,19 @@ spec-compile:
 	npm run spec-compile
 
 # ==============================================================================
+# Postman Commands
+# ==============================================================================
+
+postman-generate-collection:
+	npx @apideck/portman -l specification/im1-pfs-auth-api.yaml \
+		--base-Url $(POSTMAN_COLLECTION_BASE_URL) \
+		--output $(POSTMAN_COLLECTION_PATH)$(POSTMAN_COLLECTION_FILE_NAME)
+
+postman-test:
+	npx newman run $(POSTMAN_COLLECTION_PATH)$(POSTMAN_COLLECTION_FILE_NAME)
+
+
+# ==============================================================================
 # App Commands
 # ==============================================================================
 
