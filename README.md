@@ -30,9 +30,6 @@ TODO: Add section on getting local environment set up and on deployment
     - [Modularity](#modularity)
   - [Contributing](#contributing)
   - [Licence](#licence)
->>>>>>> 49e1675 (NPA-5232: Improve documentation)
-  - [Contributing](#contributing)
-  - [Licence](#licence)
 
 ## Repository Structure
 
@@ -73,6 +70,9 @@ make install
 
 ### Repository Structure
 
+Key folders for the project are:
+
+- `.github` contains GitHub Actions workflows for CI/CD.
 - `app` contains the backend application code for the API.
 - `docs` contains the documentation for the API, including user guides, developer guides, and design documents.
 - `postman` contains Postman collections for users to trial the sandbox environment.
@@ -83,8 +83,6 @@ make install
 - `tests` contains the tests for the API.
 
 ### Key Components
-
-There are several key components in this project that are essential for its operation:
 
 #### Apigee
 
