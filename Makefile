@@ -1,5 +1,9 @@
 include scripts/init.mk
 
+# ==============================================================================
+# General Commands
+# ==============================================================================
+
 install:
 	uv sync --all-extras
 	npm install
@@ -70,6 +74,32 @@ set-hosted-container-version:
 		sed -i 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml;
 	fi
 
+spec-compile:
+	mkdir -p build
+	npm run spec-compile
+
+# ==============================================================================
+# App Commands
+# ==============================================================================
+
+app-build:
+	cp pyproject.toml app/
+	cp uv.lock app/
+	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load app/
+
+app-push:
+	proxygen docker get-login | bash
+	docker push $(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)
+
+app-debug-run:
+	FLASK_APP=app.api.app flask run --port 8000
+
+app-docker-run:
+	docker run -p 9000:9000 "im1-pfs-auth-app"
+
+app-unit-test:
+	uv run pytest app --cov=app --cov-fail-under=80
+
 # ==============================================================================
 # Sandbox Commands
 # ==============================================================================
@@ -77,7 +107,7 @@ set-hosted-container-version:
 sandbox-build:
 	cp pyproject.toml sandbox/
 	cp uv.lock sandbox/
-	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load sandbox/
+	docker build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load sandbox/
 
 sandbox-push:
 	proxygen docker get-login | bash
@@ -89,16 +119,10 @@ sandbox-debug-run:
 sandbox-docker-run:
 	docker run -p 9000:9000 "im1-pfs-auth"
 
-sandbox-test:
-	uv run pytest --cov=sandbox --cov-fail-under=80
+sandbox-unit-test:
+	uv run pytest sandbox --cov=sandbox --cov-fail-under=80
 
-# ==============================================================================
-# Spec Commands
-# ==============================================================================
-
-spec-compile:
-	mkdir -p build
-	npm run spec-compile
+# ==============================================================================s
 
 ${VERBOSE}.SILENT: \
 	build \

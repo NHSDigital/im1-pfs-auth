@@ -19,14 +19,6 @@ dev = [
 required-version = "~=0.8.0"
 package = false
 
-[tool.coverage.run]
-branch = true
-omit = [
-  "app/api/tests/*",
-  "sandbox/tests/*",
-]
-
-
 [tool.ruff]
 target-version = "py313"
 extend-exclude = ["docs/adr"]
@@ -48,6 +40,3 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
-
-[tool.ruff.lint.isort]
-known-local-folder = ["tests", "api", "app", "sandbox"]

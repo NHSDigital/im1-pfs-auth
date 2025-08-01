@@ -4,15 +4,23 @@ updates:
   - package-ecosystem: "github-actions"
     directories:
       - "/" # Covers .github/workflows
+      - ".github/actions/build-container"
       - ".github/actions/check-english-usage"
       - ".github/actions/check-file-format"
       - ".github/actions/check-github-actions"
       - ".github/actions/check-markdown-format"
+      - ".github/actions/check-uv-lock"
+      - ".github/actions/compile-spec"
       - ".github/actions/create-lines-of-code-report"
       - ".github/actions/perform-static-analysis"
-      - ".github/actions/prettier-commit-checks"
+      - ".github/actions/prettier-checks"
+      - ".github/actions/ruff-checks"
+      - ".github/actions/ruff-format"
+      - ".github/actions/run-unit-tests"
       - ".github/actions/scan-dependencies"
       - ".github/actions/scan-secrets"
+      - ".github/actions/setup-proxygen"
+      - ".github/actions/setup-python-dependencies"
     schedule:
       interval: "monthly"
     groups:

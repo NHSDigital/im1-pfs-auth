@@ -1,5 +1,11 @@
 name: Run Unit Tests
 description: Installs pytest and runs tests
+
+inputs:
+  type_of_deployment:
+    description: "Type of deployment (app or sandbox)"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -9,5 +15,5 @@ runs:
       run: uv sync --all-groups
       shell: bash
     - name: Run Unit Tests
-      run: make sandbox-test
+      run: make ${{ inputs.type_of_deployment }}-unit-test
       shell: bash

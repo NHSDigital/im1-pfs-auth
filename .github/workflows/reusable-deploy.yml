@@ -1,7 +1,7 @@
 name: Deploy Environment
 
 concurrency:
-  group: deploy-${{ inputs.environment }}-${{ inputs.additional_path || 'default' }}
+  group: deploy-${{ inputs.environment }}-${{ inputs.type_of_deployment }}-${{ inputs.additional_path || 'default' }}
 
 on:
   workflow_call:
@@ -23,6 +23,7 @@ on:
         description: "Type of deployment, e.g. 'app', 'sandbox'"
         required: true
         type: string
+
     secrets:
       PROXYGEN_CLIENT_ID:
         required: true
@@ -41,8 +42,24 @@ env:
   PROXYGEN_DOCKER_REGISTRY_URL: 958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth
 
 jobs:
+  validate-inputs:
+    name: "Validate Inputs"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check type_of_deployment input"
+        run: |
+          case "${{ inputs.environment }}" in
+            internal-dev|internal-dev-sandbox)
+              ;;
+            *)
+              echo "Invalid environment: ${{ inputs.environment }}. Allowed values are: internal-dev, internal-dev-sandbox."
+              exit 1
+              ;;
+          esac
+
   build-and-push-container:
     name: "Build & Push Container"
+    needs: validate-inputs
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
@@ -59,7 +76,7 @@ jobs:
           PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
           PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
       - name: "Build ${{inputs.type_of_deployment}} container"
         run: make ${{inputs.type_of_deployment}}-build
       - name: Check Docker Containers
