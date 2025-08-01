@@ -1,7 +1,7 @@
 name: Deploy Environment
 
 concurrency:
-  group: deploy-${{ inputs.environment }}-${{ inputs.additional_path || 'default' }}
+  group: deploy-${{ inputs.environment }}-${{ inputs.type_of_deployment }}-${{ inputs.additional_path || 'default' }}
 
 on:
   workflow_call:
