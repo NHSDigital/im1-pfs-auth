@@ -27,7 +27,6 @@ TODO: Add section on getting local environment set up and on deployment
     - [Testing](#testing)
   - [Design](#design)
     - [Diagrams](#diagrams)
-    - [Modularity](#modularity)
   - [Contributing](#contributing)
   - [Licence](#licence)
 
@@ -149,10 +148,6 @@ sequenceDiagram
 Here is a diagram showing the internal interactions within the API platform as well as where each component is hosted.
 
 ![API Flow Diagram](./docs/diagrams/API_Flow_Diagram.drawio.png)
-
-### Modularity
-
-Most of the projects are built with customisability and extendability in mind. At a minimum, this can be achieved by implementing service level configuration options and settings. The intention of this section is to show how this can be used. If the system processes data, you could mention here for example how the input is prepared for testing - anonymised, synthetic or live data.
 
 ## Contributing
 
