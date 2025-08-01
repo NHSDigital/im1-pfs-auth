@@ -88,7 +88,7 @@ info:
     * only covers a limited set of scenarios
     * is open access, so does not allow you to test authorisation
 
-    [![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/postman/postman_collection.json)
+    [![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](asserts/im1-api-auth-api.postman_collection.json)
 
     Import the  postman collection to run requests against sandbox.
 
@@ -101,8 +101,8 @@ info:
     For help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).
 
 servers:
-  - url: https://int.api.service.nhs.uk/im1-pfs-auth/
   - url: https://sandbox.api.service.nhs.uk/im1-pfs-auth/
+  - url: https://int.api.service.nhs.uk/im1-pfs-auth/
 
 paths:
   /authentication:

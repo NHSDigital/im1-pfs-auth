@@ -10,6 +10,7 @@
 
 sandbox/pyproject.toml
 sandbox/uv.lock
+specification/assets/*.json
 
 ### This is the Github Python.gitignore https://github.com/github/gitignore/blob/main/Python.gitignore
 # Byte-compiled / optimized / DLL files
