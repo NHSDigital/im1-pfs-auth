@@ -83,6 +83,7 @@ spec-compile:
 # ==============================================================================
 
 postman-generate-collection:
+	mkdir $(POSTMAN_COLLECTION_PATH)
 	npx @apideck/portman -l specification/im1-pfs-auth-api.yaml \
 		--base-Url $(POSTMAN_COLLECTION_BASE_URL) \
 		--output $(POSTMAN_COLLECTION_PATH)$(POSTMAN_COLLECTION_FILE_NAME)
