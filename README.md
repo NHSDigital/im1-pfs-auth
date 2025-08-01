@@ -102,7 +102,7 @@ After a successful installation, provide an informative example of how this proj
 
 #### Deployment
 
-The application is deployed mainly using [proxygen cli](./docs/user-guides/Proxygen_CLI.md). Proxygen cli manages all the infrastructure and deployment of the application.
+The application is deployed mainly using [Proxygen CLI](./docs/user-guides/Proxygen_CLI.md). Proxygen CLI manages all the infrastructure and deployment of the application.
 
 For the API to be functional a docker container must be pushed to APIM's container registry. This container will then be referenced in the proxygen deployment make command to deploy the Apigee API Proxy with the correct backend container.
 
