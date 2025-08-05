@@ -11,7 +11,6 @@ TODO: Add section on getting local environment set up and on deployment
 
 - [IM1 Patient Facing Service Auth](#im1-patient-facing-service-auth)
   - [Table of Contents](#table-of-contents)
-  - [Repository Structure](#repository-structure)
   - [Setup](#setup)
     - [Prerequisites](#prerequisites)
     - [Configuration](#configuration)
@@ -29,14 +28,6 @@ TODO: Add section on getting local environment set up and on deployment
     - [Diagrams](#diagrams)
   - [Contributing](#contributing)
   - [Licence](#licence)
-
-## Repository Structure
-
-This repository includes:
-
-- [specification/im1-pfs-auth-api.yaml](./specificationim1-pfs-auth-api.yaml) - The [Open API Specification](https://swagger.io/docs/specification/about/) describes the endpoints, methods and messages exchanged by the API. Used to generate interactive documentation for the NHS API Catalogue; the contract between the API and its consumers.
-- `sandbox/` - A flask (Python) API that implements a mock implementation of the service. It's to be used as interactive documentation to illustrate interactions and concepts. It is not intended to provide an exhaustive/faithful environment suitable for full development and testing.
-- `scripts/` - Utilities helpful to developers for the development and release of the specification.
 
 ## Setup
 
