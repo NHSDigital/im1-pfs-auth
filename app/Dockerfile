@@ -6,6 +6,8 @@ COPY . /app/
 RUN find /app -type d -name "test*" -exec rm -rf {} + && \
     find /app -type f -name "test*" -exec rm -f {} +
 
+ARG USE_MOCK
+ENV USE_MOCK=${USE_MOCK}
 WORKDIR /app
 
 RUN uv sync --project=app/pyproject.toml --only-group=app

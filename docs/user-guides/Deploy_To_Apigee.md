@@ -15,7 +15,7 @@
    Build application container image:
 
    ```shell
-   make app-build PROXYGEN_DOCKER_REGISTRY_URL="958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth" CONTAINER_TAG=<tag>
+   make app-build PROXYGEN_DOCKER_REGISTRY_URL="958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth" CONTAINER_TAG=<tag> USE_MOCK=<use_mock>
    ```
 
    Build sandbox container image:

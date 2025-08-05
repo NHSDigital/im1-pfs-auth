@@ -11,7 +11,6 @@ TODO: Add section on getting local environment set up and on deployment
 
 - [IM1 Patient Facing Service Auth](#im1-patient-facing-service-auth)
   - [Table of Contents](#table-of-contents)
-  - [Repository Structure](#repository-structure)
   - [Setup](#setup)
     - [Prerequisites](#prerequisites)
     - [Configuration](#configuration)
@@ -29,14 +28,6 @@ TODO: Add section on getting local environment set up and on deployment
     - [Diagrams](#diagrams)
   - [Contributing](#contributing)
   - [Licence](#licence)
-
-## Repository Structure
-
-This repository includes:
-
-- [specification/im1-pfs-auth-api.yaml](./specificationim1-pfs-auth-api.yaml) - The [Open API Specification](https://swagger.io/docs/specification/about/) describes the endpoints, methods and messages exchanged by the API. Used to generate interactive documentation for the NHS API Catalogue; the contract between the API and its consumers.
-- `sandbox/` - A flask (Python) API that implements a mock implementation of the service. It's to be used as interactive documentation to illustrate interactions and concepts. It is not intended to provide an exhaustive/faithful environment suitable for full development and testing.
-- `scripts/` - Utilities helpful to developers for the development and release of the specification.
 
 ## Setup
 
@@ -93,6 +84,15 @@ Apigee is the API management platform used to deploy and manage the API. It prov
 
 The app is the core component of the API, containing the business logic and data access layers. It is responsible for the processing of requests and responses, such as validating the NHS login proxy token and initiating a session with the supplier system based on ODS code.
 
+#### App Structure
+
+The application is to aims to apply domain driven design by incorporating a decoupled architecture that separates core business lock from infrastructure concerns.
+
+- Domain: Contains business logic
+- Application: Orchestrates the use cases
+- Infrastructure: Technical implementations
+- App: Application entry point
+
 #### Sandbox
 
 The sandbox is a testing environment that simulates the behaviour of the API without affecting the production environment. It allows developers to experiment with `im1-pfs-auth` APIs without onboarding or authenticating their requests.
@@ -122,6 +122,12 @@ Deployment limits information can be found in [confluence](https://nhsd-confluen
 ### Testing
 
 There are multiple layers of testing which can be run from a local machine.
+
+To run the app unit tests run the following command:
+
+```shell
+make app-unit-test
+```
 
 To run the sandbox unit tests run the following command:
 

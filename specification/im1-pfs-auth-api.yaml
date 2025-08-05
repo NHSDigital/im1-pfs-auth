@@ -172,11 +172,11 @@ paths:
                 $ref: "#/components/schemas/ErrorResponseModel"
               examples:
                 missingValueError:
-                  externalValue: "./examples/errors.yaml#/MissingValueError"
+                  externalValue: "./examples/errors.yaml#/MissingValueErrorError"
                 invalidValueError:
-                  externalValue: "./examples/errors.yaml#/InvalidValueError"
+                  externalValue: "./examples/errors.yaml#/InvalidValueErrorError"
                 accessDeniedError:
-                  externalValue: "./examples/errors.yaml#/AccessDeniedError"
+                  externalValue: "./examples/errors.yaml#/AccessDeniedErrorError"
                 forbiddenError:
                   externalValue: "./examples/errors.yaml#/ForbiddenError"
                 timeoutError:
@@ -190,6 +190,7 @@ paths:
             | HTTP status | Error code              | Description                                       |
             | ----------- | ----------------------- | ------------------------------------------------- |
             | 500         | `SERVER_ERROR`          | An unexpected internal server error has occurred. |
+            | 502         | `BAD_GATEWAY`           | An error downstream has occurred.                 |
           content:
             application/json:
               schema:
@@ -197,6 +198,8 @@ paths:
               examples:
                 serverError:
                   externalValue: "./examples/errors.yaml#/ServerError"
+                downstreamError:
+                  externalValue: "./examples/errors.yaml#/DownstreamError"
 
 components:
   securitySchemes:
@@ -205,24 +208,40 @@ components:
 
   schemas:
     ResponseModel:
+      required:
+        - sessionId
+          supplier
+          proxy
+          patients
       type: object
       properties:
         sessionId:
           minLength: 1
           type: string
-        userPatientLinkToken:
+        supplier:
+          enum: [EMIS, TPP]
           type: string
-          nullable: true
-        suid:
-          type: string
-          nullable: true
-        onlineUserId:
-          type: string
-          nullable: true
-        patientId:
-          type: string
-          nullable: true
+        proxy:
+          $ref: "#/components/schemas/DemographicsModel"
+        patients:
+          type: array
+          items:
+            $ref: "#/components/schemas/DemographicsModel"
       additionalProperties: false
+
+    DemographicsModel:
+      required:
+        - firstName
+          surname
+          title
+      type: object
+      properties:
+        firstName:
+          type: string
+        surname:
+          type: string
+        title:
+          type: string
 
     ErrorResponseModel:
       required:

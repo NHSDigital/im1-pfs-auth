@@ -1,19 +1,24 @@
-AccessDeniedError:
+AccessDeniedErrorError:
   summary: Access Denied
   description: The request was unsuccessful due to invalid authentication credentials being provided.
   value:
     message: "Missing or invalid OAuth 2.0 bearer token in request."
+DownstreamServiceError:
+  summary: Downstream Service Error
+  description: The request was unsuccessful due to error in downstream service.
+  value:
+    message: "Downstream Service Error."
 ForbiddenError:
   summary: Forbidden
   description: The request was unsuccessful due to authentication credentials is not valid for requested resource.
   value:
     message: "Access denied to resource."
-InvalidValueError:
+InvalidValueErrorError:
   summary: Invalid Value
   description: The request was unsuccessful due to invalid value.
   value:
     message: "Invalid header request."
-MissingValueError:
+MissingValueErrorError:
   summary: Missing Value
   description: The request was unsuccessful due to missing required value.
   value:

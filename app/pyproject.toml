@@ -3,21 +3,37 @@ name = "im1-pfs-auth"
 version = "0.1.0"
 description = "IM1 PFS Auth API"
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = "~=3.13"
 
 [dependency-groups]
-app = ["flask~=3.1.1", "gunicorn~=23.0.0"]
+app = [
+    "flask~=3.1.1",
+    "pydantic~=2.11.7",
+    "gunicorn~=23.0.0",
+    "requests~=2.32.4",
+    "pyjwt~=2.10.1",
+    "cryptography>=45.0.6",
+]
 sandbox = ["flask~=3.1.1", "gunicorn~=23.0.0"]
 dev = [
   "pytest~=8.4.1",
   "pytest-cov~=6.2.1",
   "coverage~=7.10.1",
   "ruff~=0.12.7",
+  "pytest-mock~=3.14.1",
 ]
 
 [tool.uv]
 required-version = "~=0.8.0"
 package = false
+
+[tool.coverage.run]
+branch = true
+omit = [
+  "app/api/tests/*",
+  "sandbox/tests/*",
+]
+
 
 [tool.ruff]
 target-version = "py313"
@@ -33,6 +49,11 @@ ignore = [
   "D104",    # Ignore missing docstring in public package
   "D100",    # Ignore missing docstring in public module
   "N999",    # Ignore invalid module name
+  "N805",    # Ignore valid first argument name for method
+  "PLR0913", # Ignore too many arguments in function definition
+  "ANN401",  # Ignore dynamically typed expressions are disallowed
+  "E501",    # Ignore line too long
+  "FIX002",  # Ignore TODO
 ]
 
 [tool.ruff.lint.per-file-ignores]
@@ -40,3 +61,6 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[tool.ruff.lint.isort]
+known-local-folder = ["tests", "api", "app", "sandbox"]
