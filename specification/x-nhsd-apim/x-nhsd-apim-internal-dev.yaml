@@ -22,11 +22,7 @@ target:
         tag: CONTAINER_TAG_TO_BE_REPLACED
       environment:
         LOG_LEVEL: info
-target-attributes:
-  - name: X-Forward-To
-    required: true
 target-identity: # Information from User ID token to pass to backend via Headers
   - name: nhs-login-nhs-number
-    header: "NHSD-NHSlogin-NHS-Number"
   - name: nhs-login-identity-proofing-level
-    header: "NHSD-NHSlogin-Identity-Proofing-Level"
+  - name: id-token

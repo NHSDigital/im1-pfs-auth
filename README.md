@@ -112,7 +112,13 @@ Deployment limits information can be found in [confluence](https://nhsd-confluen
 
 There are multiple layers of testing which can be run from a local machine.
 
-To run the sandbox unit tests run the following command:
+1. To run the app unit tests run the following command:
+
+```shell
+make app-unit-test
+```
+
+2. To run the sandbox unit tests run the following command:
 
 ```shell
 make sandbox-test

@@ -5,7 +5,7 @@ include scripts/init.mk
 # ==============================================================================
 
 install:
-	uv sync --all-extras
+	uv sync --all-groups
 	npm install
 
 lint:
