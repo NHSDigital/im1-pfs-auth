@@ -23,9 +23,8 @@ target:
       environment:
         LOG_LEVEL: info
 target-attributes:
-  - name: forward-to
+  - name: X-Forward-To
     required: true
-    header: X-Forward-To
 target-identity: # Information from User ID token to pass to backend via Headers
   - name: nhs-login-nhs-number
     header: "NHSD-NHSlogin-NHS-Number"
