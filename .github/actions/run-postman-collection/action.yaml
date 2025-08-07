@@ -17,5 +17,5 @@ runs:
       run: npm install
       shell: bash
     - name: Run Postman Collection
-      run: make postman-test-pr-environment SANDBOX_BASE_URL=$INPUT_SANDBOX_BASE_URL
+      run: make postman-test-pr-environment
       shell: bash
