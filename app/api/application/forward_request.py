@@ -1,9 +1,9 @@
-from domain.exception import DownstreamError
-from domain.forward_request_model import ForwardRequest
-from domain.forward_response_model import ForwardResponse
-from infrastructure.emis_client import EmisClient
+from ..domain.exception import DownstreamError
+from ..domain.forward_request_model import ForwardRequest
+from ..domain.forward_response_model import ForwardResponse
+from ..infrastructure.emis_client import EmisClient
 
-client_map = {"https://emis.com": EmisClient}
+client_map = {"https://emis.com": EmisClient}  # TODO: Add TPP Client and change URL
 
 
 def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
@@ -19,6 +19,4 @@ def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
         response = client.forward_request()
         return client.transform_response(response)
     except Exception:
-        raise DownstreamError(
-            "Error occurred with downstream service"
-        )  # Double check want to do this for all...
+        raise DownstreamError("Error occurred with downstream service")

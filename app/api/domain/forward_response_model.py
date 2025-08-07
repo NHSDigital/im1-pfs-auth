@@ -9,15 +9,8 @@ class Demographics(BaseModel):
     title: str
 
 
-class Patient(Demographics):
-    """A data model that encapsulates all the essential information needed for patient"""
-
-    identifier_value: str
-    identifier_type: str
-
-
 class ForwardResponse(Demographics):
     """A data model that encapsulates all the essential information needed to forward a external backend system response to the client"""
 
     session_id: str
-    patients: list[Patient]
+    patients: list[Demographics]

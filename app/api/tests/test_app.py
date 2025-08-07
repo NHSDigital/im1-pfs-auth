@@ -1,11 +1,19 @@
-from uuid import uuid4
+from http import HTTPStatus
 from unittest.mock import MagicMock, patch
 
 import pytest
 from flask.testing import FlaskClient
 
 from app.api.app import app
-from app.api.exception import AccessDenied, InvalidValue, MissingValue
+from app.api.domain.exception import (
+    AccessDenied,
+    ApiException,
+    DownstreamError,
+    InvalidValue,
+    MissingValue,
+)
+
+FILE_PATH = "app.api.app"
 
 
 @pytest.fixture
@@ -13,138 +21,90 @@ def client() -> FlaskClient:
     return app.test_client()
 
 
-def test_authentication_post(client: FlaskClient) -> None:
+@patch(f"{FILE_PATH}.ForwardRequest")
+@patch(f"{FILE_PATH}.route_and_forward")
+def test_authentication_post(
+    mock_route_and_forward: MagicMock,
+    mock_forward_request: MagicMock,
+    client: FlaskClient,
+) -> None:
     """Test the POST /authentication endpoint."""
     # Arrange
-    path = "/authentication"
-    headers = {
-        "NHSD-NHSlogin-Identity-Proofing-Level": "P9",
-        "NHSD-NHSlogin-NHS-Number": "some nhs number",
-        "NHSD-ID-Token": "some token",
-        "X-Application-ID": "some application id",
-        "X-ODS-Code": "some ods code",
-        "X-Request-ID": str(uuid4()),
-        "X-Correlation-ID": str(uuid4()),
-        "X-Forward-To": "https://example.com",
-    }
+    mocked_response = {"body": "Hello World!"}
+    mock_instance = MagicMock()
+    mock_instance.dict.return_value = mocked_response
+    mock_route_and_forward.return_value = mock_instance
     # Act
-    actual_result = client.post(path, headers=headers)
+    actual_result = client.post("/authentication")
 
     # Assert
     assert actual_result.status_code == 200
-    assert actual_result.get_json() == {
-        "message": "Hello from the IM1 PFS Auth API!",
-        "hello": "world",
-    }
+    assert actual_result.get_json() == mocked_response
+    mock_forward_request.assert_called_once()
+    mock_route_and_forward.assert_called_once_with(mock_forward_request.return_value)
 
 
-@patch(
-    "app.api.app.validate_application_id", side_effect=AccessDenied("Test exception")
+@pytest.mark.parametrize(
+    "exception, expected_status_code, expected_message",
+    [
+        (
+            AccessDenied,
+            HTTPStatus.UNAUTHORIZED,
+            "Missing or invalid OAuth 2.0 bearer token in request.",
+        ),
+        (DownstreamError, HTTPStatus.BAD_GATEWAY, "Downstream Service Error."),
+        (
+            InvalidValue,
+            HTTPStatus.BAD_REQUEST,
+            "The request was unsuccessful due to invalid value.",
+        ),
+        (
+            MissingValue,
+            HTTPStatus.BAD_REQUEST,
+            "The request was unsuccessful due to missing required value.",
+        ),
+    ],
 )
-def test_authentication_post_access_denied_exception(
-    _mock_validate: MagicMock, client: FlaskClient
-) -> None:
-    """Test the POST /authentication endpoint with an access denied exception."""
-    # Arrange
-    path = "/authentication"
-    # Act
-    actual_result = client.post(path)
-
-    # Assert
-    assert actual_result.status_code == 401
-    assert actual_result.get_json() == {
-        "message": "Missing or invalid OAuth 2.0 bearer token in request.",
-    }
-
-
-@patch(
-    "app.api.app.validate_application_id", side_effect=InvalidValue("Test exception")
-)
-def test_authentication_post_invalid_value_exception(
-    _mock_validate: MagicMock, client: FlaskClient
-) -> None:
-    """Test the POST /authentication endpoint with an invalid value exception."""
-    # Arrange
-    path = "/authentication"
-    # Act
-    actual_result = client.post(path)
-
-    # Assert
-    assert actual_result.status_code == 400
-    assert actual_result.get_json() == {
-        "message": "The request was unsuccessful due to invalid value.",
-    }
-
-
-@patch(
-    "app.api.app.validate_application_id", side_effect=MissingValue("Test exception")
-)
-def test_authentication_post_missing_value_exception(
-    _mock_validate: MagicMock, client: FlaskClient
-) -> None:
-    """Test the POST /authentication endpoint with an missing value exception."""
-    # Arrange
-    path = "/authentication"
-    # Act
-    actual_result = client.post(path)
-
-    # Assert
-    assert actual_result.status_code == 400
-    assert actual_result.get_json() == {
-        "message": "The request was unsuccessful due to missing required value.",
-    }
-
-
-@patch("app.api.app.validate_forward_to", side_effect=MissingValue("Test Exception"))
-@patch("app.api.app.validate_correlation_id")
-@patch("app.api.app.validate_request_id")
-@patch("app.api.app.validate_ods_code")
-@patch("app.api.app.validate_vot_level")
-@patch("app.api.app.validate_proofing_level")
-@patch("app.api.app.validate_nhs_number")
-@patch("app.api.app.validate_application_id")
-def test_authentication_post_last_validation_check_fails(
-    mock_validate_application_id: MagicMock,
-    mock_validate_nhs_number: MagicMock,
-    mock_validate_proofing_level: MagicMock,
-    mock_validate_vot_level: MagicMock,
-    mock_validate_ods_code: MagicMock,
-    mock_validate_request_id: MagicMock,
-    mock_validate_correlation_id: MagicMock,
-    mock_validate_forward_to: MagicMock,
+@patch(f"{FILE_PATH}.ForwardRequest")
+@patch(f"{FILE_PATH}.route_and_forward")
+def test_authentication_post_api_exception(
+    mock_route_and_forward: MagicMock,
+    mock_forward_request: MagicMock,
+    exception: ApiException,
+    expected_status_code: HTTPStatus,
+    expected_message: str,
     client: FlaskClient,
 ) -> None:
-    """Test the POST /authentication endpoint last validation check fails."""
+    """Test the POST /authentication endpoint with an api exception."""
     # Arrange
-    path = "/authentication"
+    mock_forward_request.side_effect = exception("Testing")
+
     # Act
-    actual_result = client.post(path)
+    actual_result = client.post("/authentication")
 
     # Assert
-    assert actual_result.status_code == 400
-    assert actual_result.get_json() == {
-        "message": "The request was unsuccessful due to missing required value.",
-    }
-    mock_validate_nhs_number.assert_called_once()
-    mock_validate_proofing_level.assert_called_once()
-    mock_validate_vot_level.assert_called_once()
-    mock_validate_ods_code.assert_called_once()
-    mock_validate_request_id.assert_called_once()
-    mock_validate_correlation_id.assert_called_once()
-    mock_validate_forward_to.assert_called_once()
+    assert actual_result.status_code == expected_status_code
+    assert actual_result.get_json() == {"message": expected_message}
+    mock_forward_request.assert_called_once()
+    mock_route_and_forward.assert_not_called()
 
 
-@patch("app.api.app.validate_application_id", side_effect=Exception("Test exception"))
-def test_authentication_post_exception(
-    _mock_validate: MagicMock, client: FlaskClient
+@patch(f"{FILE_PATH}.ForwardRequest")
+@patch(f"{FILE_PATH}.route_and_forward")
+def test_authentication_post_api_exception(
+    mock_route_and_forward: MagicMock,
+    mock_forward_request: MagicMock,
+    client: FlaskClient,
 ) -> None:
-    """Test the POST /authentication endpoint with an exception."""
+    """Test the POST /authentication endpoint with unknown exception."""
     # Arrange
-    path = "/authentication"
+    mock_route_and_forward.side_effect = Exception("Testing")
 
     # Act
-    actual_result = client.post(path)
+    actual_result = client.post("/authentication")
 
     # Assert
-    assert actual_result.status_code == 500
+    assert actual_result.status_code == HTTPStatus.INTERNAL_SERVER_ERROR
     assert actual_result.get_json() == {"error": "Exception: Exception"}
+    mock_forward_request.assert_called_once()
+    mock_route_and_forward.assert_called_once_with(mock_forward_request.return_value)

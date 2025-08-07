@@ -16,6 +16,7 @@ class ForwardRequest(BaseModel):
     patient_ods_code: str
     proxy_nhs_number: str
 
+    @classmethod
     @field_validator("application_id", "patient_ods_code", "forward_to")
     def validate_required_value(cls, v) -> None:
         """Validates if required value is present
@@ -25,6 +26,7 @@ class ForwardRequest(BaseModel):
         if not v:
             raise MissingValue("Missing required value")
 
+    @classmethod
     @field_validator("patient_nhs_number", "proxy_nhs_number")
     def validate_nhs_number(cls, v) -> None:
         """Validates nhs number
@@ -34,8 +36,9 @@ class ForwardRequest(BaseModel):
         if not v:
             raise AccessDenied("Failed to retrieve NHS Number")
 
+    @classmethod
     @field_validator("forward_to")
-    def validate_url(cls, v):
+    def validate_url(cls, v) -> None:
         """Validates url
 
         If unsuccessful will raise An InvalidValue Exception

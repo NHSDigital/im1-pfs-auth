@@ -2,8 +2,8 @@ import requests
 from abc import ABC, abstractmethod
 from requests import Response
 
-from domain.forward_request_model import ForwardRequest
-from domain.forward_response_model import ForwardResponse
+from ..domain.forward_request_model import ForwardRequest
+from ..domain.forward_response_model import ForwardResponse
 
 
 class BaseClient(ABC):

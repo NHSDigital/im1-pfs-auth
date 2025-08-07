@@ -18,9 +18,12 @@ def authentication() -> Response:
     try:
         forward_request = ForwardRequest(
             application_id=request.headers.get("X-Application-ID"),
-            patient_nhs_number=request.headers.get("NHSD-NHSlogin-NHS-Number"),
+            forward_to=request.headers.get("X-Forward-To"),
+            patient_nhs_number=request.headers.get(
+                "NHSD-NHSlogin-NHS-Number"
+            ),  # TODO: Needs updating
             patient_ods_code=request.headers.get("X-ODS-Code"),
-            proxy_nhs_number=request.headers.get(""),  # Where to get this from???
+            proxy_nhs_number=request.headers.get("NHSD-NHSlogin-NHS-Number"),
         )
         response = route_and_forward(forward_request)
         return make_response(

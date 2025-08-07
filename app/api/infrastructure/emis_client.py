@@ -1,7 +1,7 @@
 from requests import Response
 
 from .base_client import BaseClient
-from domain.forward_response_model import ForwardResponse, Patient
+from ..domain.forward_response_model import ForwardResponse, Demographics
 
 
 class EmisClient(BaseClient):
@@ -35,7 +35,7 @@ class EmisClient(BaseClient):
             surname=response_body.get("Surname"),
             title=response_body.get("Title"),
             patients=[
-                Patient(
+                Demographics(
                     first_name=patient_link.get("Forenames"),
                     surname=patient_link.get("Surname"),
                     title=patient_link.get("Title"),
