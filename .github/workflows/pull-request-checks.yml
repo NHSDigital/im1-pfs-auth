@@ -61,6 +61,7 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+
       - name: Run Postman Collection
         uses: ./.github/actions/run-postman-collection
         env:

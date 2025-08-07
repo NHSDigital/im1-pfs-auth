@@ -95,7 +95,7 @@ postman-test:
 postman-test-pr-environment:
 # Mandatory arguments:
 # SANDBOX_BASE_URL: The base URL for the sandbox environment (e.g., https://sandbox.api.service.nhs.uk/im1-pfs-auth/)
-	@make postman-test --env-var "--env-var baseUrl=$(SANDBOX_BASE_URL)"
+	@make postman-test NEWMAN_ARGS="--env-var baseUrl=$(SANDBOX_BASE_URL)"
 
 # ==============================================================================
 # App Commands
