@@ -1,3 +1,12 @@
+# ----------------
+# Custom
+# ----------------
+specification/im1-pfs-auth-api.portman.generated.yaml
+# Portman temp directory
+tmp/
+# ----------------
+# Python .gitignore - https://github.com/github/gitignore/blob/main/Python.gitignore
+# ----------------
 .scannerwork
 *cloc*report*.json
 *sbom*report*.json
@@ -217,7 +226,9 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-### This is the Github Node.gitignore https://github.com/github/gitignore/blob/main/Node.gitignore
+# ----------------
+# Node .gitignore - https://github.com/github/gitignore/blob/main/Node.gitignore
+# ----------------
 # Logs
 logs
 *.log

@@ -1,108 +1,936 @@
 {
-  "info": {
-    "_postman_id": "ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9",
-    "name": "IM1 PFS Auth Service Sandbox 29/08/2025",
-    "description": "This Postman collection includes example scenarios for each of the IM1 PFS Auth API endpoints, covering both valid and invalid request scenarios.\n\nThe collection is pointed towards the IM1 PFS Auth API sandbox environment, which will return a specific example response based on the request sent. All data shown in the requests or responses is test data.\n\nOur sandbox environment only covers the scenarios listed in the Postman collection and is open access. It does not allow you to test authorisation or any scenarios beyond the ones documented.\n\nFull specification is available at [https://github.com/NHSDigital/im1-pfs-auth](https://github.com/NHSDigital/im1-pfs-auth).",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "44536620",
-    "_collection_link": "https://www.postman.com/ellie-bound1-b2ea016f/workspace/im1-pfs-auth-service-sandbox-28-08-2025/collection/44536620-ba48b9b9-73a3-4bf9-8ffc-821385fbf6e9?action=share&source=collection_link&creator=44536620"
+  "_": {
+    "postman_id": "b5140f25-dd1f-49c5-9842-4aeb1e80a88c"
   },
   "item": [
     {
-      "name": "Create a Session (authentication)",
+      "id": "399b7e53-fbf2-4e2d-bca5-b606a5101292",
+      "name": "sessions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
       "item": [
         {
-          "name": "Create a Session",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "const expectedResponseBody = {",
-                  "    \"onlineUserId\": \"123\",",
-                  "    \"patientId\": \"123\",",
-                  "    \"sessionId\": \"123\",",
-                  "    \"suid\": \"123\",",
-                  "    \"userPatientLinkToken\": \"123\"",
-                  "};",
-                  "",
-                  "pm.test(\"Status code is 201\", function () {",
-                  "    pm.response.to.have.status(201);",
-                  "});",
-                  "",
-                  "pm.test(\"Should have correct response body\", () => {",
-                  "    const responseJson = pm.response.json();",
-                  "    pm.expect(responseJson).to.eql(expectedResponseBody);",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {}
-              }
-            }
-          ],
+          "id": "8be360a2-f0a5-4c68-9aa9-ba228e2e2a20",
+          "name": "Begins a session",
           "request": {
-            "method": "POST",
+            "name": "Begins a session",
+            "description": {
+              "content": "## Overview\n\nA user can authenticate and establish a session with GPIT supplier systems.\n\nThis endpoint:\n  - Verifies the user access token\n  - Extracts the NHS number for the user, NHS number and ODS code of the patient\n  - Determines which supplier system to forward requests onto\n  - Transforms response\n\n## Access modes\n\nThis endpoint supports the following access modes:\n- Patient access\n\n## Sandbox test scenarios\n\nSee the postman collection for example requests.\n\n| Scenario               | Request                                                                                     | Response                                                    |\n| ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |\n| Successful request     | Valid request with forward to value of https://example.com and ods code value of A29929     | HTTP Status 201 Success response                            |\n\n### Sandbox constraints\n  - Headers that are not required for the scenario are not validated and are disregarded.\n\nOr perhaps you'd like to try out the sandbox using our 'Try it out' feature.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "authentication"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
             "header": [
               {
-                "key": "X-Forward-To",
-                "value": "https://example.com",
-                "type": "text"
+                "disabled": false,
+                "description": {
+                  "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                  "type": "text/plain"
+                },
+                "key": "Authorization",
+                "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
               },
               {
-                "key": "X-ODS-Code",
-                "value": "A29929",
-                "type": "text"
-              },
-              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) The identity of the subsidiary.",
+                  "type": "text/plain"
+                },
                 "key": "X-Application-ID",
-                "value": "postman",
-                "type": "text"
+                "value": "reprehenderit anim"
               },
               {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                  "type": "text/plain"
+                },
                 "key": "X-Request-ID",
-                "value": "38a997d0-bf72-4288-bd52-fc6045392dfb",
-                "type": "text"
+                "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
               },
               {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) The base URL to forward requests to.",
+                  "type": "text/plain"
+                },
+                "key": "X-Forward-To",
+                "value": "https://example.com"
+              },
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) The ODS code of the user to start a session with.",
+                  "type": "text/plain"
+                },
+                "key": "X-ODS-Code",
+                "value": "A29929"
+              },
+              {
+                "disabled": true,
+                "description": {
+                  "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                  "type": "text/plain"
+                },
                 "key": "X-Correlation-ID",
-                "value": "38a997d0-bf72-4288-bd52-fc6045392dfb",
-                "type": "text"
+                "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
               }
             ],
-            "url": {
-              "raw": "{{api_base_url}}/authentication",
-              "host": ["{{api_base_url}}"],
-              "path": ["authentication"]
+            "method": "POST",
+            "body": {},
+            "auth": {
+              "type": "oauth2",
+              "oauth2": [
+                {
+                  "type": "any",
+                  "value": "/oauth2/token",
+                  "key": "accessTokenUrl"
+                },
+                {
+                  "type": "any",
+                  "value": "/oauth2/authorize",
+                  "key": "authUrl"
+                },
+                {
+                  "type": "any",
+                  "value": "authorization_code",
+                  "key": "grant_type"
+                }
+              ]
             }
           },
-          "response": []
+          "response": [
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "802d6ba5-3c0c-489a-8ad4-4ac953d27549",
+              "name": "The session was created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sessionId\": \"occaecat ex\",\n  \"userPatientLinkToken\": \"esse reprehenderit\",\n  \"suid\": \"exercitation ad Ut Lorem\",\n  \"onlineUserId\": \"sunt velit laborum veniam\",\n  \"patientId\": \"Excepteur qui\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "577a13d4-718f-4e17-84b3-3b959cbb69c6",
+              "name": "missingValueError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/MissingValueError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "6d9a8123-f483-47e5-b370-3f0532fb2e63",
+              "name": "invalidValueError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/InvalidValueError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "26d73949-7aa4-47c0-95fe-b15d8a54857a",
+              "name": "accessDeniedError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/AccessDeniedError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "b913a788-7e71-4f33-b2f7-5e09be23ba7f",
+              "name": "forbiddenError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/ForbiddenError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "5fa3fcf7-0f8c-4f98-b51a-528eda521ae2",
+              "name": "timeoutError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/TimeoutError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "957dc615-fcaf-41e9-8968-ce8f4e2273af",
+              "name": "throttledError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/ThrottledError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "0c00c527-a6cf-4b18-b725-26dc8fb6b9c8",
+              "name": "Errors will be returned for the first error encountered in the request. An error occurred as follows:\n\n| HTTP status | Error code              | Description                                       |\n| ----------- | ----------------------- | ------------------------------------------------- |\n| 500         | `SERVER_ERROR`          | An unexpected internal server error has occurred. |\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authentication"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identity of the subsidiary.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Application-ID",
+                    "value": "reprehenderit anim"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The base URL to forward requests to.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Forward-To",
+                    "value": "https://example.com"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "X-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/ServerError\"\n}",
+              "cookie": []
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
         }
-      ]
+      ],
+      "event": []
     }
   ],
-  "event": [
-    {
-      "listen": "prerequest",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [""]
-      }
-    },
-    {
-      "listen": "test",
-      "script": {
-        "type": "text/javascript",
-        "packages": {},
-        "exec": [""]
-      }
-    }
-  ],
+  "event": [],
   "variable": [
     {
-      "key": "api_base_url",
-      "value": "http://localhost:8000",
-      "type": "default"
+      "type": "any",
+      "value": "https://sandbox.api.service.nhs.uk/im1-pfs-auth/",
+      "key": "baseUrl"
     }
-  ]
+  ],
+  "info": {
+    "_postman_id": "b5140f25-dd1f-49c5-9842-4aeb1e80a88c",
+    "name": "IM1 PFS Auth API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "## Overview\n![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)\n\nAn intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued \"proxy token\" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.\n\nYou can:\n\n- Authenticate a user and initiate a session with the approporiate supplier\n\n## Who can use this API\nThis API can only be used where there is a legal basis to do so. Make sure you have this and a valid use case before\nyou go too far with your development by [contacting us](https://digital.nhs.uk/developer/help-and-support)\n\nYou must do this before you can go live (see 'Onboarding' below).\n\n## API status and roadmap\nThis API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses), meaning:\n- we will be making breaking changes\n\n## Technology\nThis API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).\n\n## Network access\nThis API is available on the internet.\n\nFor more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).\n\n## Security and authorisation\n\nThis API supports [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis) access type with the following access modes:\n\n| Access mode                   | Access type            |\n|-------------------------------|------------------------|\n| Patient access                | User-restricted        |\n\nFor more information on access modes and how to use them, see the developer [security and authorisation guide](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation).\n\n### User-restricted access\n\nUser-restricted access meaning an end user must be present, authenticated and authorised.\n\n#### Patient access mode\nIf the end user is a patient then you must use this access mode.\n\n[Review all patient access modes](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#patient-access-mode)\n\nValidated Relationships Service API checks the patient is P9 verified and has a high [vector of trust](https://nhsconnect.github.io/nhslogin/vectors-of-trust/) (VOT).\n\nAllowed vectors of trust are:\n- `P9.Cp.Cd`\n- `P9.Cp.Ck`\n- `P9.Cm`\n\n## Headers\nThis API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. X-Request-Id, x-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.\n\n## Errors\nWe use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:\n\n* 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action\n* 400 to 499 if it failed because of a client error by your application\n* 500 to 599 if it failed because of an error on our server\n\nErrors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.\n\n## Open source\nYou might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:\n\n| Resource         | Description                                               | Links                                                     |\n| ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |\n| IM1 PFS Auth API | Source code for the API proxy, sandbox and specification. | [GitHub repo](https://github.com/NHSDigital/im1-pfs-auth) |\n\n## Environments and testing\n| Environment       | Base URL                                           |\n| ----------------- | -------------------------------------------------- |\n| Sandbox           | `https://sandbox.api.service.nhs.uk/im1-pfs-auth/` |\n| Integration test  | `https://int.api.service.nhs.uk/im1-pfs-auth/`     |\n\n### Sandbox testing\nOur [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing)\n\n* is for early developer testing\n* only covers a limited set of scenarios\n* is open access, so does not allow you to test authorisation\n\n[![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](asserts/im1-api-auth-api.postman_collection.json)\n\nImport the  postman collection to run requests against sandbox.\n\n## Onboarding\nYou must get your software onboarded before it can go live.\n\nFor more details, contact us at [england.vrs-team@nhs.net](mailto:england.vrs-team@nhs.net).\n\n## Contact us\nFor help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).\n",
+      "type": "text/plain"
+    }
+  }
 }

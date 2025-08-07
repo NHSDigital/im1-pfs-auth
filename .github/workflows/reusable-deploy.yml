@@ -24,6 +24,11 @@ on:
         required: true
         type: string
 
+    outputs:
+      environment_url:
+        description: "The URL of the deployed environment"
+        value: ${{ jobs.deploy-environment.outputs.environment_url }}
+
     secrets:
       PROXYGEN_CLIENT_ID:
         required: true
@@ -90,8 +95,13 @@ jobs:
     needs: build-and-push-container
     environment:
       name: ${{ inputs.environment }}
-      url: https://${{ inputs.environment }}.api.platform.nhs.uk/${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}
+      url: ${{ steps.deploy-environment-url.outputs.environment_url }}
+    outputs:
+      environment_url: ${{ steps.deploy-environment-url.outputs.environment_url }}
     steps:
+      - name: "Output environment URL"
+        id: deploy-environment-url
+        run: echo "environment_url=${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}" >> $GITHUB_ENV
       - name: "Checkout code"
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -110,7 +120,7 @@ jobs:
         run: make deploy-ci
         env:
           ENVIRONMENT: ${{ inputs.environment }}
-          PROXYGEN_URL_PATH: ${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}
+          PROXYGEN_URL_PATH: ${{ steps.deploy-environment-url.outputs.environment_url }}
 
       - name: "Check Deployment"
         run: cat specification/x-nhsd-apim/x-nhsd-apim.generated.yaml
