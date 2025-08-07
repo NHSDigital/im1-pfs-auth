@@ -1,10 +1,10 @@
 {
   "_": {
-    "postman_id": "b5140f25-dd1f-49c5-9842-4aeb1e80a88c"
+    "postman_id": "70ba2b8a-5ba5-43a3-8163-93fc86b0faf6"
   },
   "item": [
     {
-      "id": "399b7e53-fbf2-4e2d-bca5-b606a5101292",
+      "id": "89e70426-dc25-42ad-ae62-3417f07f202d",
       "name": "sessions",
       "description": {
         "content": "",
@@ -12,7 +12,7 @@
       },
       "item": [
         {
-          "id": "8be360a2-f0a5-4c68-9aa9-ba228e2e2a20",
+          "id": "f9d648b9-2b04-4d82-960e-4300b43b0e4c",
           "name": "Begins a session",
           "request": {
             "name": "Begins a session",
@@ -47,7 +47,7 @@
                   "type": "text/plain"
                 },
                 "key": "X-Application-ID",
-                "value": "reprehenderit anim"
+                "value": "anim cillum"
               },
               {
                 "disabled": false,
@@ -118,7 +118,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "802d6ba5-3c0c-489a-8ad4-4ac953d27549",
+              "id": "c8735fef-ab9b-480b-8294-0aaec70746b6",
               "name": "The session was created successfully",
               "originalRequest": {
                 "url": {
@@ -148,7 +148,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -210,14 +210,14 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"sessionId\": \"occaecat ex\",\n  \"userPatientLinkToken\": \"esse reprehenderit\",\n  \"suid\": \"exercitation ad Ut Lorem\",\n  \"onlineUserId\": \"sunt velit laborum veniam\",\n  \"patientId\": \"Excepteur qui\"\n}",
+              "body": "{\n  \"sessionId\": \"in laboru\",\n  \"userPatientLinkToken\": \"fugiat anim\",\n  \"suid\": \"commodo reprehenderit\",\n  \"onlineUserId\": \"deserunt Lorem magna\",\n  \"patientId\": \"Excepteur aute reprehenderit in laborum\"\n}",
               "cookie": []
             },
             {
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "577a13d4-718f-4e17-84b3-3b959cbb69c6",
+              "id": "ffba3bb4-3d3c-4c7a-927a-6b269de42549",
               "name": "missingValueError",
               "originalRequest": {
                 "url": {
@@ -247,7 +247,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -316,7 +316,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "6d9a8123-f483-47e5-b370-3f0532fb2e63",
+              "id": "e511f239-d22d-4936-8684-09f8b1c96f9e",
               "name": "invalidValueError",
               "originalRequest": {
                 "url": {
@@ -346,7 +346,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -415,7 +415,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "26d73949-7aa4-47c0-95fe-b15d8a54857a",
+              "id": "0a429ad4-82ab-47df-aa42-88b4dec0274f",
               "name": "accessDeniedError",
               "originalRequest": {
                 "url": {
@@ -445,7 +445,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -514,7 +514,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "b913a788-7e71-4f33-b2f7-5e09be23ba7f",
+              "id": "faedfcd9-a404-440f-a6f9-9e0181bee0e6",
               "name": "forbiddenError",
               "originalRequest": {
                 "url": {
@@ -544,7 +544,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -613,7 +613,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "5fa3fcf7-0f8c-4f98-b51a-528eda521ae2",
+              "id": "05b40f8a-bea2-4f3b-8087-bf64c5c56771",
               "name": "timeoutError",
               "originalRequest": {
                 "url": {
@@ -643,7 +643,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -712,7 +712,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "957dc615-fcaf-41e9-8968-ce8f4e2273af",
+              "id": "db71ab20-cf87-46d8-b493-6c7834daad27",
               "name": "throttledError",
               "originalRequest": {
                 "url": {
@@ -742,7 +742,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -811,7 +811,7 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "0c00c527-a6cf-4b18-b725-26dc8fb6b9c8",
+              "id": "28945647-79bf-4b1d-86a0-5399420ed35c",
               "name": "Errors will be returned for the first error encountered in the request. An error occurred as follows:\n\n| HTTP status | Error code              | Description                                       |\n| ----------- | ----------------------- | ------------------------------------------------- |\n| 500         | `SERVER_ERROR`          | An unexpected internal server error has occurred. |\n",
               "originalRequest": {
                 "url": {
@@ -841,7 +841,7 @@
                       "type": "text/plain"
                     },
                     "key": "X-Application-ID",
-                    "value": "reprehenderit anim"
+                    "value": "anim cillum"
                   },
                   {
                     "disabled": false,
@@ -925,11 +925,11 @@
     }
   ],
   "info": {
-    "_postman_id": "b5140f25-dd1f-49c5-9842-4aeb1e80a88c",
+    "_postman_id": "70ba2b8a-5ba5-43a3-8163-93fc86b0faf6",
     "name": "IM1 PFS Auth API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "## Overview\n![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)\n\nAn intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued \"proxy token\" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.\n\nYou can:\n\n- Authenticate a user and initiate a session with the approporiate supplier\n\n## Who can use this API\nThis API can only be used where there is a legal basis to do so. Make sure you have this and a valid use case before\nyou go too far with your development by [contacting us](https://digital.nhs.uk/developer/help-and-support)\n\nYou must do this before you can go live (see 'Onboarding' below).\n\n## API status and roadmap\nThis API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses), meaning:\n- we will be making breaking changes\n\n## Technology\nThis API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).\n\n## Network access\nThis API is available on the internet.\n\nFor more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).\n\n## Security and authorisation\n\nThis API supports [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis) access type with the following access modes:\n\n| Access mode                   | Access type            |\n|-------------------------------|------------------------|\n| Patient access                | User-restricted        |\n\nFor more information on access modes and how to use them, see the developer [security and authorisation guide](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation).\n\n### User-restricted access\n\nUser-restricted access meaning an end user must be present, authenticated and authorised.\n\n#### Patient access mode\nIf the end user is a patient then you must use this access mode.\n\n[Review all patient access modes](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#patient-access-mode)\n\nValidated Relationships Service API checks the patient is P9 verified and has a high [vector of trust](https://nhsconnect.github.io/nhslogin/vectors-of-trust/) (VOT).\n\nAllowed vectors of trust are:\n- `P9.Cp.Cd`\n- `P9.Cp.Ck`\n- `P9.Cm`\n\n## Headers\nThis API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. X-Request-Id, x-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.\n\n## Errors\nWe use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:\n\n* 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action\n* 400 to 499 if it failed because of a client error by your application\n* 500 to 599 if it failed because of an error on our server\n\nErrors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.\n\n## Open source\nYou might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:\n\n| Resource         | Description                                               | Links                                                     |\n| ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |\n| IM1 PFS Auth API | Source code for the API proxy, sandbox and specification. | [GitHub repo](https://github.com/NHSDigital/im1-pfs-auth) |\n\n## Environments and testing\n| Environment       | Base URL                                           |\n| ----------------- | -------------------------------------------------- |\n| Sandbox           | `https://sandbox.api.service.nhs.uk/im1-pfs-auth/` |\n| Integration test  | `https://int.api.service.nhs.uk/im1-pfs-auth/`     |\n\n### Sandbox testing\nOur [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing)\n\n* is for early developer testing\n* only covers a limited set of scenarios\n* is open access, so does not allow you to test authorisation\n\n[![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](asserts/im1-api-auth-api.postman_collection.json)\n\nImport the  postman collection to run requests against sandbox.\n\n## Onboarding\nYou must get your software onboarded before it can go live.\n\nFor more details, contact us at [england.vrs-team@nhs.net](mailto:england.vrs-team@nhs.net).\n\n## Contact us\nFor help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).\n",
+      "content": "## Overview\n![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)\n\nAn intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued \"proxy token\" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.\n\nYou can:\n\n- Authenticate a user and initiate a session with the approporiate supplier\n\n## Who can use this API\nThis API can only be used where there is a legal basis to do so. Make sure you have this and a valid use case before\nyou go too far with your development by [contacting us](https://digital.nhs.uk/developer/help-and-support)\n\nYou must do this before you can go live (see 'Onboarding' below).\n\n## API status and roadmap\nThis API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses), meaning:\n- we will be making breaking changes\n\n## Technology\nThis API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).\n\n## Network access\nThis API is available on the internet.\n\nFor more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).\n\n## Security and authorisation\n\nThis API supports [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis) access type with the following access modes:\n\n| Access mode                   | Access type            |\n|-------------------------------|------------------------|\n| Patient access                | User-restricted        |\n\nFor more information on access modes and how to use them, see the developer [security and authorisation guide](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation).\n\n### User-restricted access\n\nUser-restricted access meaning an end user must be present, authenticated and authorised.\n\n#### Patient access mode\nIf the end user is a patient then you must use this access mode.\n\n[Review all patient access modes](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#patient-access-mode)\n\nValidated Relationships Service API checks the patient is P9 verified and has a high [vector of trust](https://nhsconnect.github.io/nhslogin/vectors-of-trust/) (VOT).\n\nAllowed vectors of trust are:\n- `P9.Cp.Cd`\n- `P9.Cp.Ck`\n- `P9.Cm`\n\n## Headers\nThis API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. X-Request-Id, x-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.\n\n## Errors\nWe use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:\n\n* 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action\n* 400 to 499 if it failed because of a client error by your application\n* 500 to 599 if it failed because of an error on our server\n\nErrors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.\n\n## Open source\nYou might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:\n\n| Resource         | Description                                               | Links                                                     |\n| ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |\n| IM1 PFS Auth API | Source code for the API proxy, sandbox and specification. | [GitHub repo](https://github.com/NHSDigital/im1-pfs-auth) |\n\n## Environments and testing\n| Environment       | Base URL                                           |\n| ----------------- | -------------------------------------------------- |\n| Sandbox           | `https://sandbox.api.service.nhs.uk/im1-pfs-auth/` |\n| Integration test  | `https://int.api.service.nhs.uk/im1-pfs-auth/`     |\n\n### Sandbox testing\nOur [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing)\n\n* is for early developer testing\n* only covers a limited set of scenarios\n* is open access, so does not allow you to test authorisation\n\n[![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/postman/postman_collection.json)\n\nImport the  postman collection to run requests against sandbox.\n\n## Onboarding\nYou must get your software onboarded before it can go live.\n\nFor more details, contact us at [england.vrs-team@nhs.net](mailto:england.vrs-team@nhs.net).\n\n## Contact us\nFor help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).\n",
       "type": "text/plain"
     }
   }
