@@ -105,7 +105,7 @@ def test_authentication_post_last_validation_check_fails(
     mock_validate_forward_to: MagicMock,
     client: FlaskClient,
 ) -> None:
-    """Test the POST /authentication endpoint with an missing value exception."""
+    """Test the POST /authentication endpoint last validation check fails."""
     # Arrange
     path = "/authentication"
     # Act

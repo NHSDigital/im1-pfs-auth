@@ -13,6 +13,7 @@ dev = [
   "pytest-cov~=6.2.1",
   "coverage~=7.10.1",
   "ruff~=0.12.7",
+  "pytest-mock>=3.14.1",
 ]
 
 [tool.uv]

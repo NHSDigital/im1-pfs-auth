@@ -62,7 +62,7 @@ def validate_request_id() -> None:
     try:
         UUID(str(request_id))
     except ValueError:
-        raise MissingValue("Invalid request id")
+        raise InvalidValue("Invalid request id")
 
 
 def validate_correlation_id() -> None:
@@ -70,11 +70,12 @@ def validate_correlation_id() -> None:
 
     If unsuccessful will raise an InvalidValue Exception
     """
-    correlation_id = request.headers.get("X-Request-ID")
-    try:
-        UUID(str(correlation_id))
-    except ValueError:
-        raise InvalidValue("Invalid correlation id")
+    correlation_id = request.headers.get("X-Correlation-ID")
+    if correlation_id:
+        try:
+            UUID(str(correlation_id))
+        except ValueError:
+            raise InvalidValue("Invalid correlation id")
 
 
 def validate_forward_to() -> None:
