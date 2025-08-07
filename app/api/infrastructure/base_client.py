@@ -7,7 +7,7 @@ from domain.forward_response_model import ForwardResponse
 
 
 class BaseClient(ABC):
-    """An abstract base class that defines a common interface and shared behavior for all backend clients that forward requests to external systems"""
+    """An abstract base class that defines a blueprint for all backend clients that forward requests to external systems and transforms the responses"""
 
     def __init__(self, request: ForwardRequest):
         self.request = request

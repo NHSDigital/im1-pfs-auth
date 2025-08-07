@@ -23,7 +23,7 @@ class ForwardRequest(BaseModel):
         If unsuccessful will raise a MissingValue Exception
         """
         if not v:
-            raise MissingValue("Missing application id")
+            raise MissingValue("Missing required value")
 
     @field_validator("patient_nhs_number", "proxy_nhs_number")
     def validate_nhs_number(cls, v) -> None:

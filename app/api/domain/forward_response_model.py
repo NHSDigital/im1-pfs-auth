@@ -1,5 +1,23 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel
 
 
-class ForwardResponse(BaseModel):
-    """A domain-level data model that encapsulates all the essential information needed to forward a external backend system response to the client"""
+class Demographics(BaseModel):
+    """A data model that encapsulates all the essential demographic data"""
+
+    first_name: str
+    surname: str
+    title: str
+
+
+class Patient(Demographics):
+    """A data model that encapsulates all the essential information needed for patient"""
+
+    identifier_value: str
+    identifier_type: str
+
+
+class ForwardResponse(Demographics):
+    """A data model that encapsulates all the essential information needed to forward a external backend system response to the client"""
+
+    session_id: str
+    patients: list[Patient]

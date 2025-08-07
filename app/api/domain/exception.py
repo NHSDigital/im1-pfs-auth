@@ -9,21 +9,28 @@ class ApiException(Exception):
 
 
 class AccessDenied(ApiException):
-    """Exception for when Request is not authorised to access resource"""
+    """Exception for when request is not authorised to access resource"""
 
     status_code = HTTPStatus.UNAUTHORIZED
     message = "Missing or invalid OAuth 2.0 bearer token in request."
 
 
+class DownstreamError(ApiException):
+    """Exception for when there is a downstream error"""
+
+    status_code = HTTPStatus.BAD_GATEWAY
+    message = "Downstream Service Error."
+
+
 class InvalidValue(ApiException):
-    """Exception for when Request contains a value that is invalid"""
+    """Exception for when request contains a value that is invalid"""
 
     status_code = HTTPStatus.BAD_REQUEST
     message = "The request was unsuccessful due to invalid value."
 
 
 class MissingValue(ApiException):
-    """Exception for when Request is missing a required value"""
+    """Exception for when request is missing a required value"""
 
     status_code = HTTPStatus.BAD_REQUEST
     message = "The request was unsuccessful due to missing required value."

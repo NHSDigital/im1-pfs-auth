@@ -1,7 +1,7 @@
 from requests import Response
 
 from .base_client import BaseClient
-from domain.forward_response_model import ForwardResponse
+from domain.forward_response_model import ForwardResponse, Patient
 
 
 class EmisClient(BaseClient):
@@ -27,4 +27,20 @@ class EmisClient(BaseClient):
         }
 
     def transform_response(self, response: Response) -> ForwardResponse:
-        return super().transform_response(response)
+        response_body = response.json()
+        user_patient_links = response_body.get("UserPatientLinks", [])
+        return ForwardResponse(
+            session_id=response_body.get("SessionId"),
+            first_name=response_body.get("FirstName"),
+            surname=response_body.get("Surname"),
+            title=response_body.get("Title"),
+            patients=[
+                Patient(
+                    first_name=patient_link.get("Forenames"),
+                    surname=patient_link.get("Surname"),
+                    title=patient_link.get("Title"),
+                )
+                for patient_link in user_patient_links
+                if patient_link
+            ],
+        )

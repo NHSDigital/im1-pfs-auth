@@ -1,9 +1,9 @@
+from domain.exception import DownstreamError
 from domain.forward_request_model import ForwardRequest
 from domain.forward_response_model import ForwardResponse
 from infrastructure.emis_client import EmisClient
-from infrastructure.tpp_client import TppClient
 
-client_map = {"https://emis.com": EmisClient, "https://tpp.com": TppClient}
+client_map = {"https://emis.com": EmisClient}
 
 
 def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
@@ -14,6 +14,11 @@ def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
     Returns:
         ForwardResponse: Transformed response from client
     """
-    client = client_map[forward_request.forward_to](forward_request)
-    response = client.forward_request()
-    return client.transform_response(response)
+    try:
+        client = client_map[forward_request.forward_to](forward_request)
+        response = client.forward_request()
+        return client.transform_response(response)
+    except Exception:
+        raise DownstreamError(
+            "Error occurred with downstream service"
+        )  # Double check want to do this for all...

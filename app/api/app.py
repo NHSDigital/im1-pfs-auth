@@ -24,7 +24,7 @@ def authentication() -> Response:
         )
         response = route_and_forward(forward_request)
         return make_response(
-            jsonify(response),
+            jsonify(response.dict()),
             HTTPStatus.OK,
         )
     except ApiException as e:
