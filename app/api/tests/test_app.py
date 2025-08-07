@@ -21,6 +21,7 @@ def test_authentication_post(client: FlaskClient) -> None:
         "NHSD-NHSlogin-Identity-Proofing-Level": "P9",
         "NHSD-NHSlogin-NHS-Number": "some nhs number",
         "NHSD-ID-Token": "some token",
+        "X-Application-ID": "some application id",
         "X-ODS-Code": "some ods code",
         "X-Request-ID": str(uuid4()),
         "X-Correlation-ID": str(uuid4()),
@@ -37,7 +38,9 @@ def test_authentication_post(client: FlaskClient) -> None:
     }
 
 
-@patch("app.api.app.validate_nhs_number", side_effect=AccessDenied("Test exception"))
+@patch(
+    "app.api.app.validate_application_id", side_effect=AccessDenied("Test exception")
+)
 def test_authentication_post_access_denied_exception(
     _mock_validate: MagicMock, client: FlaskClient
 ) -> None:
@@ -54,7 +57,9 @@ def test_authentication_post_access_denied_exception(
     }
 
 
-@patch("app.api.app.validate_nhs_number", side_effect=InvalidValue("Test exception"))
+@patch(
+    "app.api.app.validate_application_id", side_effect=InvalidValue("Test exception")
+)
 def test_authentication_post_invalid_value_exception(
     _mock_validate: MagicMock, client: FlaskClient
 ) -> None:
@@ -71,7 +76,9 @@ def test_authentication_post_invalid_value_exception(
     }
 
 
-@patch("app.api.app.validate_nhs_number", side_effect=MissingValue("Test exception"))
+@patch(
+    "app.api.app.validate_application_id", side_effect=MissingValue("Test exception")
+)
 def test_authentication_post_missing_value_exception(
     _mock_validate: MagicMock, client: FlaskClient
 ) -> None:
@@ -95,7 +102,9 @@ def test_authentication_post_missing_value_exception(
 @patch("app.api.app.validate_vot_level")
 @patch("app.api.app.validate_proofing_level")
 @patch("app.api.app.validate_nhs_number")
+@patch("app.api.app.validate_application_id")
 def test_authentication_post_last_validation_check_fails(
+    mock_validate_application_id: MagicMock,
     mock_validate_nhs_number: MagicMock,
     mock_validate_proofing_level: MagicMock,
     mock_validate_vot_level: MagicMock,
@@ -125,7 +134,7 @@ def test_authentication_post_last_validation_check_fails(
     mock_validate_forward_to.assert_called_once()
 
 
-@patch("app.api.app.validate_nhs_number", side_effect=Exception("Test exception"))
+@patch("app.api.app.validate_application_id", side_effect=Exception("Test exception"))
 def test_authentication_post_exception(
     _mock_validate: MagicMock, client: FlaskClient
 ) -> None:

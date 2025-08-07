@@ -4,6 +4,16 @@ from uuid import UUID
 from .exception import AccessDenied, InvalidValue, MissingValue
 
 
+def validate_application_id() -> None:
+    """Validates Application Id from Request Header
+
+    If unsuccessful will raise a MissingValue Exception
+    """
+    application_id = request.headers.get("X-Application-ID")
+    if not application_id:
+        raise MissingValue("Missing application id")
+
+
 def validate_nhs_number() -> None:
     """Validates Logged in User's NHS Number from Request Header
 

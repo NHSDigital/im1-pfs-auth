@@ -1,16 +1,9 @@
-from flask import Flask, Response, jsonify, make_response
+from flask import Flask, Response, jsonify, make_response, request
 from http import HTTPStatus
 
-from .exception import ApiException
-from .utils import (
-    validate_correlation_id,
-    validate_forward_to,
-    validate_nhs_number,
-    validate_ods_code,
-    validate_proofing_level,
-    validate_request_id,
-    validate_vot_level,
-)
+from .domain.exception import ApiException
+from .domain.forward_request_model import ForwardRequest
+from .application.forward_request import route_and_forward
 
 app = Flask(__name__)
 
@@ -23,18 +16,15 @@ def authentication() -> Response:
         Response: Response for POST /authentication
     """
     try:
-        for func in [
-            validate_nhs_number,
-            validate_proofing_level,
-            validate_vot_level,
-            validate_ods_code,
-            validate_request_id,
-            validate_correlation_id,
-            validate_forward_to,
-        ]:
-            func()
+        forward_request = ForwardRequest(
+            application_id=request.headers.get("X-Application-ID"),
+            patient_nhs_number=request.headers.get("NHSD-NHSlogin-NHS-Number"),
+            patient_ods_code=request.headers.get("X-ODS-Code"),
+            proxy_nhs_number=request.headers.get(""),  # Where to get this from???
+        )
+        response = route_and_forward(forward_request)
         return make_response(
-            jsonify(message="Hello from the IM1 PFS Auth API!", hello="world"),
+            jsonify(response),
             HTTPStatus.OK,
         )
     except ApiException as e:
