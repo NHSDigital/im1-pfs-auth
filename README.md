@@ -56,6 +56,8 @@ The following software packages, or their equivalents, are expected to be instal
 - [GNU make](https://www.gnu.org/software/make/) 3.82 or later,
 - [Python](https://www.python.org/) the latest version
 - [uv](https://docs.astral.sh/uv/) Python package manager
+- [yq](https://github.com/mikefarah/yq) command line YAML processor
+- [Node.js](https://nodejs.org/) 22 or later
 
 ### Configuration
 

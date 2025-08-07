@@ -101,8 +101,8 @@ info:
     For help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).
 
 servers:
-  - url: https://int.api.service.nhs.uk/im1-pfs-auth/
   - url: https://sandbox.api.service.nhs.uk/im1-pfs-auth/
+  - url: https://int.api.service.nhs.uk/im1-pfs-auth/
 
 paths:
   /authentication:

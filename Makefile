@@ -79,6 +79,25 @@ spec-compile:
 	npm run spec-compile
 
 # ==============================================================================
+# Postman Commands
+# ==============================================================================
+
+# Generate Postman collection from OpenAPI specification
+postman-generate-collection:
+	yq 'del(.x-nhsd-apim)' specification/im1-pfs-auth-api.yaml > specification/im1-pfs-auth-api.portman.generated.yaml
+	npx portman --cliOptionsFile portman/portman-cli.json
+
+# Run Postman tests using Newman
+postman-test:
+	npx newman run postman/postman_collection.json $(NEWMAN_ARGS)
+
+# Run Postman Tests
+postman-test-pr-environment:
+# Mandatory arguments:
+# SANDBOX_BASE_URL: The base URL for the sandbox environment (e.g., https://sandbox.api.service.nhs.uk/im1-pfs-auth/)
+	@make postman-test NEWMAN_ARGS="--env-var baseUrl=$(SANDBOX_BASE_URL)"
+
+# ==============================================================================
 # App Commands
 # ==============================================================================
 

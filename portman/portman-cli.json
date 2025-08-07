@@ -1,0 +1,8 @@
+{
+  "local": "specification/im1-pfs-auth-api.portman.generated.yaml",
+  "output": "postman/postman_collection.json",
+  "portmanConfigFile": "portman/portman-config.json",
+  "includeTests": true,
+  "syncPostman": false,
+  "runNewman": true
+}

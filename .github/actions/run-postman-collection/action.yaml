@@ -1,0 +1,21 @@
+name: "Run Postman Collection"
+description: Run Postman collection with Newman
+
+inputs:
+  SANDBOX_BASE_URL:
+    description: The base URL for the sandbox environment (e.g., https://sandbox.api.service.nhs.uk/im1-pfs-auth/)
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Node.js
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+      with:
+        node-version: "24"
+    - name: Install NPM packages
+      run: npm install
+      shell: bash
+    - name: Run Postman Collection
+      run: make postman-test-pr-environment
+      shell: bash
