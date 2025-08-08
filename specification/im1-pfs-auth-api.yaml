@@ -210,28 +210,26 @@ components:
     ResponseModel:
       required:
         - sessionId
-          firstName
-          surname
-          title
+          supplier
+          proxy
           patients
       type: object
       properties:
         sessionId:
           minLength: 1
           type: string
-        firstName:
+        supplier:
+          enum: [EMIS, TPP]
           type: string
-        surname:
-          type: string
-        title:
-          type: string
+        proxy:
+          $ref: "#/components/schemas/DemographicsModel"
         patients:
           type: array
           items:
-            $ref: "#/components/schemas/PatientModel"
+            $ref: "#/components/schemas/DemographicsModel"
       additionalProperties: false
 
-    PatientModel:
+    DemographicsModel:
       required:
         - firstName
           surname

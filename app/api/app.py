@@ -1,6 +1,5 @@
 from flask import Flask, Response, jsonify, make_response, request
 from http import HTTPStatus
-from os import environ
 
 from .domain.exception import ApiException
 from .domain.forward_request_model import ForwardRequest
@@ -8,11 +7,6 @@ from .application.forward_request import route_and_forward
 from .application.jwt import get_nhs_number_from_jwt_token
 
 app = Flask(__name__)
-
-
-@app.route("/ping", methods=["GET"])
-def health_check() -> Response:
-    return make_response(jsonify({"message": environ.get("MOCK")}), HTTPStatus.OK)
 
 
 @app.route("/authentication", methods=["POST"])

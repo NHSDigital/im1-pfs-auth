@@ -1,7 +1,10 @@
 import pytest
+from json import load
+from os import environ
 from pydantic import ValidationError
-from json import dumps
-from requests import Response
+from requests import HTTPError
+from typing import Any
+from unittest.mock import patch, MagicMock
 
 from ...domain.forward_request_model import ForwardRequest
 from ...domain.forward_response_model import ForwardResponse, Demographics
@@ -51,35 +54,82 @@ def test_emis_client_get_data(client: EmisClient) -> None:
     }
 
 
+@patch.dict(environ, {"USE_MOCK": "True"})
+def test_emis_forward_request_use_mock(client: EmisClient) -> None:
+    """Test the EmisClient forward_request function when mock is turned on"""
+    # Arrange
+    with open(
+        "app/api/infrastructure/data/mocked_emis_response.json", encoding="utf-8"
+    ) as f:
+        expected_response = load(f)
+    # Act
+    actual_result = client.forward_request()
+
+    # Assert
+    assert actual_result == expected_response
+
+
+@patch.dict(environ, {"USE_MOCK": "False"})
+@patch("app.api.infrastructure.emis_client.requests")
+def test_emis_forward_request_use_mock(
+    mock_request: MagicMock, client: EmisClient
+) -> None:
+    """Test the EmisClient forward_request function when mock is turned off"""
+    # Arrange
+    expected_response = {"Message": "Happy Days!"}
+    mock_instance = MagicMock()
+    mock_instance.json.return_value = expected_response
+    mock_request.post.return_value = mock_instance
+    # Act
+    actual_result = client.forward_request()
+
+    # Assert
+    assert actual_result == expected_response
+
+
+@patch.dict(environ, {"USE_MOCK": "False"})
+@patch("app.api.infrastructure.emis_client.requests")
+def test_emis_forward_request_use_mock(
+    mock_request: MagicMock, client: EmisClient
+) -> None:
+    """Test the EmisClient forward_request function when mock is turned off and there is an error"""
+    # Arrange
+    mock_instance = MagicMock()
+    mock_instance.raise_for_status.side_effect = HTTPError("Oops")
+    mock_request.post.return_value = mock_instance
+    # Act & Assert
+    with pytest.raises(HTTPError, match="Oops"):
+        client.forward_request()
+
+
 def test_emis_client_transform_response(client: EmisClient) -> None:
     """Test the EmisClient transform_response function."""
     # Assert
-    content = dumps(
-        {
-            "SessionId": "some session",
-            "FirstName": "some first name",
-            "Surname": "some surname",
-            "Title": "some title",
-            "UserPatientLinks": [
-                {
-                    "Forenames": "some other first name",
-                    "Surname": "some other surname",
-                    "Title": "some other title",
-                }
-            ],
-        }
-    )
-    response = Response()
-    response._content = content.encode("utf-8")
+    response = {
+        "SessionId": "some session",
+        "FirstName": "some first name",
+        "Surname": "some surname",
+        "Title": "some title",
+        "UserPatientLinks": [
+            {
+                "Forenames": "some other first name",
+                "Surname": "some other surname",
+                "Title": "some other title",
+            }
+        ],
+    }
     # Act
     actual_result = client.transform_response(response)
 
     # Assert
     assert actual_result == ForwardResponse(
-        first_name="some first name",
-        surname="some surname",
-        title="some title",
         session_id="some session",
+        supplier="EMIS",
+        proxy=Demographics(
+            first_name="some first name",
+            surname="some surname",
+            title="some title",
+        ),
         patients=[
             Demographics(
                 first_name="some other first name",
@@ -90,14 +140,45 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
     )
 
 
+@pytest.mark.parametrize(
+    "response",
+    [
+        {},
+        {  # Missing UserPatientLints
+            "SessionId": "some session",
+            "FistName": "someone's first name",
+            "Surname": "someone's surname",
+            "Title": "someone's title",
+        },
+        {  # Missing Proxy Demographic information
+            "SessionId": "some session",
+            "UserPatientLinks": [
+                {
+                    "FistName": "someone's first name",
+                    "Surname": "someone's surname",
+                    "Title": "someone's title",
+                }
+            ],
+        },
+        {  # Missing Session Id
+            "FistName": "someone's first name",
+            "Surname": "someone's surname",
+            "Title": "someone's title",
+            "UserPatientLinks": [
+                {
+                    "FistName": "someone's first name",
+                    "Surname": "someone's surname",
+                    "Title": "someone's title",
+                }
+            ],
+        },
+    ],
+)
 def test_emis_client_transform_response_raise_validation_error(
+    response: Any,
     client: EmisClient,
 ) -> None:
     """Test the EmisClient transform_response function raises validation error."""
-    # Assert
-    content = dumps({})
-    response = Response()
-    response._content = content.encode("utf-8")
     # Act & Assert
     with pytest.raises(ValidationError):
         client.transform_response(response)

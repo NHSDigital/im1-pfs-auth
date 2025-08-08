@@ -114,3 +114,4 @@ jobs:
         uses: ./.github/actions/build-container
         with:
           type_of_deployment: "app"
+          use_mock: "True"

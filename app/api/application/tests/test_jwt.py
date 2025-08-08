@@ -6,9 +6,7 @@ from ...domain.exception import AccessDenied
 from ..jwt import get_nhs_number_from_jwt_token
 
 
-@pytest.mark.parametrize(
-    "vot_level", ["P9.Cp.Cd", "P9.Cp.Ck", "P9.Cm"]
-)
+@pytest.mark.parametrize("vot_level", ["P9.Cp.Cd", "P9.Cp.Ck", "P9.Cm"])
 def test_get_nhs_number_from_jwt_token(vot_level: str) -> None:
     """Test the get_nhs_number_from_jwt_token function."""
     # Arrange
@@ -51,7 +49,7 @@ def test_get_nhs_number_from_jwt_token_missing_patient_nhs_number() -> None:
         algorithm="none",
     )
     # Act & Assert
-    with pytest.raises(AccessDenied, match = "Failed to retrieve nhs number from token"):
+    with pytest.raises(AccessDenied, match="Failed to retrieve nhs number from token"):
         get_nhs_number_from_jwt_token(token)
 
 
@@ -72,13 +70,14 @@ def test_get_nhs_number_from_jwt_token_missing_proxy_nhs_number() -> None:
         algorithm="none",
     )
     # Act & Assert
-    with pytest.raises(AccessDenied, match = "Failed to retrieve nhs number from token"):
+    with pytest.raises(AccessDenied, match="Failed to retrieve nhs number from token"):
         get_nhs_number_from_jwt_token(token)
 
-@pytest.mark.parametrize(
-    "proofing_level", ["P5", "P0", "something random", "", None]
-)
-def test_get_nhs_number_from_jwt_token_invalid_proxy_proofing_level(proofing_level: Any) -> None:
+
+@pytest.mark.parametrize("proofing_level", ["P5", "P0", "something random", "", None])
+def test_get_nhs_number_from_jwt_token_invalid_proxy_proofing_level(
+    proofing_level: Any,
+) -> None:
     """Test the get_nhs_number_from_jwt_token function when invalid proxy proofing level."""
     # Arrange
     logged_in_user_token = encode(
@@ -96,7 +95,7 @@ def test_get_nhs_number_from_jwt_token_invalid_proxy_proofing_level(proofing_lev
         algorithm="none",
     )
     # Act & Assert
-    with pytest.raises(AccessDenied, match = "Logged in user is not P9 proofing level"):
+    with pytest.raises(AccessDenied, match="Logged in user is not P9 proofing level"):
         get_nhs_number_from_jwt_token(token)
 
 
@@ -121,5 +120,5 @@ def test_get_nhs_number_from_jwt_token_invalid_proxy_vot_level(vot_level: Any) -
         algorithm="none",
     )
     # Act & Assert
-    with pytest.raises(AccessDenied, match = "Logged in user has incorrect vot level"):
+    with pytest.raises(AccessDenied, match="Logged in user has incorrect vot level"):
         get_nhs_number_from_jwt_token(token)

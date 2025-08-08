@@ -21,7 +21,7 @@ def client() -> FlaskClient:
     return app.test_client()
 
 
-@patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value = ("patient", "proxy"))
+@patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value=("patient", "proxy"))
 @patch(f"{FILE_PATH}.ForwardRequest")
 @patch(f"{FILE_PATH}.route_and_forward")
 def test_authentication_post(
@@ -67,7 +67,7 @@ def test_authentication_post(
         ),
     ],
 )
-@patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value = ("patient", "proxy"))
+@patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value=("patient", "proxy"))
 @patch(f"{FILE_PATH}.ForwardRequest")
 @patch(f"{FILE_PATH}.route_and_forward")
 def test_authentication_post_api_exception(
@@ -93,7 +93,7 @@ def test_authentication_post_api_exception(
     mock_route_and_forward.assert_not_called()
 
 
-@patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value = ("patient", "proxy"))
+@patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value=("patient", "proxy"))
 @patch(f"{FILE_PATH}.ForwardRequest")
 @patch(f"{FILE_PATH}.route_and_forward")
 def test_authentication_post_exception(

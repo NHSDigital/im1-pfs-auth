@@ -85,7 +85,7 @@ spec-compile:
 app-build:
 	cp pyproject.toml app/
 	cp uv.lock app/
-	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --load app/
+	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --build-arg USE_MOCK=$(USE_MOCK) --load app/
 
 app-push:
 	proxygen docker get-login | bash
