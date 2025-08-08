@@ -23,6 +23,10 @@ on:
         description: "Type of deployment, e.g. 'app', 'sandbox'"
         required: true
         type: string
+      use_mock:
+        description: "Whether or not the mock for routing requests is on or off"
+        type: string
+        required: false
 
     outputs:
       environment_url:
@@ -45,6 +49,7 @@ permissions: {}
 env:
   CONTAINER_TAG: ${{inputs.type_of_deployment}}-${{ github.sha }}
   PROXYGEN_DOCKER_REGISTRY_URL: 958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth
+  USE_MOCK: ${{ inputs.use_mock }}
 
 jobs:
   validate-inputs:

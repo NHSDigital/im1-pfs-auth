@@ -32,6 +32,7 @@ jobs:
       environment: "internal-dev"
       type_of_deployment: "app"
       additional_path: "pr-${{ github.event.number }}"
+      use_mock: "True"
     secrets:
       PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
       PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
