@@ -22,7 +22,3 @@ target:
         tag: CONTAINER_TAG_TO_BE_REPLACED
       environment:
         LOG_LEVEL: info
-target-identity: # Information from User ID token to pass to backend via Headers
-  - name: nhs-login-nhs-number
-  - name: nhs-login-identity-proofing-level
-  - name: id-token
