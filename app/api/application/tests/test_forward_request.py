@@ -14,9 +14,9 @@ def test_route_and_forward() -> None:
     forward_request = ForwardRequest(
         application_id="some application",
         forward_to="https://example.com",
-        patient_nhs_number="some patient",
+        patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
-        proxy_nhs_number="some proxy",
+        proxy_nhs_number="0987654321",
     )
     mock_client = MagicMock()
     mock_client.return_value.transform_response.return_value = (
@@ -36,9 +36,9 @@ def test_route_and_forward_raises_downstream_error() -> None:
     forward_request = ForwardRequest(
         application_id="some application",
         forward_to="https://example.com",
-        patient_nhs_number="some patient",
+        patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
-        proxy_nhs_number="some proxy",
+        proxy_nhs_number="0987654321",
     )
     mock_client = MagicMock()
     mock_client.return_value.forward_request.side_effect = Exception("Oops")

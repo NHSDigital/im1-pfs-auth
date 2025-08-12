@@ -30,6 +30,19 @@ class ForwardRequest(BaseModel):
         return values
 
     @model_validator(mode="before")
+    def validate_string(cls, values: list) -> list:
+        """Validates if value is a string.
+
+        If unsuccessful will raise a MissingValueError Exception
+        """
+        string_fields = ["application_id", "patient_ods_code", "forward_to"]
+        for string_field in string_fields:
+            if not isinstance(string_field, str):
+                msg = "Invalid value"
+                raise InvalidValueError(msg)
+        return values
+
+    @model_validator(mode="before")
     def validate_nhs_number(cls, values: list) -> list:
         """Validates nhs number.
 
@@ -37,7 +50,16 @@ class ForwardRequest(BaseModel):
         """
         nhs_number_fields = ["patient_nhs_number", "proxy_nhs_number"]
         for nhs_number_field in nhs_number_fields:
-            if nhs_number_field not in values or not values[nhs_number_field]:
+            rules = [
+                nhs_number_field in values,
+                values[nhs_number_field],
+                isinstance(values[nhs_number_field], str)
+                and len(values[nhs_number_field]) == 10,
+                isinstance(values[nhs_number_field], str)
+                and values[nhs_number_field].isnumeric(),
+            ]
+
+            if not all(rules):
                 msg = "Failed to retrieve NHS Number"
                 raise AccessDeniedError(msg)
         return values

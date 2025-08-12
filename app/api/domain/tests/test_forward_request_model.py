@@ -14,9 +14,9 @@ def test_forward_request() -> None:
     ForwardRequest(
         application_id="some application",
         forward_to="https://example.com",
-        patient_nhs_number="some nhs number",
+        patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
-        proxy_nhs_number="some other nhs number",
+        proxy_nhs_number="0987654321",
     )
 
 
@@ -40,19 +40,19 @@ def test_forward_request_validates_required_field(
         ForwardRequest(
             application_id=application_id,
             forward_to=forward_to,
-            patient_nhs_number="some nhs number",
+            patient_nhs_number="1234567890",
             patient_ods_code=ods_code,
-            proxy_nhs_number="some other nhs number",
+            proxy_nhs_number="0987654321",
         )
 
 
 @pytest.mark.parametrize(
     ("patient_nhs_number", "proxy_nhs_number"),
     [
-        (None, "some nhs number"),
-        ("", "some nhs number"),
-        ("some nhs number", None),
-        ("some nhs number", ""),
+        (None, "1234567890"),
+        ("", "1234567890"),
+        ("1234567890", None),
+        ("1234567890", ""),
         (None, None),
         ("", ""),
     ],
@@ -81,7 +81,7 @@ def test_forward_request_validates_forward_to() -> None:
         ForwardRequest(
             application_id="some application",
             forward_to=forward_to,
-            patient_nhs_number="some nhs number",
+            patient_nhs_number="1234567890",
             patient_ods_code="some ods code",
-            proxy_nhs_number="some other nhs number",
+            proxy_nhs_number="0987654321",
         )

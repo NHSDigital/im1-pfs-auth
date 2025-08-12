@@ -18,9 +18,9 @@ def setup_client() -> EmisClient:
     request = ForwardRequest(
         application_id="some application id",
         forward_to="https://somewhere",
-        patient_nhs_number="some patient nhs number",
+        patient_nhs_number="1234567890",
         patient_ods_code="some patient ods code",
-        proxy_nhs_number="some proxy nhs number",
+        proxy_nhs_number="0987654321",
     )
     return EmisClient(request)
 
@@ -45,11 +45,11 @@ def test_emis_client_get_data(client: EmisClient) -> None:
     # Assert
     assert actual_result == {
         "PatientIdentifier": {
-            "IdentifierValue": "some patient nhs number",
+            "IdentifierValue": "1234567890",
             "IdentifierType": "NhsNumber",
         },
         "CarerIdentifier": {
-            "IdentifierValue": "some proxy nhs number",
+            "IdentifierValue": "0987654321",
             "IdentifierType": "NhsNumber",
         },
         "PatientNationalPracticeCode": "some patient ods code",
@@ -57,7 +57,7 @@ def test_emis_client_get_data(client: EmisClient) -> None:
 
 
 @patch.dict(environ, {"USE_MOCK": "True"})
-def test_emis_forward_request_use_mock(client: EmisClient) -> None:
+def test_emis_forward_request_use_mock_on(client: EmisClient) -> None:
     """Test the EmisClient forward_request function when mock is turned on."""
     # Arrange
     with Path("app/api/infrastructure/data/mocked_emis_response.json").open("r") as f:
@@ -71,7 +71,7 @@ def test_emis_forward_request_use_mock(client: EmisClient) -> None:
 
 @patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.emis_client.requests")
-def test_emis_forward_request_use_mock_on(
+def test_emis_forward_request_use_mock_off(
     mock_request: MagicMock, client: EmisClient
 ) -> None:
     """Test the EmisClient forward_request function when mock is turned off."""
@@ -89,7 +89,7 @@ def test_emis_forward_request_use_mock_on(
 
 @patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.emis_client.requests")
-def test_emis_forward_request_use_mock_off(
+def test_emis_forward_request_use_mock_off_exception(
     mock_request: MagicMock, client: EmisClient
 ) -> None:
     """Test the EmisClient forward_request function when mock is turned off and there is an error."""
