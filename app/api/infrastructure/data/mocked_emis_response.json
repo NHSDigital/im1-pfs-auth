@@ -1,0 +1,13 @@
+{
+  "SessionId": "123",
+  "FirstName": "Betty",
+  "Surname": "Jones",
+  "Title": "Ms",
+  "UserPatientLinks": [
+    {
+      "Forenames": "Jeremy",
+      "Surname": "Jones",
+      "Title": "Mr"
+    }
+  ]
+}
