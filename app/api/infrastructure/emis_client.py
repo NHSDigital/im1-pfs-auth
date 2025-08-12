@@ -77,7 +77,7 @@ class EmisClient(BaseClient):
         Returns:
             ForwardResponse: Homogenesised response with other clients
         """
-        user_patient_links = response.get("UserPatientLinks", [])
+        user_patient_links = response.get("UserPatientLinks", [{}])
         return ForwardResponse(
             session_id=response.get("SessionId"),
             supplier=self.supplier,
@@ -93,7 +93,6 @@ class EmisClient(BaseClient):
                     title=patient_link.get("Title"),
                 )
                 for patient_link in user_patient_links
-                if patient_link
             ],
         )
 

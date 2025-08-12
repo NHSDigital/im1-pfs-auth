@@ -146,7 +146,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
         {},
         {  # Missing UserPatientLints
             "SessionId": "some session",
-            "FistName": "someone's first name",
+            "FirstName": "someone's first name",
             "Surname": "someone's surname",
             "Title": "someone's title",
         },
@@ -154,19 +154,19 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
             "SessionId": "some session",
             "UserPatientLinks": [
                 {
-                    "FistName": "someone's first name",
+                    "FirstName": "someone's first name",
                     "Surname": "someone's surname",
                     "Title": "someone's title",
                 }
             ],
         },
         {  # Missing Session Id
-            "FistName": "someone's first name",
+            "FirstName": "someone's first name",
             "Surname": "someone's surname",
             "Title": "someone's title",
             "UserPatientLinks": [
                 {
-                    "FistName": "someone's first name",
+                    "FirstName": "someone's first name",
                     "Surname": "someone's surname",
                     "Title": "someone's title",
                 }
