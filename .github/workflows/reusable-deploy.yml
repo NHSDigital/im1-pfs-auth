@@ -32,9 +32,9 @@ on:
       environment_url:
         description: "The URL of the deployed environment"
         value: ${{ jobs.deploy-environment.outputs.environment_url }}
-      proxygen_path_url:
+      proxygen_url_path:
         description: "The URL path for the Proxygen API"
-        value: ${{ jobs.deploy-environment.outputs.proxygen_path_url }}
+        value: ${{ jobs.deploy-environment.outputs.proxygen_url_path }}
 
     secrets:
       PROXYGEN_CLIENT_ID:
@@ -103,10 +103,10 @@ jobs:
     needs: build-and-push-container
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ steps.deploy-environment-url.outputs.environment_url }}
+      url: ${{ steps.deploy-environment-url.outputs.ENVIRONMENT_URL }}
     outputs:
-      environment_url: ${{ steps.deploy-environment-url.outputs.environment_url }}
-      proxygen_path_url: ${{ steps.proxygen-url-path.outputs.proxygen_url_path }}
+      environment_url: ${{ steps.deploy-environment-url.outputs.ENVIRONMENT_URL }}
+      proxygen_url_path: ${{ steps.proxygen-url-path.outputs.PROXYGEN_URL_PATH }}
     steps:
       - name: "Output PROXYGEN_URL_PATH"
         id: proxygen-url-path
