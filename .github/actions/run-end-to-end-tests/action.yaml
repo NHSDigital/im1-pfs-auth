@@ -18,6 +18,3 @@ runs:
     - name: Run End to End Tests
       shell: bash
       run: make end-to-end-tests
-      env:
-        PROXYGEN_URL_PATH: ${{ inputs.PROXYGEN_URL_PATH }}
-        APIGEE_PROXY_NAME: ${{ inputs.APIGEE_PROXY_NAME }}
