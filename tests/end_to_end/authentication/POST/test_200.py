@@ -14,15 +14,13 @@ def test_lol(request: pytest.FixtureRequest, api_url: str) -> None:
     uuid = str(uuid4())
     headers = {
         "Authorization": get_authentication_token(request),
-        "X-Application-ID": "",
+        "X-Application-ID": request.node.name,
         "X-Request-ID": uuid,
         "X-Forward-To": "",
         "X-ODS-Code": "",
         "X-Correlation-ID": uuid,
     }
     # Act
-    print(api_url)
-    raise Exception("Test exception")
     response = post(api_url, headers=headers, timeout=5)
     # Assert
     assert response.status_code == 200

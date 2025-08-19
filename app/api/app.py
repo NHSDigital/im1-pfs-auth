@@ -30,7 +30,7 @@ def authentication() -> Response:
         )
         response = route_and_forward(forward_request)
         return make_response(
-            jsonify(response.dict()),
+            jsonify(response.model_dump()),
             HTTPStatus.OK,
         )
     except ApiError as e:
