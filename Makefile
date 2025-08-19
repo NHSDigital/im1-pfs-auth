@@ -85,7 +85,7 @@ spec-compile:
 # Generate Postman collection from OpenAPI specification
 postman-generate-collection:
 	yq 'del(.x-nhsd-apim)' specification/im1-pfs-auth-api.yaml > specification/im1-pfs-auth-api.portman.generated.yaml
-	npx portman --cliOptionsFile portman/portman-cli.json
+	npx portman --cliOptionsFile scripts/config/portman/portman-cli.json
 
 # Run Postman tests using Newman
 postman-test:
