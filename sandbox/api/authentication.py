@@ -14,10 +14,9 @@ def post_authentication() -> Response:
         # Successful Request
         data = {
             "sessionId": "123",
-            "userPatientLinkToken": "123",
-            "suid": "123",
-            "onlineUserId": "123",
-            "patientId": "123",
+            "supplier": "TPP",
+            "proxy": {"first_name": "Sarah", "surname": "Jones", "title": "Ms"},
+            "patients": [{"first_name": "James", "surname": "Jones", "title": "Mr"}],
         }
         return make_response(jsonify(data), 201)
     # Failure

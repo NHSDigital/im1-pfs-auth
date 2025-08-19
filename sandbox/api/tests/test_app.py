@@ -32,11 +32,10 @@ def test_post_authentication__success(client: FlaskClient) -> None:
     # Assert
     assert actual_result.status_code == 201
     assert actual_result.get_json() == {
-        "onlineUserId": "123",
-        "patientId": "123",
         "sessionId": "123",
-        "suid": "123",
-        "userPatientLinkToken": "123",
+        "supplier": "TPP",
+        "proxy": {"first_name": "Sarah", "surname": "Jones", "title": "Ms"},
+        "patients": [{"first_name": "James", "surname": "Jones", "title": "Mr"}],
     }
 
 
