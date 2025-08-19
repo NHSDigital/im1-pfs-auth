@@ -110,7 +110,9 @@ jobs:
     steps:
       - name: "Output PROXYGEN_URL_PATH"
         id: proxygen-url-path
-        run: echo "PROXYGEN_URL_PATH=${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}" >> $GITHUB_ENV
+        run: |
+          echo "PROXYGEN_URL_PATH=${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}" >> $GITHUB_ENV
+          echo "PROXYGEN_URL_PATH=${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}" >> $GITHUB_OUTPUT
       - name: "Output Environment URL"
         id: deploy-environment-url
         run: echo "ENVIRONMENT_URL=https://${{ inputs.environment }}.api.service.nhs.uk/$PROXYGEN_URL_PATH" >> $GITHUB_OUTPUT
