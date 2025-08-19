@@ -60,8 +60,7 @@ jobs:
         uses: ./.github/actions/run-end-to-end-tests
         env:
           PROXYGEN_URL_PATH: ${{ needs.deploy-dev-app.outputs.proxygen_url_path }}
-          ENVIRONMENT: "internal-dev"
-          PROXY_NAME: "im1-pfs-auth--internal-dev--${{ needs.deploy-dev-app.outputs.proxygen_url_path }}"
+          APIGEE_PROXY_NAME: "im1-pfs-auth--internal-dev--${{ needs.deploy-dev-app.outputs.proxygen_url_path }}"
 
   deploy-dev-sandbox:
     name: "Deploy Pull Request Sandbox Environment"

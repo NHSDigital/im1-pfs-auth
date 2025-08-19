@@ -2,19 +2,22 @@ name: "Run End to End Tests"
 description: Run End to End Tests
 
 inputs:
+  APIGEE_PROXY_NAME:
+    description: "The name of the proxy to test, e.g. 'im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31'"
+    required: true
   PROXYGEN_URL_PATH:
     description: "The URL path for the Proxygen API, e.g. 'im1-pfs-auth-pr-31'"
-    required: true
-  ENVIRONMENT:
-    description: "The environment to deploy to, e.g. 'internal-dev', 'internal-qa', 'internal-prod'"
-    required: true
-  PROXY_NAME:
-    description: "The name of the proxy to test, e.g. 'im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31'"
     required: true
 
 runs:
   using: "composite"
   steps:
-    - name: Echo
+    - name: Set APIGEE_ACCESS_TOKEN
       shell: bash
-      run: echo "Running End to End Tests"
+      run: echo "APIGEE_ACCESS_TOKEN=$(proxygen pytest-nhsd-apim --api=im1-pfs-auth get-token | jq -r .pytest_nhsd_apim_token)" >> $GITHUB_ENV
+    - name: Run End to End Tests
+      shell: bash
+      run: make end-to-end-tests
+      env:
+        PROXYGEN_URL_PATH: ${{ inputs.PROXYGEN_URL_PATH }}
+        APIGEE_PROXY_NAME: ${{ inputs.APIGEE_PROXY_NAME }}
