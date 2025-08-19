@@ -23,3 +23,6 @@ target:
         tag: CONTAINER_TAG_TO_BE_REPLACED
       environment:
         LOG_LEVEL: info
+target-identity:
+  - name: id-token
+    header: "X-ID-Token"
