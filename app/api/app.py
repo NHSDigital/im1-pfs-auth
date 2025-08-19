@@ -19,7 +19,7 @@ def authentication() -> Response:
     """
     try:
         (patient_nhs_number, proxy_nhs_number) = get_nhs_number_from_jwt_token(
-            request.headers.get("Authorization")
+            request.headers.get("X-ID-Token")
         )
         forward_request = ForwardRequest(
             application_id=request.headers.get("X-Application-ID"),
