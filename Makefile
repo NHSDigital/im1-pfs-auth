@@ -141,7 +141,19 @@ sandbox-docker-run:
 sandbox-unit-test:
 	uv run pytest sandbox --cov=sandbox --cov-fail-under=80
 
-# ==============================================================================s
+# ==============================================================================
+# Test Commands
+# ==============================================================================
+
+# TODO
+e2e-tests end-to-end-tests:
+# Mandatory arguments:
+# ENVIRONMENT: The environment to deploy to (e.g., internal-dev, internal-qa, int)
+# PROXY_NAME: The name of the proxy to test (e.g., im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31)
+# PROXYGEN_URL_PATH: The URL path for the API (e.g., im1-pfs-auth)
+	uv run pytest tests/end_to_end --api-name=im1-pfs-auth --proxy-name=im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31
+
+# ==============================================================================
 
 ${VERBOSE}.SILENT: \
 	build \
