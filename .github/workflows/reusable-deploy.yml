@@ -106,7 +106,7 @@ jobs:
       url: ${{ steps.deploy-environment-url.outputs.environment_url }}
     outputs:
       environment_url: ${{ steps.deploy-environment-url.outputs.environment_url }}
-      proxygen_path_url: ${{ steps.proxygen-url-path.outputs.proxygen_url_path }}
+      proxygen_path_url: ${{ steps.proxygen-url-path.outputs.PROXYGEN_URL_PATH }}
     steps:
       - name: "Output PROXYGEN_URL_PATH"
         id: proxygen-url-path

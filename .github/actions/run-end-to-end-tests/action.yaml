@@ -16,4 +16,5 @@ runs:
   using: "composite"
   steps:
     - name: Echo
+      shell: bash
       run: echo "Running End to End Tests"
