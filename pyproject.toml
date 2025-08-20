@@ -60,3 +60,7 @@ convention = "google"
 
 [tool.ruff.lint.isort]
 known-local-folder = ["tests", "api", "app", "sandbox"]
+
+[tool.pytest.ini_options]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"

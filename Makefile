@@ -151,7 +151,7 @@ e2e-tests end-to-end-tests:
 # APIGEE_ACCESS_TOKEN: "proxygen pytest-nhsd-apim --api=im1-pfs-auth get-token | jq -r .pytest_nhsd_apim_token"
 # APIGEE_PROXY_NAME: The name of the proxy to test (e.g., im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31)
 # PROXYGEN_URL_PATH: The URL path for the Proxygen API (e.g. im1-pfs-auth-pr-31)
-	uv run pytest tests/end_to_end --api-name=im1-pfs-auth --proxy-name=${APIGEE_PROXY_NAME}
+	uv run pytest tests/end_to_end --api-name=im1-pfs-auth --proxy-name=${APIGEE_PROXY_NAME} --disable-warnings
 
 # ==============================================================================
 
