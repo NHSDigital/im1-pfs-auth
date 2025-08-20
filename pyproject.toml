@@ -52,15 +52,13 @@ ignore = [
 
 [tool.ruff.lint.per-file-ignores]
 "app/*.py" = ["TID252"]
-"app/api/domain/forward_request_model.py" = ["N805"] # Pydantic basemodel needs cls instead of self
-"**test_*.py" = ["S101", "D102", "D103", "SLF001", "PT019", "PLR0913"]
+"app/api/domain/forward_request_model.py" = [
+  "N805",
+] # Pydantic basemodel needs cls instead of self
+"**test_*.py" = ["S101", "D102", "D103", "SLF001", "PT019", "PLR0913", "G004"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.ruff.lint.isort]
 known-local-folder = ["tests", "api", "app", "sandbox"]
-
-[tool.pytest.ini_options]
-log_format = "%(asctime)s %(levelname)s %(message)s"
-log_date_format = "%Y-%m-%d %H:%M:%S"

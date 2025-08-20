@@ -75,7 +75,7 @@ class EmisClient(BaseClient):
             response (dict): Response body from forwarded request
 
         Returns:
-            ForwardResponse: Homogenesised response with other clients
+            ForwardResponse: Homogenised response with other clients
         """
         user_patient_links = response.get("UserPatientLinks", [{}])
         return ForwardResponse(

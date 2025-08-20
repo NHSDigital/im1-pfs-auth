@@ -27,7 +27,6 @@ def test_lol(request: pytest.FixtureRequest, api_url: str) -> None:
     response = post(api_url, headers=headers, timeout=5)
     # Assert
     logger.info(
-        "API response:",
-        extra={"status_code": response.status_code, "response": response.json()},
+        f"API response: status_code {response.status_code}, response: {response.json()}",
     )
     assert response.status_code == 200
