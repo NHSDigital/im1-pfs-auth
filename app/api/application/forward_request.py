@@ -1,7 +1,7 @@
-from app.api.domain.exception import DownstreamError
-from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import ForwardResponse
-from app.api.infrastructure.emis_client import EmisClient
+from ..domain.exception import DownstreamError
+from ..domain.forward_request_model import ForwardRequest
+from ..domain.forward_response_model import ForwardResponse
+from ..infrastructure.emis_client import EmisClient
 
 client_map = {
     "https://emis.com": EmisClient

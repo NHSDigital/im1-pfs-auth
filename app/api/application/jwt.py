@@ -1,6 +1,6 @@
 from jwt import decode
 
-from app.api.domain.exception import AccessDeniedError
+from ..domain.exception import AccessDeniedError
 
 
 def __fetch_nhs_number(decoded_token: dict) -> str:

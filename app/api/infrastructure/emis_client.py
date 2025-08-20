@@ -4,8 +4,8 @@ from pathlib import Path
 
 import requests
 
-from app.api.domain.base_client import BaseClient
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from ..domain.base_client import BaseClient
+from ..domain.forward_response_model import Demographics, ForwardResponse
 
 BASE_DIR = Path(__file__).parent
 

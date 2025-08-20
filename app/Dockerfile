@@ -11,8 +11,9 @@ ENV USE_MOCK=${USE_MOCK}
 WORKDIR /app
 
 RUN uv sync --project=app/pyproject.toml --only-group=app
-RUN rm pyproject.toml uv.lock
+RUN rm pyproject.toml uv.lock Dockerfile
+# TODO: Ensure no pycache or other .cache type files make it into container (consider .tar.gz and ADD)
 
 EXPOSE 9000
 
-CMD ["uv", "run", "--no-sync", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
+CMD ["uv", "run", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
