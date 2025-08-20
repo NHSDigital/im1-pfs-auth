@@ -7,12 +7,12 @@ requires-python = "~=3.13.0"
 
 [dependency-groups]
 app = [
-    "flask~=3.1.1",
-    "pydantic==2.9.2",
-    "gunicorn~=23.0.0",
-    "requests~=2.32.5",
-    "pyjwt~=2.8.0",
-    "cryptography~=42.0.0",
+  "flask~=3.1.1",
+  "pydantic==2.9.2",
+  "gunicorn~=23.0.0",
+  "requests~=2.32.5",
+  "pyjwt~=2.8.0",
+  "cryptography~=42.0.0",
 ]
 sandbox = ["flask~=3.1.1", "gunicorn~=23.0.0"]
 dev = [
@@ -28,10 +28,7 @@ dev = [
 required-version = "~=0.8.0"
 package = false
 default-groups = "all"
-override-dependencies = [
-  "typing-extensions==4.12.2",
-  "requests==2.32.5",
-]
+override-dependencies = ["typing-extensions==4.12.2", "requests==2.32.5"]
 
 [tool.coverage.run]
 branch = true
@@ -54,6 +51,7 @@ ignore = [
 ]
 
 [tool.ruff.lint.per-file-ignores]
+"app/*.py" = ["TID252"]
 "**test_*.py" = ["S101", "D102", "D103", "SLF001", "PT019"]
 
 [tool.ruff.lint.pydocstyle]
