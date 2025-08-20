@@ -12,7 +12,17 @@ logger = getLogger(__name__)
 
 
 @pytest.mark.positive
-def test_lol(request: pytest.FixtureRequest, api_url: str) -> None:
+def test_happy_path(request: pytest.FixtureRequest, api_url: str) -> None:
+    """Test the happy path for the API.
+
+    Test Scenario:
+        Given: API is ready
+        When: a valid request is made with correct parameters
+        Then: the response status code is 200
+        And: the response body contains the expected data
+
+    NOTE: This test does not work due to missing composite derived access token.
+    """
     # Arrange
     uuid = str(uuid4())
     headers = {
@@ -27,6 +37,6 @@ def test_lol(request: pytest.FixtureRequest, api_url: str) -> None:
     response = post(api_url, headers=headers, timeout=5)
     # Assert
     logger.info(
-        f"API response: status_code {response.status_code}, response: {response.json()}",
+        f"API response: status_code {response.status_code}, response: {response.json()}"
     )
     assert response.status_code == 200
