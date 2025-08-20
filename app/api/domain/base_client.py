@@ -5,7 +5,7 @@ from .forward_response_model import ForwardResponse
 
 
 class BaseClient(ABC):
-    """An abstract base class that defines a blueprint for all backend clients that forward requests to external systems and transforms the responses."""
+    """An abstract base class that defines a blueprint for all backend clients that forward requests to external systems and transforms the responses."""  # noqa: E501
 
     def __init__(self, request: ForwardRequest) -> None:
         """Initialises client with request argument."""

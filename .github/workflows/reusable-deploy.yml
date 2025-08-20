@@ -32,6 +32,9 @@ on:
       environment_url:
         description: "The URL of the deployed environment"
         value: ${{ jobs.deploy-environment.outputs.environment_url }}
+      proxygen_url_path:
+        description: "The URL path for the Proxygen API"
+        value: ${{ jobs.deploy-environment.outputs.proxygen_url_path }}
 
     secrets:
       PROXYGEN_CLIENT_ID:
@@ -73,7 +76,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -100,18 +103,21 @@ jobs:
     needs: build-and-push-container
     environment:
       name: ${{ inputs.environment }}
-      url: ${{ steps.deploy-environment-url.outputs.environment_url }}
+      url: ${{ steps.deploy-environment-url.outputs.ENVIRONMENT_URL }}
     outputs:
-      environment_url: ${{ steps.deploy-environment-url.outputs.environment_url }}
+      environment_url: ${{ steps.deploy-environment-url.outputs.ENVIRONMENT_URL }}
+      proxygen_url_path: ${{ steps.proxygen-url-path.outputs.PROXYGEN_URL_PATH }}
     steps:
       - name: "Output PROXYGEN_URL_PATH"
-        run: echo "PROXYGEN_URL_PATH=${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}" >> $GITHUB_ENV
+        id: proxygen-url-path
+        run: |
+          echo "PROXYGEN_URL_PATH=${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}" >> $GITHUB_ENV
+          echo "PROXYGEN_URL_PATH=${{ inputs.additional_path && format('im1-pfs-auth-{0}', inputs.additional_path) || 'im1-pfs-auth' }}" >> $GITHUB_OUTPUT
       - name: "Output Environment URL"
         id: deploy-environment-url
         run: echo "ENVIRONMENT_URL=https://${{ inputs.environment }}.api.service.nhs.uk/$PROXYGEN_URL_PATH" >> $GITHUB_OUTPUT
-
       - name: "Checkout code"
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
           persist-credentials: false
@@ -128,6 +134,5 @@ jobs:
         env:
           ENVIRONMENT: ${{ inputs.environment }}
           PROXYGEN_URL_PATH: ${{ env.PROXYGEN_URL_PATH }}
-
       - name: "Check Deployment"
         run: cat specification/x-nhsd-apim/x-nhsd-apim.generated.yaml

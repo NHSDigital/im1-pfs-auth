@@ -10,7 +10,7 @@ class Demographics(BaseModel):
 
 
 class ForwardResponse(BaseModel):
-    """A data model that encapsulates all the essential information needed to forward a external backend system response to the client."""
+    """A data model that encapsulates all the essential information needed to forward a external backend system response to the client."""  # noqa: E501
 
     session_id: str
     supplier: str

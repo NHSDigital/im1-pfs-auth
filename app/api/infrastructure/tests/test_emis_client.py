@@ -1,7 +1,6 @@
 from json import load
 from os import environ
 from pathlib import Path
-from typing import Any
 from unittest.mock import MagicMock, patch
 
 import pytest
@@ -92,7 +91,7 @@ def test_emis_forward_request_use_mock_off(
 def test_emis_forward_request_use_mock_off_exception(
     mock_request: MagicMock, client: EmisClient
 ) -> None:
-    """Test the EmisClient forward_request function when mock is turned off and there is an error."""
+    """Test the EmisClient forward_request function when mock is turned off and there is an error."""  # noqa: E501
     # Arrange
     mock_instance = MagicMock()
     mock_instance.raise_for_status.side_effect = HTTPError("Oops")
@@ -175,7 +174,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
     ],
 )
 def test_emis_client_transform_response_raise_validation_error(
-    response: Any,
+    response: dict,
     client: EmisClient,
 ) -> None:
     """Test the EmisClient transform_response function raises validation error."""

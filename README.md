@@ -15,15 +15,18 @@ TODO: Add section on getting local environment set up and on deployment
     - [Prerequisites](#prerequisites)
     - [Configuration](#configuration)
   - [Usage](#usage)
-    - [Repository Structure](#repository-structure-1)
+    - [Repository Structure](#repository-structure)
     - [Key Components](#key-components)
       - [Apigee](#apigee)
       - [App](#app)
+      - [App Structure](#app-structure)
       - [Sandbox](#sandbox)
     - [Usage TODO](#usage-todo)
       - [Deployment](#deployment)
         - [Deployment Limits](#deployment-limits)
     - [Testing](#testing)
+      - [Unit Tests](#unit-tests)
+      - [End to End Tests](#end-to-end-tests)
   - [Design](#design)
     - [Diagrams](#diagrams)
   - [Contributing](#contributing)
@@ -123,6 +126,8 @@ Deployment limits information can be found in [confluence](https://nhsd-confluen
 
 There are multiple layers of testing which can be run from a local machine.
 
+#### Unit Tests
+
 To run the app unit tests run the following command:
 
 ```shell
@@ -135,7 +140,21 @@ To run the sandbox unit tests run the following command:
 make sandbox-test
 ```
 
-More to follow...
+#### End to End Tests
+
+To run end to end tests use the following commands:
+
+> [!NOTE]
+> Proxygen must be set up to run end to end tests.
+
+```shell
+export APIGEE_ACCESS_TOKEN=$(proxygen pytest-nhsd-apim --api=im1-pfs-auth get-token | jq -r .pytest_nhsd_apim_token)
+make end-to-end-test PROXYGEN_URL_PATH=<proxygen_url_path> PROXY_NAME=<proxy_name> APIGEE_PROXY_NAME=<apigee_proxy_name>
+```
+
+- `PROXYGEN_URL_PATH`: The URL path for the Proxygen API (e.g. im1-pfs-auth-pr-31)
+- `PROXY_NAME`: The name of the proxy (e.g. im1-pfs-auth)
+- `APIGEE_PROXY_NAME`: The name of the proxy to test (e.g., im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31)
 
 ## Design
 

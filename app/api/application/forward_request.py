@@ -1,12 +1,11 @@
-from app.api.domain.exception import DownstreamError
-from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import ForwardResponse
-from app.api.infrastructure.emis_client import EmisClient
+from ..domain.exception import DownstreamError
+from ..domain.forward_request_model import ForwardRequest
+from ..domain.forward_response_model import ForwardResponse
+from ..infrastructure.emis_client import EmisClient
 
 client_map = {
     "https://emis.com": EmisClient
-}  # TODO(NPA-5401): Add TPP Client and change URL
-# https://nhsd-jira.digital.nhs.uk/browse/NPA-5401
+}  # TODO(NPA-5401): Add TPP Client and change URL - https://nhsd-jira.digital.nhs.uk/browse/NPA-5401  # noqa: E501, FIX002
 
 
 def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
