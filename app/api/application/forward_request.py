@@ -5,8 +5,7 @@ from ..infrastructure.emis_client import EmisClient
 
 client_map = {
     "https://emis.com": EmisClient
-}  # TODO(NPA-5401): Add TPP Client and change URL
-# https://nhsd-jira.digital.nhs.uk/browse/NPA-5401
+}  # TODO(NPA-5401): Add TPP Client and change URL - https://nhsd-jira.digital.nhs.uk/browse/NPA-5401  # noqa: E501, FIX002
 
 
 def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:

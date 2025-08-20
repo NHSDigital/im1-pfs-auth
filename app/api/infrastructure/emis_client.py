@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).parent
 
 
 class EmisClient(BaseClient):
-    """An implementation of BaseClient tailored for forwarding requests to Emis's backend."""
+    """An implementation of BaseClient tailored for forwarding requests to Emis's backend."""  # noqa: E501
 
     @property
     def supplier(self) -> str:
