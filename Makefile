@@ -26,10 +26,11 @@ deploy:
 # ENVIRONMENT: The environment to deploy to (e.g., internal-dev, internal-qa, int)
 # PROXYGEN_URL_PATH: The URL path for the API (e.g., im1-pfs-auth)
 # CONTAINER_TAG: The version of the API to deploy (e.g., latest, v1.0.0, commit hash)
+
 	@echo "Deploying API to the NHS API Platform..."
 	if [ -z "$(ENVIRONMENT)" ]; then \
 		echo "No ENVIRONMENT provided. Use 'make deploy ENVIRONMENT=\"<env>\"' to specify environment."; \
-		echo "Available environments include: internal-dev, internal-qa, int"; \
+		echo "Available environments include: internal-dev, internal-dev-sandbox, internal-qa, internal-qa-sandbox, sandbox, int"; \
 		exit 1; \
 	fi
 	if [ -z "$(PROXYGEN_URL_PATH)" ]; then \
@@ -54,11 +55,11 @@ deploy-ci:
 
 # Select the appropriate specification configuration based on the environment/version
 select-spec-configuration:
-ifeq ($(ENVIRONMENT), $(filter $(ENVIRONMENT), internal-dev internal-dev-sandbox ))
+ifeq ($(ENVIRONMENT), $(filter $(ENVIRONMENT), internal-dev internal-dev-sandbox internal-qa internal-qa-sandbox sandbox int ))
 	@ $(MAKE) select-x-nhsd-apim-configuration
 	@ $(MAKE) set-hosted-container-version
 else
-	@ echo ERROR: $$ENVIRONMENT is not a valid environment. Please use one of [sandbox, internal-dev, int, ref, prod]
+	@ echo ERROR: $$ENVIRONMENT is not a valid environment. Please use one of [internal-dev, internal-dev-sandbox, internal-qa, internal-qa-sandbox, sandbox, int]
 	@ exit 1;
 endif
 

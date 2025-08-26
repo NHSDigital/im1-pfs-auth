@@ -16,7 +16,7 @@ target:
   type: hosted
   healthcheck: /_status
   containers:
-    - name: im1-pfs-auth
+    - name: im1-pfs-auth-sandbox
       image:
         name: im1-pfs-auth
         tag: CONTAINER_TAG_TO_BE_REPLACED

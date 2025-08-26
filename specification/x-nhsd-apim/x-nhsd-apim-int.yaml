@@ -1,7 +1,7 @@
 monitoring: true
-temporary: true
+temporary: false
 access:
-  - title: IM1 PFS Auth - P9 User Restricted Access (dev)
+  - title: IM1 PFS Auth - P9 User Restricted Access (int)
     description: IM1 PFS Auth with P9 Patient Access Mode Security
     grants:
       nhs-login-p9: []

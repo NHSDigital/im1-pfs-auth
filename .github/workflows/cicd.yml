@@ -1,4 +1,4 @@
-name: "CICD"
+name: "CI/CD"
 
 on:
   pull_request:
@@ -22,14 +22,14 @@ jobs:
       contents: read
       id-token: write
 
-  deploy-to-dev:
-    name: "Deploy to Dev Environment"
-    uses: ./.github/workflows/cicd-stage-1-deploy-to-dev.yml
+  deploy-to-internal-qa:
+    name: "Deploy to Internal QA Environment"
+    uses: ./.github/workflows/cicd-stage-1-deploy-to-internal-qa.yml
     needs:
       - core-code-checks
       - additional-code-checks
 
-  deploy-to-int:
-    name: "Deploy to Int Environment"
-    uses: ./.github/workflows/cicd-stage-2-deploy-to-int.yml
-    needs: deploy-to-dev
+  deploy-to-int-and-sandbox:
+    name: "Deploy to Int and Sandbox Environments"
+    uses: ./.github/workflows/cicd-stage-2-deploy-to-int-and-sandbox.yml
+    needs: deploy-to-internal-qa

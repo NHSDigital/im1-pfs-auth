@@ -1,4 +1,4 @@
-name: "CICD Stage 1 Deploy to Dev"
+name: "CI/CD Stage 1 Deploy to Internal QA"
 
 on:
   workflow_call:
@@ -7,11 +7,11 @@ permissions: {}
 
 jobs:
   # TODO: Save Docker Container to GitHub packages. To reuse in int
-  deploy-dev-app:
+  deploy-qa-app:
     name: "Deploy Pull Request App Environment"
     uses: ./.github/workflows/reusable-deploy.yml
     with:
-      environment: "internal-dev"
+      environment: "internal-qa"
       type_of_deployment: "app"
       use_mock: "True"
     secrets:
@@ -22,11 +22,11 @@ jobs:
   # Add int end-to-end tests
 
   # TODO: Save Docker Container to GitHub packages. To reuse in sandbox
-  deploy-dev-sandbox:
+  deploy-qa-sandbox:
     name: "Deploy Pull Request Sandbox Environment"
     uses: ./.github/workflows/reusable-deploy.yml
     with:
-      environment: "internal-dev-sandbox"
+      environment: "internal-qa-sandbox"
       type_of_deployment: "sandbox"
     secrets:
       PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
@@ -36,14 +36,13 @@ jobs:
   run-postman-collection:
     name: "Run Postman Collection"
     runs-on: ubuntu-latest
-    needs: deploy-dev-sandbox
+    needs: deploy-qa-sandbox
     steps:
       - name: Checkout Repository
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           fetch-depth: 0
           persist-credentials: false
-
       - name: Run Postman Collection
         uses: ./.github/actions/run-postman-collection
         env:

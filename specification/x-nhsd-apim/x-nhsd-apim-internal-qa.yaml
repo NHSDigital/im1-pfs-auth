@@ -1,5 +1,5 @@
 monitoring: true
-temporary: true
+temporary: false
 access:
   - title: IM1 PFS Auth - P9 User Restricted Access (dev)
     description: IM1 PFS Auth with P9 Patient Access Mode Security

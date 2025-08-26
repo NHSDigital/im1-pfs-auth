@@ -15,10 +15,6 @@ on:
         description: "Additional path to append to the deployment URL, e.g. 'pr-x'"
         required: false
         type: string
-      # temporary_deployment: # TODO: Use variable to set if this is a temporary deployment
-      #   description: "Whether this is a temporary deployment, e.g. for a pull request, temporary deployment will be cleared after 3 days"
-      #   required: true
-      #   type: boolean
       type_of_deployment:
         description: "Type of deployment, e.g. 'app', 'sandbox'"
         required: true

@@ -1,8 +1,7 @@
 monitoring: true
-temporary: true
+temporary: false
 access:
-  - title: IM1 PFS Auth - P9 User Restricted Access (dev)
-    description: IM1 PFS Auth with P9 Patient Access Mode Security
+  - title: P9 User Restricted Access
     grants:
       nhs-login-p9: []
     visible: false
@@ -17,12 +16,9 @@ target:
   type: hosted
   healthcheck: /_status
   containers:
-    - name: im1-pfs-auth-app
+    - name: im1-pfs-auth-sandbox
       image:
         name: im1-pfs-auth
         tag: CONTAINER_TAG_TO_BE_REPLACED
       environment:
         LOG_LEVEL: info
-target-identity:
-  - name: id-token
-    header: "X-ID-Token"
