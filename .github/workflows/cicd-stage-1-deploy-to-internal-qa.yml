@@ -6,7 +6,7 @@ on:
 permissions: {}
 
 jobs:
-  # TODO: Save Docker Container to GitHub packages. To reuse in int
+  # TODO: Reuse docker container for int deployment, don't rebuild docker container
   deploy-qa-app:
     name: "Deploy Pull Request App Environment"
     uses: ./.github/workflows/reusable-deploy.yml
@@ -21,7 +21,7 @@ jobs:
 
   # Add int end-to-end tests
 
-  # TODO: Save Docker Container to GitHub packages. To reuse in sandbox
+  # TODO: Reuse docker container for sandbox deployment, don't rebuild docker container
   deploy-qa-sandbox:
     name: "Deploy Pull Request Sandbox Environment"
     uses: ./.github/workflows/reusable-deploy.yml
