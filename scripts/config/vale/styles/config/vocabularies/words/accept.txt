@@ -2,6 +2,7 @@
 [Aa]pigee
 APIM
 Bitwarden
+Bloomreach
 Cyber
 Dependabot
 Gitleaks
