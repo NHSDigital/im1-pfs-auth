@@ -137,7 +137,7 @@ make app-unit-test
 To run the sandbox unit tests run the following command:
 
 ```shell
-make sandbox-test
+make sandbox-unit-test
 ```
 
 #### End to End Tests
