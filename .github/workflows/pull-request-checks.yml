@@ -29,7 +29,7 @@ jobs:
     needs: core-code-checks
     if: ${{ github.actor != 'dependabot[bot]' }}
     with:
-      environment: "internal-qa"
+      environment: "internal-dev"
       type_of_deployment: "app"
       additional_path: "pr-${{ github.event.number }}"
       use_mock: "True"

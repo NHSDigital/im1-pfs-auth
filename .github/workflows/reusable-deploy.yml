@@ -58,10 +58,10 @@ jobs:
       - name: "Check type_of_deployment input"
         run: |
           case "${{ inputs.environment }}" in
-            internal-dev|internal-dev-sandbox)
+            internal-dev|internal-dev-sandbox|internal-qa|internal-qa-sandbox|sandbox|int)
               ;;
             *)
-              echo "Invalid environment: ${{ inputs.environment }}. Allowed values are: internal-dev, internal-dev-sandbox."
+              echo "Invalid environment: ${{ inputs.environment }}. Allowed values are: internal-dev, internal-dev-sandbox, internal-qa, internal-qa-sandbox, sandbox, int."
               exit 1
               ;;
           esac
