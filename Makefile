@@ -85,7 +85,7 @@ spec-compile:
 # Generate Postman collection from OpenAPI specification
 postman-generate-collection:
 	yq 'del(.x-nhsd-apim)' specification/im1-pfs-auth-api.yaml > specification/im1-pfs-auth-api.portman.generated.yaml
-	npx portman --cliOptionsFile portman/portman-cli.json
+	npx portman --cliOptionsFile scripts/config/portman/portman-cli.json
 
 # Run Postman tests using Newman
 postman-test:
@@ -141,7 +141,21 @@ sandbox-docker-run:
 sandbox-unit-test:
 	uv run pytest sandbox --cov=sandbox --cov-fail-under=80
 
-# ==============================================================================s
+# ==============================================================================
+# Test Commands
+# ==============================================================================
+
+# Runs End to End tests against a deployed environment
+e2e-tests end-to-end-tests:
+# Mandatory arguments:
+# APIGEE_ACCESS_TOKEN: "proxygen pytest-nhsd-apim --api=im1-pfs-auth get-token | jq -r .pytest_nhsd_apim_token"
+# APIGEE_PROXY_NAME: The name of the proxy to test (e.g., im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31)
+# PROXYGEN_URL_PATH: The URL path for the Proxygen API (e.g. im1-pfs-auth-pr-31)
+	uv run pytest tests/end_to_end \
+		--api-name=im1-pfs-auth --proxy-name=${APIGEE_PROXY_NAME} \
+		--disable-warnings -o log_cli_level=INFO
+
+# ==============================================================================
 
 ${VERBOSE}.SILENT: \
 	build \

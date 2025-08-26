@@ -8,7 +8,7 @@ from .exception import (
 
 
 class ForwardRequest(BaseModel):
-    """A domain-level data model that encapsulates all the essential information needed to forward a clients request to an external backend system."""
+    """A domain-level data model that encapsulates all the essential information needed to forward a clients request to an external backend system."""  # noqa: E501
 
     application_id: str
     forward_to: str

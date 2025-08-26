@@ -4,14 +4,14 @@ from pathlib import Path
 
 import requests
 
-from app.api.domain.base_client import BaseClient
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from ..domain.base_client import BaseClient
+from ..domain.forward_response_model import Demographics, ForwardResponse
 
 BASE_DIR = Path(__file__).parent
 
 
 class EmisClient(BaseClient):
-    """An implementation of BaseClient tailored for forwarding requests to Emis's backend."""
+    """An implementation of BaseClient tailored for forwarding requests to Emis's backend."""  # noqa: E501
 
     @property
     def supplier(self) -> str:
@@ -75,7 +75,7 @@ class EmisClient(BaseClient):
             response (dict): Response body from forwarded request
 
         Returns:
-            ForwardResponse: Homogenesised response with other clients
+            ForwardResponse: Homogenised response with other clients
         """
         user_patient_links = response.get("UserPatientLinks", [{}])
         return ForwardResponse(

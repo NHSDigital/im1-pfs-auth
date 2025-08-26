@@ -4,9 +4,15 @@
 specification/im1-pfs-auth-api.portman.generated.yaml
 # Portman temp directory
 tmp/
-# ----------------
-# Python .gitignore - https://github.com/github/gitignore/blob/main/Python.gitignore
-# ----------------
+
+# Docker build asserts
+app/pyproject.toml
+app/uv.lock
+sandbox/pyproject.toml
+sandbox/uv.lock
+
+specification/assets/*.json
+
 .scannerwork
 *cloc*report*.json
 *sbom*report*.json
@@ -17,11 +23,9 @@ tmp/
 *.code-workspace
 !project.code-workspace
 
-sandbox/pyproject.toml
-sandbox/uv.lock
-specification/assets/*.json
-
-### This is the Github Python.gitignore https://github.com/github/gitignore/blob/main/Python.gitignore
+# ----------------
+# Python .gitignore - https://github.com/github/gitignore/blob/main/Python.gitignore
+# ----------------
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

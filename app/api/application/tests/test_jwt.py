@@ -31,7 +31,7 @@ def test_get_nhs_number_from_jwt_token(vot_level: str) -> None:
 
 
 def test_get_nhs_number_from_jwt_token_missing_patient_nhs_number() -> None:
-    """Test the get_nhs_number_from_jwt_token function when missing patient nhs number."""
+    """Test the get_nhs_number_from_jwt_token function when missing patient nhs number."""  # noqa: E501
     # Arrange
     logged_in_user_token = encode(
         {
@@ -81,7 +81,7 @@ def test_get_nhs_number_from_jwt_token_missing_proxy_nhs_number() -> None:
 def test_get_nhs_number_from_jwt_token_invalid_proxy_proofing_level(
     proofing_level: str,
 ) -> None:
-    """Test the get_nhs_number_from_jwt_token function when invalid proxy proofing level."""
+    """Test the get_nhs_number_from_jwt_token function when invalid proxy proofing level."""  # noqa: E501
     # Arrange
     logged_in_user_token = encode(
         {
@@ -108,7 +108,7 @@ def test_get_nhs_number_from_jwt_token_invalid_proxy_proofing_level(
     "vot_level", ["P5.Cp.Cd", "P0.Cp.Cd", "something random", "", None]
 )
 def test_get_nhs_number_from_jwt_token_invalid_proxy_vot_level(vot_level: str) -> None:
-    """Test the get_nhs_number_from_jwt_token function when invalid proxy proofing level."""
+    """Test the get_nhs_number_from_jwt_token function when invalid proxy proofing level."""  # noqa: E501
     # Arrange
     logged_in_user_token = encode(
         {
