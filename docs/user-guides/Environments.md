@@ -32,6 +32,8 @@ IM1 PFS Auth current has the following types of application and sandbox environm
 | sandbox              | sandbox | Early integration environment for the public to use to get a flavour of our API.                                      | 1                                      | Public, no authentication                                   | [https://sandbox.api.service.nhs.uk/im1-pfs-auth](https://sandbox.api.service.nhs.uk/im1-pfs-auth)                                 |
 | prod                 | app     |                                                                                                                       | 1                                      | Public, authentication requires production composite token  | TBD                                                                                                                                |
 
+Each environment has a GitHub environment associated with it which could be used to protect deployments.
+
 > [!NOTE]
 > More APIM environments exist, for information on environment im1-pfs-auth does not use review [APIM Environments](https://nhsd-confluence.digital.nhs.uk/spaces/APM/pages/110873804/Environments)
 >
