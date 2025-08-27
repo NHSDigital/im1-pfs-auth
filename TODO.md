@@ -5,3 +5,4 @@
 - Document environments, process to go from merge to main to production
 - Reuse docker container built in internal-qa, in int, sandbox and prod
 - Write documentation about GH environment and APIM environments
+- Move Portman to global dependency. This removes all requirements for a package.json and NPM package management

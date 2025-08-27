@@ -45,4 +45,29 @@ jobs:
       - name: Run Postman Collection
         uses: ./.github/actions/run-postman-collection
         env:
-          SANDBOX_BASE_URL: ${{ needs.deploy-dev-sandbox.outputs.environment_url }}
+          SANDBOX_BASE_URL: ${{ needs.deploy-sandbox.outputs.environment_url }}
+
+  deploy-uat-spec:
+    name: "Deploy Specification to UAT"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Setup Python Dependencies
+        uses: ./.github/actions/setup-python-dependencies
+      - name: Setup proxygen
+        uses: ./.github/actions/setup-proxygen
+        with:
+          PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
+          PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
+          PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
+      - name: Deploy Specification to UAT
+        run: make deploy-spec-uat-ci
+        env:
+          # Variables are necessary for spec generation, but aren't used in compiled spec
+          ENVIRONMENT: "int"
+          PROXYGEN_URL_PATH: "im1-pfs-auth"
+          CONTAINER_TAG: "latest"
