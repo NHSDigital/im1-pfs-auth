@@ -57,11 +57,11 @@ deploy-ci:
 
 # Deploy spec to uat
 deploy-spec-uat: prepare-deploy
-	proxygen spec publish --uat $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.portman.generated.yaml
+	proxygen spec publish --uat $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.yaml
 
 # Deploy spec to prod
 deploy-spec-prod: prepare-deploy
-	proxygen spec publish $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.portman.generated.yaml
+	proxygen spec publish $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.yaml
 
 # Deploy spec to uat in CI
 deploy-spec-uat-ci:
