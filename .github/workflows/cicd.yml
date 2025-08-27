@@ -1,0 +1,35 @@
+name: "CI/CD"
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Temporary manual trigger for testing
+
+permissions: {}
+
+jobs:
+  core-code-checks:
+    name: "Run Core Code Checks"
+    uses: ./.github/workflows/reusable-core-code-checks.yml
+    permissions:
+      contents: read
+      id-token: write
+
+  additional-code-checks:
+    name: "Run Additional Code Checks"
+    uses: ./.github/workflows/reusable-additional-code-checks.yml
+    permissions:
+      contents: read
+      id-token: write
+
+  deploy-to-internal-qa:
+    name: "Deploy to Internal QA Environment"
+    uses: ./.github/workflows/cicd-stage-1-deploy-to-internal-qa.yml
+    needs:
+      - core-code-checks
+      - additional-code-checks
+
+  deploy-to-int-and-sandbox:
+    name: "Deploy to Int and Sandbox Environments"
+    uses: ./.github/workflows/cicd-stage-2-deploy-to-int-and-sandbox.yml
+    needs: deploy-to-internal-qa
