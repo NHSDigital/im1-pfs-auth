@@ -97,10 +97,6 @@ set-hosted-container-version:
 		sed -i 's|CONTAINER_TAG_TO_BE_REPLACED|$(CONTAINER_TAG)|g' specification/x-nhsd-apim/x-nhsd-apim.generated.yaml;
 	fi
 
-spec-compile:
-	mkdir -p build
-	npm run spec-compile
-
 # ==============================================================================
 # Postman Commands
 # ==============================================================================
