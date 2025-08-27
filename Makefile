@@ -21,13 +21,20 @@ format:
 # ==============================================================================
 
 # Deploy environment
-deploy:
+deploy: prepare-deploy
 # Mandatory arguments:
 # ENVIRONMENT: The environment to deploy to (e.g., internal-dev, internal-qa, int)
 # PROXYGEN_URL_PATH: The URL path for the API (e.g., im1-pfs-auth)
 # CONTAINER_TAG: The version of the API to deploy (e.g., latest, v1.0.0, commit hash)
-
 	@echo "Deploying API to the NHS API Platform..."
+	proxygen instance deploy "$(ENVIRONMENT)" "$(PROXYGEN_URL_PATH)" specification/im1-pfs-auth-api.yaml $(PROXYGEN_ARGS)
+
+
+prepare-deploy:
+# Mandatory arguments:
+# ENVIRONMENT: The environment to deploy to (e.g., internal-dev, internal-qa, int)
+# PROXYGEN_URL_PATH: The URL path for the API (e.g., im1-pfs-auth)
+# CONTAINER_TAG: The version of the API to deploy (e.g., latest, v1.0.0, commit hash)
 	if [ -z "$(ENVIRONMENT)" ]; then \
 		echo "No ENVIRONMENT provided. Use 'make deploy ENVIRONMENT=\"<env>\"' to specify environment."; \
 		echo "Available environments include: internal-dev, internal-dev-sandbox, internal-qa, internal-qa-sandbox, sandbox, int"; \
@@ -43,11 +50,26 @@ deploy:
 		exit 1; \
 	fi
 	make select-spec-configuration
-	proxygen instance deploy "$(ENVIRONMENT)" "$(PROXYGEN_URL_PATH)" specification/im1-pfs-auth-api.yaml $(PROXYGEN_ARGS)
 
 # Deploy environment from CI
 deploy-ci:
 	make deploy PROXYGEN_ARGS="--no-confirm"
+
+# Deploy spec to uat
+deploy-spec-uat: prepare-deploy
+	proxygen spec publish --uat $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.portman.generated.yaml
+
+# Deploy spec to prod
+deploy-spec-prod: prepare-deploy
+	proxygen spec publish $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.portman.generated.yaml
+
+# Deploy spec to uat in CI
+deploy-spec-uat-ci:
+	make deploy-spec-uat PROXYGEN_ARGS="--no-confirm"
+
+# Deploy spec to prod in CI
+deploy-spec-prod-ci:
+	make deploy-spec-prod PROXYGEN_ARGS="--no-confirm"
 
 # ==============================================================================
 # Spec Commands
