@@ -46,4 +46,4 @@ jobs:
       - name: Run Postman Collection
         uses: ./.github/actions/run-postman-collection
         env:
-          SANDBOX_BASE_URL: ${{ needs.deploy-dev-sandbox.outputs.environment_url }}
+          SANDBOX_BASE_URL: ${{ needs.deploy-qa-sandbox.outputs.environment_url }}

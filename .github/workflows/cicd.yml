@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch: # Temporary manual trigger for testing
 
+concurrency:
+  group: ${{ github.workflow }}
+
 permissions: {}
 
 jobs:
@@ -28,8 +31,10 @@ jobs:
     needs:
       - core-code-checks
       - additional-code-checks
+    secrets: inherit
 
   deploy-to-int-and-sandbox:
     name: "Deploy to Int and Sandbox Environments"
     uses: ./.github/workflows/cicd-stage-2-deploy-to-int-and-sandbox.yml
     needs: deploy-to-internal-qa
+    secrets: inherit
