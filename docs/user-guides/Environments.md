@@ -17,7 +17,7 @@ Environments can be broken down into one of two types:
 | sandbox | Sandbox environments are publicly accessible environments that host a limited/mocked version of our application                                   |
 | app     | Environments that are not of type sandbox. These environment require authentication and contain application code within their deployed container. |
 
-IM1 PFS Auth current has the following types of application and sandbox environments. An environment in this context is an Apigee url connected to the im1-pfs-auth ECS container.
+IM1 PFS Auth current has the following types of application and sandbox environments. An environment in this context is an Apigee URL connected to the im1-pfs-auth ECS container.
 
 > [!TIP]
 > For information on deploying see [Deploying to Apigee](./Deploy_To_Apigee.md)
@@ -43,8 +43,8 @@ Bloomreach environments are when the specification is hosted. This allows consum
 
 | Name | Purpose         | Access                                                       |
 | ---- | --------------- | ------------------------------------------------------------ |
-| uat  | internal review | Access through NHS network via VDI or HSCN VPN or NHS office |
-| prod | production      | Public page on API Catalogue                                 |
+| UAT  | internal review | Access through NHS network via VDI or HSCN VPN or NHS office |
+| Prod | production      | Public page on API Catalogue                                 |
 
 ## Deployment Flow
 
