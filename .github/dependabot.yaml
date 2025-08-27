@@ -61,7 +61,9 @@ updates:
           - "minor"
 
   - package-ecosystem: "docker"
-    directory: "/sandbox"
+    directories:
+      - "/app"
+      - "/sandbox"
     schedule:
       interval: "monthly"
     groups:
