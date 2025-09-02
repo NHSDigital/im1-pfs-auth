@@ -11,7 +11,7 @@
   "homepage": "https://github.com/NHSDigital/im1-pfs-auth-api",
   "devDependencies": {
     "@apideck/portman": "~=1.32.1",
-    "@openapitools/openapi-generator-cli": "~=2.20.2",
+    "@openapitools/openapi-generator-cli": "~=2.23.1",
     "apigeetool": "~=0.16.4",
     "license-checker": "~=25.0.1",
     "minimist": "~=1.2.2",
