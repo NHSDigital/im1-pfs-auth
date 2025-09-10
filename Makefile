@@ -29,7 +29,6 @@ deploy: prepare-deploy
 	@echo "Deploying API to the NHS API Platform..."
 	proxygen instance deploy "$(ENVIRONMENT)" "$(PROXYGEN_URL_PATH)" specification/im1-pfs-auth-api.yaml $(PROXYGEN_ARGS)
 
-
 prepare-deploy:
 # Mandatory arguments:
 # ENVIRONMENT: The environment to deploy to (e.g., internal-dev, internal-qa, int)
@@ -56,11 +55,11 @@ deploy-ci:
 	make deploy PROXYGEN_ARGS="--no-confirm"
 
 # Deploy spec to uat
-deploy-spec-uat: prepare-deploy
+deploy-spec-uat:
 	proxygen spec publish --uat $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.yaml
 
 # Deploy spec to prod
-deploy-spec-prod: prepare-deploy
+deploy-spec-prod:
 	proxygen spec publish $(PROXYGEN_ARGS) specification/im1-pfs-auth-api.yaml
 
 # Deploy spec to uat in CI
@@ -183,3 +182,4 @@ ${VERBOSE}.SILENT: \
 	dependencies \
 	deploy \
 	deploy-ci \
+	prepare-deploy \
