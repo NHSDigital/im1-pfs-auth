@@ -166,6 +166,10 @@ sandbox-unit-test:
 # Runs End to End tests against a deployed environment
 e2e-tests end-to-end-tests:
 # Mandatory arguments:
+# KEYCLOAK_CLIENT_ID: Client Id issued to the mocked authorisation provider client. Obtained by the GET Keycloak credentials endpoint.
+# KEYCLOAK_SECRET: Secret assigned to the mocked authorisation provider client. Obtained by the GET Keycloak credentials endpoint.
+# APP_CLIENT_ID: API Key for test application in the developer portal (https://dos-internal.ptl.api.platform.nhs.uk/MyApplications)
+# APP_CLIENT_PRIVATE_KEY: Private Key from key pair for test application in the developer portal (https://dos-internal.ptl.api.platform.nhs.uk/MyApplications)
 # APIGEE_ACCESS_TOKEN: "proxygen pytest-nhsd-apim --api=im1-pfs-auth get-token | jq -r .pytest_nhsd_apim_token"
 # APIGEE_PROXY_NAME: The name of the proxy to test (e.g., im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31)
 # PROXYGEN_URL_PATH: The URL path for the Proxygen API (e.g. im1-pfs-auth-pr-31)

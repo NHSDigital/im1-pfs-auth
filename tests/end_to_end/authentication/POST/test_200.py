@@ -12,7 +12,7 @@ logger = getLogger(__name__)
 
 
 @pytest.mark.positive
-def test_happy_path(request: pytest.FixtureRequest, api_url: str) -> None:
+def test_happy_path__emis(request: pytest.FixtureRequest, api_url: str) -> None:
     """Test the happy path for the API.
 
     Test Scenario:
@@ -26,10 +26,12 @@ def test_happy_path(request: pytest.FixtureRequest, api_url: str) -> None:
     # Arrange
     uuid = str(uuid4())
     headers = {
-        "Authorization": get_authentication_token(request),
+        "Authorization": get_authentication_token(
+            request
+        ),  # Should be an access token for a composite token
         "X-Application-ID": request.node.name,
         "X-Request-ID": uuid,
-        "X-Forward-To": "",
+        "X-Forward-To": "",  # We need to update this to be EMIS
         "X-ODS-Code": "",
         "X-Correlation-ID": uuid,
     }

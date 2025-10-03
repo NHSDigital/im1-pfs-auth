@@ -111,7 +111,7 @@ paths:
         - sessions
       summary: Begins a session
       security:
-        - nhs-login-p9: []
+        - nhs-login-p5: []
       description: |
         ## Overview
 
@@ -203,8 +203,8 @@ paths:
 
 components:
   securitySchemes:
-    nhs-login-p9:
-      $ref: "https://proxygen.prod.api.platform.nhs.uk/components/securitySchemes/nhs-login-p9"
+    nhs-login-p5:
+      $ref: "https://proxygen.prod.api.platform.nhs.uk/components/securitySchemes/nhs-login-p5"
 
   schemas:
     ResponseModel:

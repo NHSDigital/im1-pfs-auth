@@ -19,7 +19,9 @@ def authentication() -> Response:
     """
     try:
         (patient_nhs_number, proxy_nhs_number) = get_nhs_number_from_jwt_token(
-            request.headers.get("X-ID-Token")
+            request.headers.get(
+                "X-ID-Token"
+            )  # Assuming this is the access token for the composite token (STEP 7)
         )
         forward_request = ForwardRequest(
             application_id=request.headers.get("X-Application-ID"),
