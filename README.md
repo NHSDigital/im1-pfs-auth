@@ -149,9 +149,17 @@ To run end to end tests use the following commands:
 
 ```shell
 export APIGEE_ACCESS_TOKEN=$(proxygen pytest-nhsd-apim --api=im1-pfs-auth get-token | jq -r .pytest_nhsd_apim_token)
-make end-to-end-test PROXYGEN_URL_PATH=<proxygen_url_path> PROXY_NAME=<proxy_name> APIGEE_PROXY_NAME=<apigee_proxy_name>
+export TEST_APP_KEYCLOAK_CLIENT_ID=KEYCLOAK_CLIENT_ID
+export TEST_APP_KEYCLOAK_CLIENT_SECRET=KEYCLOAK_SECRET
+export TEST_APP_API_KEY=APP_CLIENT_API_KEY
+export TEST_APP_PRIVATE_KEY=$(cat {path_to_private_key.pem})
+make end-to-end-tests PROXYGEN_URL_PATH=im1-pfs-auth-pr-46 PROXY_NAME=im1-pfs-auth APIGEE_PROXY_NAME=im1-pfs-auth--internal-dev--im1-pfs-auth-pr-46
 ```
 
+- `TEST_APP_KEYCLOAK_CLIENT_ID`: Client Id issued to the mocked authorisation provider client. Obtained by the GET Keycloak credentials endpoint.
+- `TEST_APP_KEYCLOAK_CLIENT_SECRET`: Secret assigned to the mocked authorisation provider client. Obtained by the GET Keycloak credentials endpoint.
+- `TEST_APP_API_KEY`: API Key for test application in the developer portal (https://dos-internal.ptl.api.platform.nhs.uk/MyApplications)
+- `TEST_APP_PRIVATE_KEY`: Private Key from key pair for test application in the developer portal (https://dos-internal.ptl.api.platform.nhs.uk/MyApplications)
 - `PROXYGEN_URL_PATH`: The URL path for the Proxygen API (e.g. im1-pfs-auth-pr-31)
 - `PROXY_NAME`: The name of the proxy (e.g. im1-pfs-auth)
 - `APIGEE_PROXY_NAME`: The name of the proxy to test (e.g., im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31)

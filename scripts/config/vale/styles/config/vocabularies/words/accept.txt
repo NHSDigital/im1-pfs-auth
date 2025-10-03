@@ -5,10 +5,12 @@ Bitwarden
 Bloomreach
 Cyber
 Dependabot
+(?i)dev
 Gitleaks
 Grype
 Gunicorn
 Jira
+Keycloak
 OAuth
 Octokit
 Podman
