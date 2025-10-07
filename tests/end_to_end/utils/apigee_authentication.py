@@ -64,7 +64,7 @@ def get_authentication_token(request: pytest.FixtureRequest) -> str:
         realm=f"NHS-Login-mock-{apigee_environment}",
         client_id=getenv("KEYCLOAK_CLIENT_ID"),
         client_secret=getenv("KEYCLOAK_SECRET"),
-        login_form={"username": "9912003072"},
+        login_form={"username": "9912003071"},
     )
 
     authenticator = KeycloakUserCompositeAuthenticator(config=config1)
