@@ -49,10 +49,13 @@ class KeycloakUserCompositeAuthenticator(KeycloakUserAuthenticator):
         return resp3.json()
 
 
-def get_authentication_token(request: pytest.FixtureRequest) -> str:
+def get_authentication_token(
+    proxy_identifier: str, request: pytest.FixtureRequest
+) -> str:
     """Get the authentication token for the IM1 PFS Auth API.
 
     Args:
+        proxy_identifier (str): The NHS number for the proxy
         request (pytest.FixtureRequest): The pytest request fixture.
 
     Returns:
@@ -64,7 +67,7 @@ def get_authentication_token(request: pytest.FixtureRequest) -> str:
         realm=f"NHS-Login-mock-{apigee_environment}",
         client_id=getenv("KEYCLOAK_CLIENT_ID"),
         client_secret=getenv("KEYCLOAK_SECRET"),
-        login_form={"username": "9912003071"},
+        login_form={"username": proxy_identifier},
     )
 
     authenticator = KeycloakUserCompositeAuthenticator(config=config1)

@@ -175,7 +175,8 @@ e2e-tests end-to-end-tests:
 # PROXYGEN_URL_PATH: The URL path for the Proxygen API (e.g. im1-pfs-auth-pr-31)
 	uv run pytest tests/end_to_end \
 		--api-name=im1-pfs-auth --proxy-name=${APIGEE_PROXY_NAME} \
-		--disable-warnings -o log_cli_level=INFO
+		--disable-warnings -o log_cli_level=INFO \
+		${PYTEST_ARGS}
 
 # ==============================================================================
 

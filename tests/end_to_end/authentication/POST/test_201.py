@@ -24,12 +24,12 @@ def test_happy_path(
         Then: the response status code is 200
         And: the response body contains the expected data
 
-    NOTE: This test does not work due to missing composite derived access token.
     """
     # Arrange
     uuid = str(uuid4())
+    proxy_identifier = "9912003071"  # P9 User with composite token
     headers = {
-        "Authorization": get_authentication_token(request),
+        "Authorization": get_authentication_token(proxy_identifier, request),
         "X-Application-ID": request.node.name,
         "X-Request-ID": uuid,
         "X-Forward-To": forward_to_url,
@@ -39,7 +39,10 @@ def test_happy_path(
     # Act
     response = post(api_url, headers=headers, timeout=5)
     # Assert
-    logger.info(
-        f"API response: status_code {response.status_code}, response: {response.json()}"
-    )
     assert response.status_code == 201
+    assert response.json() == {
+        "patients": [{"first_name": "Jeremy", "surname": "Jones", "title": "Mr"}],
+        "proxy": {"first_name": "Betty", "surname": "Jones", "title": "Ms"},
+        "session_id": "123",
+        "supplier": "EMIS",
+    }
