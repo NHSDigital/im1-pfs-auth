@@ -12,7 +12,10 @@ logger = getLogger(__name__)
 
 
 @pytest.mark.positive
-def test_happy_path__emis(request: pytest.FixtureRequest, api_url: str) -> None:
+@pytest.mark.parametrize("forward_to_url", ["https://emis.com"])
+def test_happy_path(
+    request: pytest.FixtureRequest, api_url: str, forward_to_url: str
+) -> None:
     """Test the happy path for the API.
 
     Test Scenario:
@@ -26,13 +29,11 @@ def test_happy_path__emis(request: pytest.FixtureRequest, api_url: str) -> None:
     # Arrange
     uuid = str(uuid4())
     headers = {
-        "Authorization": get_authentication_token(
-            request
-        ),  # Should be an access token for a composite token
+        "Authorization": get_authentication_token(request),
         "X-Application-ID": request.node.name,
         "X-Request-ID": uuid,
-        "X-Forward-To": "",  # We need to update this to be EMIS
-        "X-ODS-Code": "",
+        "X-Forward-To": forward_to_url,
+        "X-ODS-Code": "ODS123",
         "X-Correlation-ID": uuid,
     }
     # Act
@@ -41,4 +42,4 @@ def test_happy_path__emis(request: pytest.FixtureRequest, api_url: str) -> None:
     logger.info(
         f"API response: status_code {response.status_code}, response: {response.json()}"
     )
-    assert response.status_code == 200
+    assert response.status_code == 201

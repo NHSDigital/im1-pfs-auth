@@ -1,9 +1,9 @@
-import pytest
-import requests
-from lxml import html
 from os import getenv
 from urllib.parse import parse_qs, urlparse
 
+import pytest
+import requests
+from lxml import html
 from pytest_nhsd_apim.identity_service import (
     KeycloakUserAuthenticator,
     KeycloakUserConfig,
@@ -11,9 +11,9 @@ from pytest_nhsd_apim.identity_service import (
     TokenExchangeConfig,
 )
 
+
 class KeycloakUserCompositeAuthenticator(KeycloakUserAuthenticator):
     def get_token(self):
-
         login_session = requests.session()
         # 1. Get me that auth page
         resp = login_session.get(
@@ -75,12 +75,11 @@ def get_authentication_token(request: pytest.FixtureRequest) -> str:
         environment=apigee_environment,
         identity_service_base_url=f"https://{apigee_environment}.api.service.nhs.uk/oauth2-mock",
         client_id=getenv("APP_CLIENT_ID"),
-        jwt_private_key=getenv("APP_CLIENT_PRIVATE_KEY"),
+        jwt_private_key=getenv("APP_CLIENT_PRIVATE_KEY").replace("\\n", "\n"),
         jwt_kid="im1-pfs-auth-test",
         id_token=id_token,
     )
 
     authenticator = TokenExchangeAuthenticator(config=config)
-    print(authenticator.get_token())
 
     return f"Bearer {authenticator.get_token()['access_token']}"
