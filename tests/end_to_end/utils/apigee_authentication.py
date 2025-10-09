@@ -65,8 +65,8 @@ def get_authentication_token(
 
     config1 = KeycloakUserConfig(
         realm=f"NHS-Login-mock-{apigee_environment}",
-        client_id=getenv("KEYCLOAK_CLIENT_ID"),
-        client_secret=getenv("KEYCLOAK_SECRET"),
+        client_id=getenv("TEST_APP_KEYCLOAK_CLIENT_ID"),
+        client_secret=getenv("TEST_APP_KEYCLOAK_CLIENT_SECRET"),
         login_form={"username": proxy_identifier},
     )
 
@@ -77,8 +77,8 @@ def get_authentication_token(
     config = TokenExchangeConfig(
         environment=apigee_environment,
         identity_service_base_url=f"https://{apigee_environment}.api.service.nhs.uk/oauth2-mock",
-        client_id=getenv("APP_CLIENT_ID"),
-        jwt_private_key=getenv("APP_CLIENT_PRIVATE_KEY").replace("\\n", "\n"),
+        client_id=getenv("TEST_APP_API_KEY"),
+        jwt_private_key=getenv("TEST_APP_PRIVATE_KEY").replace("\\n", "\n"),
         jwt_kid="im1-pfs-auth-test",
         id_token=id_token,
     )
