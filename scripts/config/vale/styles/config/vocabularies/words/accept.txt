@@ -27,3 +27,4 @@ sed
 toolchain
 uv
 yq
+Keycloak

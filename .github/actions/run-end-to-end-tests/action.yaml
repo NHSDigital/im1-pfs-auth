@@ -3,7 +3,7 @@ description: Run End to End Tests
 
 inputs:
   PROXY_NAME:
-    description: "The name of the proxy, e.g. 'im1-pfs'auth'"
+    description: "The name of the proxy, e.g. 'im1-pfs-auth'"
     required: true
   APIGEE_PROXY_NAME:
     description: "The name of the proxy to test, e.g. 'im1-pfs-auth--internal-dev--im1-pfs-auth-pr-31'"

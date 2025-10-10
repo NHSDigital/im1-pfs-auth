@@ -41,9 +41,9 @@ jobs:
       - name: Run End to End Tests
         uses: ./.github/actions/run-end-to-end-tests
         env:
-          PROXYGEN_URL_PATH: ${{ needs.deploy-qa-app.outputs.proxygen_url_path }}
+          PROXYGEN_URL_PATH: "im1-pfs-auth"
           PROXY_NAME: "im1-pfs-auth"
-          APIGEE_PROXY_NAME: "im1-pfs-auth--internal-qa--im1-pfs-auth--nhs-login-p9"
+          APIGEE_PROXY_NAME: "im1-pfs-auth--internal-qa--im1-pfs-auth"
           TEST_APP_KEYCLOAK_CLIENT_ID: ${{ secrets.TEST_APP_KEYCLOAK_CLIENT_ID }}
           TEST_APP_KEYCLOAK_CLIENT_SECRET: ${{ secrets.TEST_APP_KEYCLOAK_CLIENT_SECRET }}
           TEST_APP_API_KEY: ${{ secrets.TEST_APP_API_KEY }}

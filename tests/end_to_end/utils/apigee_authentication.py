@@ -13,7 +13,18 @@ from pytest_nhsd_apim.identity_service import (
 
 
 class KeycloakUserCompositeAuthenticator(KeycloakUserAuthenticator):
-    def get_token(self):
+    """Derived class to allow for a different scope in Keycloak config.
+
+    Inherits:
+        KeycloakUserAuthenticator: pytest-nhsd-apim parent class.
+    """
+
+    def get_token(self) -> str:
+        """Re-implementation to add 'openid delegated' scope.
+
+        Returns:
+            str: Token returned from Keycloak endpoint.
+        """
         login_session = requests.session()
         # 1. Get me that auth page
         resp = login_session.get(
