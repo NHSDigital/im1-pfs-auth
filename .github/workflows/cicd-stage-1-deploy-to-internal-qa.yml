@@ -19,35 +19,10 @@ jobs:
       PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
       PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
 
-  # Add int end-to-end tests
-  run-end-to-end-tests:
-    name: "Run End to End Tests"
-    runs-on: ubuntu-latest
-    needs: deploy-qa-app
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-      - name: Setup Python Dependencies
-        uses: ./.github/actions/setup-python-dependencies
-      - name: Setup proxygen
-        uses: ./.github/actions/setup-proxygen
-        with:
-          PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
-          PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
-          PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
-      - name: Run End to End Tests
-        uses: ./.github/actions/run-end-to-end-tests
-        env:
-          PROXYGEN_URL_PATH: "im1-pfs-auth"
-          PROXY_NAME: "im1-pfs-auth"
-          APIGEE_PROXY_NAME: "im1-pfs-auth--internal-qa--im1-pfs-auth"
-          TEST_APP_KEYCLOAK_CLIENT_ID: ${{ secrets.TEST_APP_KEYCLOAK_CLIENT_ID }}
-          TEST_APP_KEYCLOAK_CLIENT_SECRET: ${{ secrets.TEST_APP_KEYCLOAK_CLIENT_SECRET }}
-          TEST_APP_API_KEY: ${{ secrets.TEST_APP_API_KEY }}
-          TEST_APP_PRIVATE_KEY: ${{ secrets.TEST_APP_PRIVATE_KEY }}
+  # Add end-to-end tests here subject to either:
+  #.   - mockjws having composite tokens available for internal-qa
+  #    - making internal-dev the APIGEE environment used for CI/CD
+  #.     (or added to start of CI/CD pipeline)
 
   # TODO: Reuse docker container for sandbox deployment, don't rebuild docker container
   deploy-qa-sandbox:
