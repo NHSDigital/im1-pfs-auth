@@ -28,6 +28,18 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
    pip install proxygen-cli
    ```
 
+   Alternative proxygen install
+
+   Proxygen currently, 2025-10-09, fails to build with Python 3.13, the version used in the IM1 repository, due to an inability to build `lxml==4.9.4`.
+
+   A workaround is to create a separate virtual environment at a lower Python version, then build proxygen for that environment, and transfer the binary to the IM1 repository virtual environment.
+
+   ```shell
+   uv venv -p 3.12 # In a directory not containing the IM1 repository
+   uv pip install proxygen-cli
+   cp .venv/bin/proxygen <IM1 Repository>/.venv/bin/
+   ```
+
 2. Confirm the installation by checking the version:
 
    ```shell

@@ -40,7 +40,7 @@ def test_authentication_post(
     actual_result = client.post("/authentication")
 
     # Assert
-    assert actual_result.status_code == 200
+    assert actual_result.status_code == 201
     assert actual_result.get_json() == mocked_forward_request_response
     mock_forward_request.assert_called_once()
     mock_route_and_forward.assert_called_once_with(mock_forward_request.return_value)
