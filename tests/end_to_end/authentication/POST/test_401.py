@@ -1,4 +1,4 @@
-"""All tests in this file are for the 200 OK response."""
+"""All tests in this file are for the 401 Error response."""
 
 from logging import getLogger
 from uuid import uuid4
