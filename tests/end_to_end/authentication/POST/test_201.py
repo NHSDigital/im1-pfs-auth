@@ -1,4 +1,4 @@
-"""All tests in this file are for the 200 OK response."""
+"""All tests in this file are for the 201 OK response."""
 
 from logging import getLogger
 from uuid import uuid4
@@ -21,7 +21,7 @@ def test_happy_path(
     Test Scenario:
         Given: API is ready
         When: a valid request is made with correct parameters
-        Then: the response status code is 200
+        Then: the response status code is 201
         And: the response body contains the expected data
 
     """

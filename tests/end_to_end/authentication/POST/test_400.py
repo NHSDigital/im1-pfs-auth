@@ -1,4 +1,4 @@
-"""All tests in this file are for the 200 OK response."""
+"""All tests in this file are for the 400 Error response."""
 
 from logging import getLogger
 from uuid import uuid4
@@ -21,7 +21,7 @@ def test_missing_forward_to_header(
     Test Scenario:
         Given: API is ready
         When: an invalid request is made with no X-Forward-To header
-        Then: the response status code is 401
+        Then: the response status code is 400
         And: the response body contains the expected message
 
     """
@@ -55,7 +55,7 @@ def test_invalid_forward_to_header(
     Test Scenario:
         Given: API is ready
         When: an invalid request is made with an invalid X-Forward-To header
-        Then: the response status code is 401
+        Then: the response status code is 400
         And: the response body contains the expected message
 
     """
@@ -89,7 +89,7 @@ def test_missing_ods_header(
     Test Scenario:
         Given: API is ready
         When: an invalid request is made with no X-ODS-Code header
-        Then: the response status code is 401
+        Then: the response status code is 400
         And: the response body contains the expected message
 
     """
