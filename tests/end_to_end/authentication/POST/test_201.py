@@ -13,7 +13,7 @@ logger = getLogger(__name__)
 
 @pytest.mark.positive
 @pytest.mark.parametrize(
-    "forward_to_url, expected_response",
+    ("forward_to_url", "expected_response"),
     [
         (
             "https://emis.com",
@@ -28,11 +28,26 @@ logger = getLogger(__name__)
                 "end_user_session_id": "SESS_mDq6nE2b8R7KQ0v",
                 "supplier": "EMIS",
             },
-        )
+        ),
+        (
+            "https://tpp.com",
+            {
+                "patients": [
+                    {"first_name": "Clare", "surname": "Jones", "title": "Ms"},
+                ],
+                "proxy": {"first_name": "Sam", "surname": "Jones", "title": "Mr"},
+                "session_id": "xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",  # noqa: E501
+                "end_user_session_id": "9cbf400000000000",
+                "supplier": "TPP",
+            },
+        ),
     ],
 )
 def test_happy_path(
-    request: pytest.FixtureRequest, api_url: str, forward_to_url: str, expected_response: dict
+    request: pytest.FixtureRequest,
+    api_url: str,
+    forward_to_url: str,
+    expected_response: dict,
 ) -> None:
     """Test the happy path for the API.
 
