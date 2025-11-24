@@ -91,10 +91,10 @@ The app is the core component of the API, containing the business logic and data
 
 The application is to aims to apply domain driven design by incorporating a decoupled architecture that separates core business lock from infrastructure concerns.
 
-- Domain: Contains business logic
-- Application: Orchestrates the use cases
-- Infrastructure: Technical implementations
-- App: Application entry point
+- Domain: Contains business logic and rules, independent of frameworks or external systems. 
+- Application: Orchestrates the use cases (the thins the system needs to do to serve the business i.e. forward request on to GPIT)
+- Infrastructure: Technical implementations required by the Domain and Application layers.
+- App: How the application is presented to the outside world
 
 #### Sandbox
 
