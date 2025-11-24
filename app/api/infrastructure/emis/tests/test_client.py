@@ -104,39 +104,21 @@ def test_emis_forward_request_use_mock_off_exception(
 def test_emis_client_transform_response(client: EmisClient) -> None:
     """Test the EmisClient transform_response function."""
     # Assert
-    response = {
-        "SessionId": "some session id",
-        "EndUserSessionId": "some end session id",
-        "FirstName": "some first name",
-        "Surname": "some surname",
-        "Title": "some title",
-        "UserPatientLinks": [
-            {
-                "FirstName": "some other first name",
-                "Surname": "some other surname",
-                "Title": "some other title",
-            }
-        ],
-    }
+    with Path("app/api/infrastructure/emis/data/mocked_response.json").open("r") as f:
+        response = load(f)
     # Act
     actual_result = client.transform_response(response)
 
     # Assert
     assert actual_result == ForwardResponse(
-        session_id="some session id",
-        end_user_session_id="some end session id",
+        session_id="SID_2qZ9yJpVxHq4N3b",
+        end_user_session_id="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
-        proxy=Demographics(
-            first_name="some first name",
-            surname="some surname",
-            title="some title",
-        ),
+        proxy=Demographics(first_name="Alex", surname="Taylor", title="Mr"),
         patients=[
-            Demographics(
-                first_name="some other first name",
-                surname="some other surname",
-                title="some other title",
-            )
+            Demographics(first_name="Alex", surname="Taylor", title="Mr"),
+            Demographics(first_name="Jane", surname="Doe", title="Mrs"),
+            Demographics(first_name="Ella", surname="Taylor", title="Ms"),
         ],
     )
 

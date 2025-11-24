@@ -3,12 +3,14 @@ from pydantic import BaseModel
 
 class Identifier(BaseModel):
     """Base Model for identifiers."""
+
     value: str
     type: str = "NhsNumber"
 
 
 class CreateSessionRequestData(BaseModel):
     """Base Model for the request data required to create a session."""
+
     patient: Identifier
     patient_ods_code: str
     proxy: Identifier
@@ -30,6 +32,7 @@ class CreateSessionRequestData(BaseModel):
 
 class CreateSessionRequestHeaders(BaseModel):
     """Base Model for the request headers required to create a session."""
+
     application_id: str
     version: str = "1"
 
