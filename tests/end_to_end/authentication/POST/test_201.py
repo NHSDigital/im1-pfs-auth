@@ -12,9 +12,27 @@ logger = getLogger(__name__)
 
 
 @pytest.mark.positive
-@pytest.mark.parametrize("forward_to_url", ["https://emis.com"])
+@pytest.mark.parametrize(
+    "forward_to_url, expected_response",
+    [
+        (
+            "https://emis.com",
+            {
+                "patients": [
+                    {"first_name": "Alex", "surname": "Taylor", "title": "Mr"},
+                    {"first_name": "Jane", "surname": "Doe", "title": "Mrs"},
+                    {"first_name": "Ella", "surname": "Taylor", "title": "Ms"},
+                ],
+                "proxy": {"first_name": "Alex", "surname": "Taylor", "title": "Mr"},
+                "session_id": "SID_2qZ9yJpVxHq4N3b",
+                "end_user_session_id": "SESS_mDq6nE2b8R7KQ0v",
+                "supplier": "EMIS",
+            },
+        )
+    ],
+)
 def test_happy_path(
-    request: pytest.FixtureRequest, api_url: str, forward_to_url: str
+    request: pytest.FixtureRequest, api_url: str, forward_to_url: str, expected_response: dict
 ) -> None:
     """Test the happy path for the API.
 
@@ -40,9 +58,4 @@ def test_happy_path(
     response = post(api_url, headers=headers, timeout=5)
     # Assert
     assert response.status_code == 201
-    assert response.json() == {
-        "patients": [{"first_name": "Jeremy", "surname": "Jones", "title": "Mr"}],
-        "proxy": {"first_name": "Betty", "surname": "Jones", "title": "Ms"},
-        "session_id": "123",
-        "supplier": "EMIS",
-    }
+    assert response.json() == expected_response
