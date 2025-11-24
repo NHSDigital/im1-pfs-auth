@@ -4,8 +4,9 @@ from pathlib import Path
 
 import requests
 
-from ..domain.base_client import BaseClient
-from ..domain.forward_response_model import Demographics, ForwardResponse
+from ...domain.base_client import BaseClient
+from ...domain.forward_response_model import Demographics, ForwardResponse
+from .models import CreateSessionRequestData, CreateSessionRequestHeaders, Identifier
 
 BASE_DIR = Path(__file__).parent
 
@@ -28,17 +29,12 @@ class EmisClient(BaseClient):
         Returns:
             dict: Data dictionary
         """
-        return {
-            "PatientIdentifier": {
-                "IdentifierValue": self.request.patient_nhs_number,
-                "IdentifierType": "NhsNumber",
-            },
-            "CarerIdentifier": {
-                "IdentifierValue": self.request.proxy_nhs_number,
-                "IdentifierType": "NhsNumber",
-            },
-            "PatientNationalPracticeCode": self.request.patient_ods_code,
-        }
+        session_request = CreateSessionRequestData(
+            patient=Identifier(value=self.request.patient_nhs_number),
+            patient_ods_code=self.request.patient_ods_code,
+            proxy=Identifier(value=self.request.proxy_nhs_number),
+        )
+        return session_request.to_dict()
 
     def get_headers(self) -> dict:
         """Function to create headers to pass to Emis client.
@@ -46,10 +42,10 @@ class EmisClient(BaseClient):
         Returns:
             dict: Header dictionary
         """
-        return {
-            "X-API-ApplicationId": self.request.application_id,
-            "X-API-Version": "1",
-        }
+        request_headers = CreateSessionRequestHeaders(
+            application_id=self.request.application_id
+        )
+        return request_headers.to_dict()
 
     def forward_request(self) -> dict:
         """Function to forward requests to Emis client.
@@ -77,9 +73,10 @@ class EmisClient(BaseClient):
         Returns:
             ForwardResponse: Homogenised response with other clients
         """
-        user_patient_links = response.get("UserPatientLinks", [{}])
+        patient_links = response.get("UserPatientLinks", [{}])
         return ForwardResponse(
             session_id=response.get("SessionId"),
+            end_user_session_id=response.get("EndUserSessionId"),
             supplier=self.supplier,
             proxy=Demographics(
                 first_name=response.get("FirstName"),
@@ -88,11 +85,11 @@ class EmisClient(BaseClient):
             ),
             patients=[
                 Demographics(
-                    first_name=patient_link.get("Forenames"),
+                    first_name=patient_link.get("FirstName"),
                     surname=patient_link.get("Surname"),
                     title=patient_link.get("Title"),
                 )
-                for patient_link in user_patient_links
+                for patient_link in patient_links
             ],
         )
 
@@ -102,5 +99,5 @@ class EmisClient(BaseClient):
         Returns:
             dict: Hard coded response rather than forwarding request to Emis client
         """
-        with Path((BASE_DIR) / "data" / "mocked_emis_response.json").open("r") as f:
+        with Path((BASE_DIR) / "data" / "mocked_response.json").open("r") as f:
             return load(f)

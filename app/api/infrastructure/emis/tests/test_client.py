@@ -9,7 +9,7 @@ from requests import HTTPError
 
 from app.api.domain.forward_request_model import ForwardRequest
 from app.api.domain.forward_response_model import Demographics, ForwardResponse
-from app.api.infrastructure.emis_client import EmisClient
+from app.api.infrastructure.emis.client import EmisClient
 
 
 @pytest.fixture(name="client")
@@ -47,7 +47,7 @@ def test_emis_client_get_data(client: EmisClient) -> None:
             "IdentifierValue": "1234567890",
             "IdentifierType": "NhsNumber",
         },
-        "CarerIdentifier": {
+        "UserIdentifier": {
             "IdentifierValue": "0987654321",
             "IdentifierType": "NhsNumber",
         },
@@ -59,7 +59,7 @@ def test_emis_client_get_data(client: EmisClient) -> None:
 def test_emis_forward_request_use_mock_on(client: EmisClient) -> None:
     """Test the EmisClient forward_request function when mock is turned on."""
     # Arrange
-    with Path("app/api/infrastructure/data/mocked_emis_response.json").open("r") as f:
+    with Path("app/api/infrastructure/emis/data/mocked_response.json").open("r") as f:
         expected_response = load(f)
     # Act
     actual_result = client.forward_request()
@@ -69,7 +69,7 @@ def test_emis_forward_request_use_mock_on(client: EmisClient) -> None:
 
 
 @patch.dict(environ, {"USE_MOCK": "False"})
-@patch("app.api.infrastructure.emis_client.requests")
+@patch("app.api.infrastructure.emis.client.requests")
 def test_emis_forward_request_use_mock_off(
     mock_request: MagicMock, client: EmisClient
 ) -> None:
@@ -87,7 +87,7 @@ def test_emis_forward_request_use_mock_off(
 
 
 @patch.dict(environ, {"USE_MOCK": "False"})
-@patch("app.api.infrastructure.emis_client.requests")
+@patch("app.api.infrastructure.emis.client.requests")
 def test_emis_forward_request_use_mock_off_exception(
     mock_request: MagicMock, client: EmisClient
 ) -> None:
@@ -105,13 +105,14 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
     """Test the EmisClient transform_response function."""
     # Assert
     response = {
-        "SessionId": "some session",
+        "SessionId": "some session id",
+        "EndUserSessionId": "some end session id",
         "FirstName": "some first name",
         "Surname": "some surname",
         "Title": "some title",
         "UserPatientLinks": [
             {
-                "Forenames": "some other first name",
+                "FirstName": "some other first name",
                 "Surname": "some other surname",
                 "Title": "some other title",
             }
@@ -122,7 +123,8 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
 
     # Assert
     assert actual_result == ForwardResponse(
-        session_id="some session",
+        session_id="some session id",
+        end_user_session_id="some end session id",
         supplier="EMIS",
         proxy=Demographics(
             first_name="some first name",
