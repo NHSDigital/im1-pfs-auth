@@ -81,17 +81,17 @@ class TPPClient(BaseClient):
         proxy_person = proxy_link.get("Person", {})
         patient_links = response.get("PatientAccess", [{}])
         return ForwardResponse(
-            session_id=response.get("suid"),
-            end_user_session_id=proxy_link.get("onlineUserId"),
+            sessionId=response.get("suid"),
+            endUserSessionId=proxy_link.get("onlineUserId"),
             supplier=self.supplier,
             proxy=Demographics(
-                first_name=proxy_person.get("PersonName", {}).get("firstName"),
+                firstName=proxy_person.get("PersonName", {}).get("firstName"),
                 surname=proxy_person.get("PersonName", {}).get("surname"),
                 title=proxy_person.get("PersonName", {}).get("title"),
             ),
             patients=[
                 Demographics(
-                    first_name=patient_link.get("PersonName", {}).get("firstName"),
+                    firstName=patient_link.get("PersonName", {}).get("firstName"),
                     surname=patient_link.get("PersonName", {}).get("surname"),
                     title=patient_link.get("PersonName", {}).get("title"),
                 )

@@ -115,11 +115,11 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
 
     # Assert
     assert actual_result == ForwardResponse(
-        session_id="xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",
-        end_user_session_id="9cbf400000000000",
+        sessionId="xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",
+        endUserSessionId="9cbf400000000000",
         supplier="TPP",
-        proxy=Demographics(first_name="Sam", surname="Jones", title="Mr"),
-        patients=[Demographics(first_name="Clare", surname="Jones", title="Mrs")],
+        proxy=Demographics(firstName="Sam", surname="Jones", title="Mr"),
+        patients=[Demographics(firstName="Clare", surname="Jones", title="Mrs")],
     )
 
 

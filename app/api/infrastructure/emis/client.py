@@ -75,17 +75,17 @@ class EmisClient(BaseClient):
         """
         patient_links = response.get("UserPatientLinks", [{}])
         return ForwardResponse(
-            session_id=response.get("SessionId"),
-            end_user_session_id=response.get("EndUserSessionId"),
+            sessionId=response.get("SessionId"),
+            endUserSessionId=response.get("EndUserSessionId"),
             supplier=self.supplier,
             proxy=Demographics(
-                first_name=response.get("FirstName"),
+                firstName=response.get("FirstName"),
                 surname=response.get("Surname"),
                 title=response.get("Title"),
             ),
             patients=[
                 Demographics(
-                    first_name=patient_link.get("FirstName"),
+                    firstName=patient_link.get("FirstName"),
                     surname=patient_link.get("Surname"),
                     title=patient_link.get("Title"),
                 )
