@@ -218,6 +218,8 @@ components:
         sessionId:
           minLength: 1
           type: string
+        endUserSessionId:
+          type: string
         supplier:
           enum: [EMIS, TPP]
           type: string

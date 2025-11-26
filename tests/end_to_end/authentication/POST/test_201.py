@@ -12,9 +12,42 @@ logger = getLogger(__name__)
 
 
 @pytest.mark.positive
-@pytest.mark.parametrize("forward_to_url", ["https://emis.com"])
+@pytest.mark.parametrize(
+    ("forward_to_url", "expected_response"),
+    [
+        (
+            "https://emis.com",
+            {
+                "patients": [
+                    {"firstName": "Alex", "surname": "Taylor", "title": "Mr"},
+                    {"firstName": "Jane", "surname": "Doe", "title": "Mrs"},
+                    {"firstName": "Ella", "surname": "Taylor", "title": "Ms"},
+                ],
+                "proxy": {"firstName": "Alex", "surname": "Taylor", "title": "Mr"},
+                "sessionId": "SID_2qZ9yJpVxHq4N3b",
+                "endUserSessionId": "SESS_mDq6nE2b8R7KQ0v",
+                "supplier": "EMIS",
+            },
+        ),
+        (
+            "https://tpp.com",
+            {
+                "patients": [
+                    {"firstName": "Clare", "surname": "Jones", "title": "Mrs"},
+                ],
+                "proxy": {"firstName": "Sam", "surname": "Jones", "title": "Mr"},
+                "sessionId": "xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",  # noqa: E501
+                "endUserSessionId": "9cbf400000000000",
+                "supplier": "TPP",
+            },
+        ),
+    ],
+)
 def test_happy_path(
-    request: pytest.FixtureRequest, api_url: str, forward_to_url: str
+    request: pytest.FixtureRequest,
+    api_url: str,
+    forward_to_url: str,
+    expected_response: dict,
 ) -> None:
     """Test the happy path for the API.
 
@@ -40,9 +73,4 @@ def test_happy_path(
     response = post(api_url, headers=headers, timeout=5)
     # Assert
     assert response.status_code == 201
-    assert response.json() == {
-        "patients": [{"first_name": "Jeremy", "surname": "Jones", "title": "Mr"}],
-        "proxy": {"first_name": "Betty", "surname": "Jones", "title": "Ms"},
-        "session_id": "123",
-        "supplier": "EMIS",
-    }
+    assert response.json() == expected_response

@@ -1,0 +1,140 @@
+{
+  "EndUserSessionId": "SESS_mDq6nE2b8R7KQ0v",
+  "SessionId": "SID_2qZ9yJpVxHq4N3b",
+  "ApplicationLinkLevel": "Linked",
+  "Title": "Mr",
+  "FirstName": "Alex",
+  "Surname": "Taylor",
+  "LastAccessTimestamp": "2025-09-26T10:15:30Z",
+  "UserPatientIdentifiers": [
+    {
+      "IdentifierValue": "9434765919",
+      "IdentifierType": "NhsNumber"
+    }
+  ],
+  "UserPatientLinks": [
+    {
+      "UserPatientLinkToken": "link_self_9aLw3G7kVQ",
+      "PatientActivityContextGuid": "a1e2b3c4-d5f6-4f3e-9a1b-12ab34cd56ef",
+      "NationalPracticeCode": "A82648",
+      "Title": "Mr",
+      "FirstName": "Alex",
+      "Surname": "Taylor",
+      "DateOfBirth": "1985-06-25",
+      "AssociationType": "Self",
+      "PatientIdentifiers": [
+        {
+          "IdentifierValue": "9434765919",
+          "IdentifierType": "NhsNumber"
+        }
+      ],
+      "ApplicationLinkLevel": "Linked",
+      "AccountRegistrationStatus": "Active",
+      "AccountCreationDate": "2024-08-14T09:12:43Z",
+      "EffectiveServices": {
+        "AppointmentsEnabled": true,
+        "DemographicsUpdateEnabled": true,
+        "EpsEnabled": true,
+        "MedicalRecordEnabled": true,
+        "OnlineTriageEnabled": false,
+        "PracticePatientCommunicationEnabled": false,
+        "PrescribingEnabled": true,
+        "RecordSharingEnabled": false,
+        "RecordViewAuditEnabled": true,
+        "MedicalRecord": {
+          "RecordAccessScheme": "DetailedCodedCareRecord",
+          "AllergiesEnabled": true,
+          "ConsultationsEnabled": true,
+          "ImmunisationsEnabled": true,
+          "DocumentsEnabled": true,
+          "MedicationEnabled": true,
+          "ProblemsEnabled": true,
+          "TestResultsEnabled": true
+        }
+      },
+      "DispensingEnabled": true
+    },
+    {
+      "UserPatientLinkToken": "link_proxy_jane_5QJw7r2m",
+      "PatientActivityContextGuid": "b2c3d4e5-f6a7-45b8-8c90-abcdefabcdef",
+      "NationalPracticeCode": "A82648",
+      "Title": "Mrs",
+      "FirstName": "Jane",
+      "Surname": "Doe",
+      "DateOfBirth": "1979-01-15",
+      "AssociationType": "Proxy",
+      "PatientIdentifiers": [
+        {
+          "IdentifierValue": "2222222222",
+          "IdentifierType": "NhsNumber"
+        }
+      ],
+      "ApplicationLinkLevel": "Linked",
+      "AccountRegistrationStatus": "Active",
+      "AccountCreationDate": "2023-11-03T14:05:12Z",
+      "EffectiveServices": {
+        "AppointmentsEnabled": false,
+        "DemographicsUpdateEnabled": true,
+        "EpsEnabled": false,
+        "MedicalRecordEnabled": true,
+        "OnlineTriageEnabled": true,
+        "PracticePatientCommunicationEnabled": true,
+        "PrescribingEnabled": true,
+        "RecordSharingEnabled": false,
+        "RecordViewAuditEnabled": true,
+        "MedicalRecord": {
+          "RecordAccessScheme": "CoreSummaryCareRecord",
+          "AllergiesEnabled": true,
+          "ConsultationsEnabled": true,
+          "ImmunisationsEnabled": true,
+          "DocumentsEnabled": true,
+          "MedicationEnabled": true,
+          "ProblemsEnabled": true,
+          "TestResultsEnabled": true
+        }
+      },
+      "DispensingEnabled": true
+    },
+    {
+      "UserPatientLinkToken": "link_proxy_ella_Z01r8yPa",
+      "PatientActivityContextGuid": "c3d4e5f6-a7b8-49cd-9e01-111213141516",
+      "NationalPracticeCode": "A82648",
+      "Title": "Ms",
+      "FirstName": "Ella",
+      "Surname": "Taylor",
+      "DateOfBirth": "2010-03-02",
+      "AssociationType": "Proxy",
+      "PatientIdentifiers": [
+        {
+          "IdentifierValue": "3333333333",
+          "IdentifierType": "NhsNumber"
+        }
+      ],
+      "ApplicationLinkLevel": "Linked",
+      "AccountRegistrationStatus": "Active",
+      "AccountCreationDate": "2021-06-19T08:22:10Z",
+      "EffectiveServices": {
+        "AppointmentsEnabled": true,
+        "DemographicsUpdateEnabled": true,
+        "EpsEnabled": false,
+        "MedicalRecordEnabled": true,
+        "OnlineTriageEnabled": false,
+        "PracticePatientCommunicationEnabled": true,
+        "PrescribingEnabled": false,
+        "RecordSharingEnabled": false,
+        "RecordViewAuditEnabled": true,
+        "MedicalRecord": {
+          "RecordAccessScheme": "DetailedCodedCareRecord",
+          "AllergiesEnabled": true,
+          "ConsultationsEnabled": true,
+          "ImmunisationsEnabled": true,
+          "DocumentsEnabled": true,
+          "MedicationEnabled": true,
+          "ProblemsEnabled": true,
+          "TestResultsEnabled": true
+        }
+      },
+      "DispensingEnabled": true
+    }
+  ]
+}
