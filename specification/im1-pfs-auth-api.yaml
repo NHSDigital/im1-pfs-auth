@@ -105,7 +105,7 @@ servers:
   - url: https://int.api.service.nhs.uk/im1-pfs-auth/
 
 paths:
-  /authentication:
+  /authenticate:
     post:
       tags:
         - sessions

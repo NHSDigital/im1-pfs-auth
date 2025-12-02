@@ -1,6 +1,6 @@
 from flask import Flask, Response
 
-from .authentication import post_authentication
+from .authentication import post_authenticate
 
 app = Flask(__name__)
 
@@ -16,11 +16,11 @@ def health() -> dict:
     }
 
 
-@app.route("/authentication", methods=["POST"])
-def authentication() -> Response:
-    """Sandbox API for POST /authentication.
+@app.route("/authenticate", methods=["POST"])
+def authenticate() -> Response:
+    """Sandbox API for POST /authenticate.
 
     Returns:
-        Response: Response for POST /authentication
+        Response: Response for POST /authenticate
     """
-    return post_authentication()
+    return post_authenticate()

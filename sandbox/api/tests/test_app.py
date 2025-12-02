@@ -22,12 +22,12 @@ def test_health_success(path: str, client: FlaskClient) -> None:
     }
 
 
-def test_post_authentication__success(client: FlaskClient) -> None:
+def test_post_authenticate__success(client: FlaskClient) -> None:
     # Arrange
     headers = {"X-Forward-To": "https://example.com", "X-ODS-Code": "A29929"}
 
     # Act
-    actual_result = client.post("/authentication", headers=headers)
+    actual_result = client.post("/authenticate", headers=headers)
 
     # Assert
     assert actual_result.status_code == 201
@@ -50,9 +50,9 @@ def test_post_authentication__success(client: FlaskClient) -> None:
         {},
     ],
 )
-def test_post_authentication__failure(headers: dict, client: FlaskClient) -> None:
+def test_post_authenticate__failure(headers: dict, client: FlaskClient) -> None:
     # Act
-    actual_result = client.post("/authentication", headers=headers)
+    actual_result = client.post("/authenticate", headers=headers)
 
     # Assert
     assert actual_result.status_code == 500

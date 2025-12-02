@@ -1,11 +1,11 @@
 from flask import Response, jsonify, make_response, request
 
 
-def post_authentication() -> Response:
-    """Sandbox API for POST /authentication.
+def post_authenticate() -> Response:
+    """Sandbox API for POST /authenticate.
 
     Returns:
-        Response: Response for POST /authentication
+        Response: Response for POST /authenticate
     """
     # Get request body
     forward_to = request.headers.get("X-Forward-To")

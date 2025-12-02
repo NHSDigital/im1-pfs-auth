@@ -172,7 +172,7 @@ Here is a mermaid sequence diagram for the available endpoints and interactions 
 
 ```mermaid
 sequenceDiagram
-    Patient Facing Application->>+IM1-PFS-Auth: POST /authentication
+    Patient Facing Application->>+IM1-PFS-Auth: POST /authenticate
     IM1-PFS-Auth->>IM1-PFS-Auth: validate request
     IM1-PFS-Auth->>GPIT-Supplier: POST /sessions
     GPIT-Supplier-->>IM1-PFS-Auth: Success
