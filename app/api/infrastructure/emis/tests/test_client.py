@@ -112,7 +112,6 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
     # Assert
     assert actual_result == ForwardResponse(
         sessionId="SID_2qZ9yJpVxHq4N3b",
-        endUserSessionId="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
         proxy=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
         patients=[

@@ -6,7 +6,6 @@ def test_forward_response() -> None:
     # Act & Assert
     ForwardResponse(
         sessionId="some session id",
-        endUserSessionId="some end user session id",
         supplier="some supplier",
         proxy=Demographics(firstName="Betty", surname="Jones", title="Ms"),
         patients=[Demographics(firstName="John", surname="Jones", title="Mr")],

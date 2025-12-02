@@ -6,7 +6,7 @@ import requests
 
 from ...domain.base_client import BaseClient
 from ...domain.forward_response_model import Demographics, ForwardResponse
-from .models import CreateSessionRequestData, CreateSessionRequestHeaders, Identifier
+from .models import SessionRequestData, SessionRequestHeaders, Identifier
 
 BASE_DIR = Path(__file__).parent
 
@@ -29,7 +29,7 @@ class EmisClient(BaseClient):
         Returns:
             dict: Data dictionary
         """
-        session_request = CreateSessionRequestData(
+        session_request = SessionRequestData(
             patient=Identifier(value=self.request.patient_nhs_number),
             patient_ods_code=self.request.patient_ods_code,
             proxy=Identifier(value=self.request.proxy_nhs_number),
@@ -42,7 +42,7 @@ class EmisClient(BaseClient):
         Returns:
             dict: Header dictionary
         """
-        request_headers = CreateSessionRequestHeaders(
+        request_headers = SessionRequestHeaders(
             application_id=self.request.application_id
         )
         return request_headers.to_dict()
@@ -76,7 +76,6 @@ class EmisClient(BaseClient):
         patient_links = response.get("UserPatientLinks", [{}])
         return ForwardResponse(
             sessionId=response.get("SessionId"),
-            endUserSessionId=response.get("EndUserSessionId"),
             supplier=self.supplier,
             proxy=Demographics(
                 firstName=response.get("FirstName"),

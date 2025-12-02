@@ -8,8 +8,8 @@ from ...domain.base_client import BaseClient
 from ...domain.forward_response_model import Demographics, ForwardResponse
 from .models import (
     Application,
-    CreateSessionRequestData,
-    CreateSessionRequestHeaders,
+    SessionRequestData,
+    SessionRequestHeaders,
     Identifier,
 )
 
@@ -34,7 +34,7 @@ class TPPClient(BaseClient):
         Returns:
             dict: Data dictionary
         """
-        session_request = CreateSessionRequestData(
+        session_request = SessionRequestData(
             application=Application(provider_id=self.request.application_id),
             patient=Identifier(value=self.request.patient_nhs_number),
             patient_ods_code=self.request.patient_ods_code,
@@ -48,7 +48,7 @@ class TPPClient(BaseClient):
         Returns:
             dict: Header dictionary
         """
-        request_headers = CreateSessionRequestHeaders()
+        request_headers = SessionRequestHeaders()
         return request_headers.to_dict()
 
     def forward_request(self) -> dict:
@@ -82,7 +82,6 @@ class TPPClient(BaseClient):
         patient_links = response.get("PatientAccess", [{}])
         return ForwardResponse(
             sessionId=response.get("suid"),
-            endUserSessionId=proxy_link.get("onlineUserId"),
             supplier=self.supplier,
             proxy=Demographics(
                 firstName=proxy_person.get("PersonName", {}).get("firstName"),

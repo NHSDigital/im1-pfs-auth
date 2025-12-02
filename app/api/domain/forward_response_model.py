@@ -18,7 +18,6 @@ class ForwardResponse(BaseModel):
     model_config = ConfigDict(alias_generator=to_camel)
 
     session_id: str
-    end_user_session_id: str
     supplier: str
     proxy: Demographics
     patients: list[Demographics]
