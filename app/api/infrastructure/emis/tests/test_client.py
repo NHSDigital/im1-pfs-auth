@@ -8,7 +8,13 @@ from pydantic import ValidationError
 from requests import HTTPError
 
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Patient,
+    Permissions,
+    ViewPermissions,
+)
 from app.api.infrastructure.emis.client import EmisClient
 
 
@@ -115,9 +121,90 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
         supplier="EMIS",
         proxy=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
         patients=[
-            Demographics(firstName="Alex", surname="Taylor", title="Mr"),
-            Demographics(firstName="Jane", surname="Doe", title="Mrs"),
-            Demographics(firstName="Ella", surname="Taylor", title="Ms"),
+            Patient(
+                firstName="Alex",
+                surname="Taylor",
+                title="Mr",
+                permissions=Permissions(
+                    access_system_connect=False,
+                    book_appointments=True,
+                    change_pharamacy=True,
+                    messsage_practice=False,
+                    provide_information_to_practice=False,
+                    request_medication=True,
+                    update_demographics=True,
+                    manage_online_triage=False,
+                    view=ViewPermissions(
+                        medical_record=True,
+                        summary_medical_record=True,
+                        allergies_medical_record=True,
+                        consultations_medical_record=True,
+                        immunisations_medical_record=True,
+                        documents_medical_record=True,
+                        medication_medical_record=True,
+                        problems_medical_record=True,
+                        test_results_medical_record=True,
+                        record_audit=True,
+                        record_sharing=False,
+                    ),
+                ),
+            ),
+            Patient(
+                firstName="Jane",
+                surname="Doe",
+                title="Mrs",
+                permissions=Permissions(
+                    access_system_connect=False,
+                    book_appointments=False,
+                    change_pharamacy=True,
+                    messsage_practice=True,
+                    provide_information_to_practice=True,
+                    request_medication=True,
+                    update_demographics=True,
+                    manage_online_triage=True,
+                    view=ViewPermissions(
+                        medical_record=True,
+                        summary_medical_record=True,
+                        allergies_medical_record=True,
+                        consultations_medical_record=True,
+                        immunisations_medical_record=True,
+                        documents_medical_record=True,
+                        medication_medical_record=True,
+                        problems_medical_record=True,
+                        test_results_medical_record=True,
+                        record_audit=True,
+                        record_sharing=False,
+                    ),
+                ),
+            ),
+            Patient(
+                firstName="Ella",
+                surname="Taylor",
+                title="Ms",
+                permissions=Permissions(
+                    access_system_connect=False,
+                    book_appointments=True,
+                    change_pharamacy=False,
+                    messsage_practice=True,
+                    provide_information_to_practice=True,
+                    request_medication=False,
+                    update_demographics=True,
+                    manage_online_triage=False,
+                    view=ViewPermissions(
+                        medical_record=True,
+                        summary_medical_record=True,
+                        allergies_medical_record=True,
+                        consultations_medical_record=True,
+                        immunisations_medical_record=True,
+                        documents_medical_record=True,
+                        medication_medical_record=True,
+                        problems_medical_record=True,
+                        test_results_medical_record=True,
+                        record_audit=True,
+                        record_sharing=False,
+                    ),
+                ),
+            ),
         ],
     )
 

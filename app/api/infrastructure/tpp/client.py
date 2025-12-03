@@ -8,9 +8,9 @@ from ...domain.base_client import BaseClient
 from ...domain.forward_response_model import Demographics, ForwardResponse
 from .models import (
     Application,
+    Identifier,
     SessionRequestData,
     SessionRequestHeaders,
-    Identifier,
 )
 
 BASE_DIR = Path(__file__).parent

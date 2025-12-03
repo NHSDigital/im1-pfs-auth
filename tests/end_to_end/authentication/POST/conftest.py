@@ -22,4 +22,6 @@ def api_url(request: pytest.FixtureRequest) -> str:
     if not proxy_path_url:
         msg = "PROXYGEN_URL_PATH environment variable is not set."
         raise ValueError(msg)
-    return f"https://{apigee_environment}.api.service.nhs.uk/{proxy_path_url}/authenticate"
+    return (
+        f"https://{apigee_environment}.api.service.nhs.uk/{proxy_path_url}/authenticate"
+    )

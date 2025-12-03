@@ -5,8 +5,14 @@ from pathlib import Path
 import requests
 
 from ...domain.base_client import BaseClient
-from ...domain.forward_response_model import Demographics, ForwardResponse
-from .models import SessionRequestData, SessionRequestHeaders, Identifier
+from ...domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Patient,
+    Permissions,
+    ViewPermissions,
+)
+from .models import Identifier, SessionRequestData, SessionRequestHeaders
 
 BASE_DIR = Path(__file__).parent
 
@@ -54,7 +60,7 @@ class EmisClient(BaseClient):
             dict: Response body from forwarded request
         """
         if os.environ.get("USE_MOCK") == "True":
-            return self.__mock_response()
+            return self._mock_response()
         response = requests.post(
             url=self.request.forward_to,
             headers=self.get_headers(),
@@ -73,7 +79,6 @@ class EmisClient(BaseClient):
         Returns:
             ForwardResponse: Homogenised response with other clients
         """
-        patient_links = response.get("UserPatientLinks", [{}])
         return ForwardResponse(
             sessionId=response.get("SessionId"),
             supplier=self.supplier,
@@ -82,17 +87,10 @@ class EmisClient(BaseClient):
                 surname=response.get("Surname"),
                 title=response.get("Title"),
             ),
-            patients=[
-                Demographics(
-                    firstName=patient_link.get("FirstName"),
-                    surname=patient_link.get("Surname"),
-                    title=patient_link.get("Title"),
-                )
-                for patient_link in patient_links
-            ],
+            patients=self._parse_patients(response),
         )
 
-    def __mock_response(self) -> dict:
+    def _mock_response(self) -> dict:
         """Function to return hard coded response.
 
         Returns:
@@ -100,3 +98,101 @@ class EmisClient(BaseClient):
         """
         with Path((BASE_DIR) / "data" / "mocked_response.json").open("r") as f:
             return load(f)
+
+    def _parse_patients(self, data: dict) -> list[Patient]:
+        """Parsing raw data from Client into structual model.
+
+        Args:
+            data (dict): Raw data containing information about multiple patients
+
+        Returns:
+            list[Patient]: Parsed information about multiple patients
+        """
+        # Extra Patient data
+        patient_links = data.get("UserPatientLinks", [])
+        parsed_patinets = []
+        for patient in patient_links:
+            raw_permissions = patient.get("EffectiveServices", {})
+            parsed_patinets.append(
+                Patient(
+                    firstName=patient.get("FirstName"),
+                    surname=patient.get("Surname"),
+                    title=patient.get("Title"),
+                    permissions=self._parse_permissions(raw_permissions),
+                )
+            )
+        return parsed_patinets
+
+    def _parse_permissions(self, raw_permissions: dict) -> Permissions:
+        permissions_map = {
+            # Key = desired field name
+            # Value = (Desired Class for field, origin of value from raw data)
+            "access_system_connect": (Permissions, None),  # only for TPP"
+            "book_appointments": (Permissions, "AppointmentsEnabled"),
+            "change_pharamacy": (Permissions, "PrescribingEnabled"),
+            "messsage_practice": (Permissions, "PracticePatientCommunicationEnabled"),
+            "provide_information_to_practice": (
+                Permissions,
+                "PracticePatientCommunicationEnabled",
+            ),
+            "request_medication": (Permissions, "PrescribingEnabled"),
+            "update_demographics": (Permissions, "DemographicsUpdateEnabled"),
+            "manage_online_triage": (Permissions, "OnlineTriageEnabled"),
+            "medical_record": (ViewPermissions, "MedicalRecordEnabled"),
+            "summary_medical_record": (ViewPermissions, "MedicalRecordEnabled"),
+            "allergies_medical_record": (
+                ViewPermissions,
+                {"MedicalRecord": "AllergiesEnabled"},
+            ),
+            "consultations_medical_record": (
+                ViewPermissions,
+                {"MedicalRecord": "ConsultationsEnabled"},
+            ),
+            "immunisations_medical_record": (
+                ViewPermissions,
+                {"MedicalRecord": "ImmunisationsEnabled"},
+            ),
+            "documents_medical_record": (
+                ViewPermissions,
+                {"MedicalRecord": "DocumentsEnabled"},
+            ),
+            "medication_medical_record": (
+                ViewPermissions,
+                {"MedicalRecord": "MedicationEnabled"},
+            ),
+            "problems_medical_record": (
+                ViewPermissions,
+                {"MedicalRecord": "ProblemsEnabled"},
+            ),
+            "test_results_medical_record": (
+                ViewPermissions,
+                {"MedicalRecord": "TestResultsEnabled"},
+            ),
+            "record_audit": (ViewPermissions, "RecordViewAuditEnabled"),
+            "record_sharing": (ViewPermissions, "RecordSharingEnabled"),
+        }
+
+        permission_kwargs = {}
+        view_kwargs = {}
+
+        for field_name, (target_model, origin) in permissions_map.items():
+            # resolve value
+            if isinstance(origin, str):
+                value = raw_permissions.get(origin)
+            elif isinstance(origin, dict):
+                # nested lookup: {"MedicalRecord": "AllergiesEnabled"}
+                parent, child = next(iter(origin.items()))
+                value = raw_permissions.get(parent, {}).get(child)
+            else:
+                value = False
+
+            # bucket into correct model
+            if target_model is Permissions:
+                permission_kwargs[field_name] = value
+            elif target_model is ViewPermissions:
+                view_kwargs[field_name] = value
+
+        return Permissions(
+            **permission_kwargs,
+            view=ViewPermissions(**view_kwargs),
+        )
