@@ -63,7 +63,7 @@ class ForwardResponse(BaseModel):
     patients: list[Patient]
 
     @field_validator("patients")
-    def patients_must_not_be_empty(cls, v: list[Patient]) -> list[Patient]: # noqa: N805
+    def patients_must_not_be_empty(cls, v: list[Patient]) -> list[Patient]:  # noqa: N805
         """Check if patient array is empty."""
         if not v:
             error_msg = "patients cannot be empty"

@@ -5,6 +5,12 @@ from pathlib import Path
 import requests
 
 from ...domain.base_client import BaseClient
+from ...domain.exception import (
+    DownstreamError,
+    InvalidValueError,
+    NotFoundError,
+    UnAuthorizedError,
+)
 from ...domain.forward_response_model import (
     Demographics,
     ForwardResponse,
@@ -67,8 +73,18 @@ class EmisClient(BaseClient):
             data=self.get_data(),
             timeout=30,
         )
-        response.raise_for_status()
-        return response.json()
+        response_json = response.json()
+        match response.status_code:
+            case 201:
+                return response_json
+            case 400:
+                raise InvalidValueError(response_json.get("message"))
+            case 401:
+                raise UnAuthorizedError(response_json.get("message"))
+            case 404:
+                raise NotFoundError(response_json.get("message"))
+            case _:
+                raise DownstreamError
 
     def transform_response(self, response: dict) -> ForwardResponse:
         """Function transform Emis client response.

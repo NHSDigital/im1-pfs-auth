@@ -5,8 +5,14 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from pydantic import ValidationError
-from requests import HTTPError
 
+from app.api.domain.exception import (
+    ApiError,
+    DownstreamError,
+    InvalidValueError,
+    NotFoundError,
+    UnAuthorizedError,
+)
 from app.api.domain.forward_request_model import ForwardRequest
 from app.api.domain.forward_response_model import (
     Demographics,
@@ -83,6 +89,7 @@ def test_emis_forward_request_use_mock_off(
     # Arrange
     expected_response = {"Message": "Happy Days!"}
     mock_instance = MagicMock()
+    mock_instance.status_code = 201
     mock_instance.json.return_value = expected_response
     mock_request.post.return_value = mock_instance
     # Act
@@ -92,18 +99,32 @@ def test_emis_forward_request_use_mock_off(
     assert actual_result == expected_response
 
 
+@pytest.mark.parametrize(
+    ("status_code", "error_msg", "api_error"),
+    [
+        (400, "No online account exists for the given user.", InvalidValueError),
+        (401, "Unauthorised.", UnAuthorizedError),
+        (404, "Not Found.", NotFoundError),
+        (500, "", DownstreamError),
+    ],
+)
 @patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.emis.client.requests")
-def test_emis_forward_request_use_mock_off_exception(
-    mock_request: MagicMock, client: EmisClient
+def test_tpp_forward_request_use_mock_off_exception(
+    mock_request: MagicMock,
+    client: EmisClient,
+    status_code: int,
+    error_msg: str,
+    api_error: ApiError,
 ) -> None:
     """Test the EmisClient forward_request function when mock is turned off and there is an error."""  # noqa: E501
     # Arrange
     mock_instance = MagicMock()
-    mock_instance.raise_for_status.side_effect = HTTPError("Oops")
+    mock_instance.status_code = status_code
+    mock_instance.json.return_value = {"message": error_msg}
     mock_request.post.return_value = mock_instance
     # Act & Assert
-    with pytest.raises(HTTPError, match="Oops"):
+    with pytest.raises(api_error, match=error_msg):
         client.forward_request()
 
 

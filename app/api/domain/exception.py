@@ -9,10 +9,24 @@ class ApiError(Exception):
 
 
 class AccessDeniedError(ApiError):
-    """Exception for when request is not authorised to access resource."""
+    """Exception for when bearer token is missing or malformed."""
 
     status_code = HTTPStatus.UNAUTHORIZED
     message = "Missing or invalid OAuth 2.0 bearer token in request."
+
+
+class UnAuthorizedError(ApiError):
+    """Exception for when user is not authorised to access resource."""
+
+    status_code = HTTPStatus.UNAUTHORIZED
+    message = "User does not have access to online services."
+
+
+class NotFoundError(ApiError):
+    """Exception for when user does not have an online account with supplier."""
+
+    status_code = HTTPStatus.NOT_FOUND
+    message = "User does not have an online account."
 
 
 class DownstreamError(ApiError):

@@ -49,7 +49,8 @@ def test_get_nhs_number_from_jwt_token_missing_patient_nhs_number() -> None:
     )
     # Act & Assert
     with pytest.raises(
-        AccessDeniedError, match="Failed to retrieve nhs number from token"
+        AccessDeniedError,
+        match="Failed to retrieve nhs number from token",
     ):
         get_nhs_number_from_jwt_token(token)
 
@@ -72,7 +73,8 @@ def test_get_nhs_number_from_jwt_token_missing_proxy_nhs_number() -> None:
     )
     # Act & Assert
     with pytest.raises(
-        AccessDeniedError, match="Failed to retrieve nhs number from token"
+        AccessDeniedError,
+        match="Failed to retrieve nhs number from token",
     ):
         get_nhs_number_from_jwt_token(token)
 
@@ -99,7 +101,8 @@ def test_get_nhs_number_from_jwt_token_invalid_proxy_proofing_level(
     )
     # Act & Assert
     with pytest.raises(
-        AccessDeniedError, match="Logged in user is not P9 proofing level"
+        AccessDeniedError,
+        match="Logged in user is not P9 proofing level",
     ):
         get_nhs_number_from_jwt_token(token)
 
@@ -126,6 +129,7 @@ def test_get_nhs_number_from_jwt_token_invalid_proxy_vot_level(vot_level: str) -
     )
     # Act & Assert
     with pytest.raises(
-        AccessDeniedError, match="Logged in user has incorrect vot level"
+        AccessDeniedError,
+        match="Logged in user has incorrect vot level",
     ):
         get_nhs_number_from_jwt_token(token)
