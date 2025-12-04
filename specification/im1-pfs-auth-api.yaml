@@ -158,14 +158,15 @@ paths:
           description: |
             Errors will be returned for the first error encountered in the request. An error occurred as follows:
 
-            | HTTP status | Error code               | Description                                                                                                                               |
-            | ----------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-            | 400         | `MISSING_VALUE`          | Missing header.                                                                                                                           |
-            | 400         | `INVALID_VALUE`          | Invalid header.                                                                                                                           |
-            | 401         | `ACCESS_DENIED`          | Missing or invalid OAuth 2.0 bearer token in request.                                                                                     |
-            | 403         | `FORBIDDEN`              | Access denied to resource.                                                                                                                |
-            | 408         | `TIMEOUT`                | Request timed out.                                                                                                                        |
-            | 429         | `THROTTLED`              | You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits). |
+            | HTTP status | Error code              | Description                                                                                                                               |
+            | ----------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+            | 400         | `BAD_REQUEST`           | Missing header.                                                                                                                           |
+            | 400         | `BAD_REQUEST`           | Invalid header.                                                                                                                           |
+            | 401         | `UNAUTHORIZED`          | Missing or invalid OAuth 2.0 bearer token in request.                                                                                     |
+            | 404         | `NOT_FOUND`             | Resource not found.                                                                                                                       |
+            | 403         | `FORBIDDEN`             | Access denied to resource.                                                                                                                |
+            | 408         | `REQUEST_TIMEOUT`       | Request timed out.                                                                                                                        |
+            | 429         | `TOO_MANY_REQUESTS`     | You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits). |
           content:
             application/json:
               schema:
@@ -175,6 +176,8 @@ paths:
                   externalValue: "./examples/errors.yaml#/MissingValueErrorError"
                 invalidValueError:
                   externalValue: "./examples/errors.yaml#/InvalidValueErrorError"
+                notFoundErrorError:
+                  externalValue: ".examples/errors.yaml#/NotFoundErrorError"
                 accessDeniedError:
                   externalValue: "./examples/errors.yaml#/AccessDeniedErrorError"
                 forbiddenError:

@@ -15,11 +15,11 @@ class AccessDeniedError(ApiError):
     message = "Missing or invalid OAuth 2.0 bearer token in request."
 
 
-class UnAuthorizedError(ApiError):
+class ForbiddenError(ApiError):
     """Exception for when user is not authorised to access resource."""
 
-    status_code = HTTPStatus.UNAUTHORIZED
-    message = "User does not have access to online services."
+    status_code = HTTPStatus.FORBIDDEN
+    message = "Access denied to resource."
 
 
 class NotFoundError(ApiError):

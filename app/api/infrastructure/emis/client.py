@@ -7,9 +7,9 @@ import requests
 from ...domain.base_client import BaseClient
 from ...domain.exception import (
     DownstreamError,
+    ForbiddenError,
     InvalidValueError,
     NotFoundError,
-    UnAuthorizedError,
 )
 from ...domain.forward_response_model import (
     Demographics,
@@ -80,7 +80,7 @@ class EmisClient(BaseClient):
             case 400:
                 raise InvalidValueError(response_json.get("message"))
             case 401:
-                raise UnAuthorizedError(response_json.get("message"))
+                raise ForbiddenError(response_json.get("message"))
             case 404:
                 raise NotFoundError(response_json.get("message"))
             case _:

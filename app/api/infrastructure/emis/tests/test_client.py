@@ -9,9 +9,9 @@ from pydantic import ValidationError
 from app.api.domain.exception import (
     ApiError,
     DownstreamError,
+    ForbiddenError,
     InvalidValueError,
     NotFoundError,
-    UnAuthorizedError,
 )
 from app.api.domain.forward_request_model import ForwardRequest
 from app.api.domain.forward_response_model import (
@@ -103,7 +103,7 @@ def test_emis_forward_request_use_mock_off(
     ("status_code", "error_msg", "api_error"),
     [
         (400, "No online account exists for the given user.", InvalidValueError),
-        (401, "Unauthorised.", UnAuthorizedError),
+        (401, "Unauthorised.", ForbiddenError),
         (404, "Not Found.", NotFoundError),
         (500, "", DownstreamError),
     ],
