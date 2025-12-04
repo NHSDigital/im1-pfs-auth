@@ -15,6 +15,8 @@ class Demographics(BaseModel):
 class ViewPermissions(BaseModel):
     """All the view permissions data the proxy holds for a pateint."""
 
+    model_config = ConfigDict(alias_generator=to_camel)
+
     medical_record: bool
     summary_medical_record: bool
     allergies_medical_record: bool
@@ -31,10 +33,12 @@ class ViewPermissions(BaseModel):
 class Permissions(BaseModel):
     """All the permissions data a proxy holds for a patient."""
 
+    model_config = ConfigDict(alias_generator=to_camel)
+
     access_system_connect: bool  # tpp only
     book_appointments: bool
     change_pharamacy: bool
-    messsage_practice: bool
+    message_practice: bool
     provide_information_to_practice: bool
     request_medication: bool
     update_demographics: bool  # emis only
@@ -59,7 +63,9 @@ class ForwardResponse(BaseModel):
     patients: list[Patient]
 
     @field_validator("patients")
-    def patients_must_not_be_empty(cls, v):
+    def patients_must_not_be_empty(cls, v: list[Patient]) -> list[Patient]: # noqa: N805
+        """Check if patient array is empty."""
         if not v:
-            raise ValueError("patients cannot be empty")
+            error_msg = "patients cannot be empty"
+            raise ValueError(error_msg)
         return v

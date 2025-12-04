@@ -127,49 +127,49 @@ class EmisClient(BaseClient):
         permissions_map = {
             # Key = desired field name
             # Value = (Desired Class for field, origin of value from raw data)
-            "access_system_connect": (Permissions, None),  # only for TPP"
-            "book_appointments": (Permissions, "AppointmentsEnabled"),
-            "change_pharamacy": (Permissions, "PrescribingEnabled"),
-            "messsage_practice": (Permissions, "PracticePatientCommunicationEnabled"),
-            "provide_information_to_practice": (
+            "accessSystemConnect": (Permissions, None),  # only for TPP"
+            "bookAppointments": (Permissions, "AppointmentsEnabled"),
+            "changePharamacy": (Permissions, "PrescribingEnabled"),
+            "messagePractice": (Permissions, "PracticePatientCommunicationEnabled"),
+            "provideInformationToPractice": (
                 Permissions,
                 "PracticePatientCommunicationEnabled",
             ),
-            "request_medication": (Permissions, "PrescribingEnabled"),
-            "update_demographics": (Permissions, "DemographicsUpdateEnabled"),
-            "manage_online_triage": (Permissions, "OnlineTriageEnabled"),
-            "medical_record": (ViewPermissions, "MedicalRecordEnabled"),
-            "summary_medical_record": (ViewPermissions, "MedicalRecordEnabled"),
-            "allergies_medical_record": (
+            "requestMedication": (Permissions, "PrescribingEnabled"),
+            "updateDemographics": (Permissions, "DemographicsUpdateEnabled"),
+            "manageOnlineTriage": (Permissions, "OnlineTriageEnabled"),
+            "medicalRecord": (ViewPermissions, "MedicalRecordEnabled"),
+            "summaryMedicalRecord": (ViewPermissions, "MedicalRecordEnabled"),
+            "allergiesMedicalRecord": (
                 ViewPermissions,
                 {"MedicalRecord": "AllergiesEnabled"},
             ),
-            "consultations_medical_record": (
+            "consultationsMedicalRecord": (
                 ViewPermissions,
                 {"MedicalRecord": "ConsultationsEnabled"},
             ),
-            "immunisations_medical_record": (
+            "immunisationsMedicalRecord": (
                 ViewPermissions,
                 {"MedicalRecord": "ImmunisationsEnabled"},
             ),
-            "documents_medical_record": (
+            "documentsMedicalRecord": (
                 ViewPermissions,
                 {"MedicalRecord": "DocumentsEnabled"},
             ),
-            "medication_medical_record": (
+            "medicationMedicalRecord": (
                 ViewPermissions,
                 {"MedicalRecord": "MedicationEnabled"},
             ),
-            "problems_medical_record": (
+            "problemsMedicalRecord": (
                 ViewPermissions,
                 {"MedicalRecord": "ProblemsEnabled"},
             ),
-            "test_results_medical_record": (
+            "testResultsMedicalRecord": (
                 ViewPermissions,
                 {"MedicalRecord": "TestResultsEnabled"},
             ),
-            "record_audit": (ViewPermissions, "RecordViewAuditEnabled"),
-            "record_sharing": (ViewPermissions, "RecordSharingEnabled"),
+            "recordAudit": (ViewPermissions, "RecordViewAuditEnabled"),
+            "recordSharing": (ViewPermissions, "RecordSharingEnabled"),
         }
 
         permission_kwargs = {}

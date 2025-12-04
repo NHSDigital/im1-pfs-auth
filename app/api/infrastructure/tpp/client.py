@@ -133,49 +133,49 @@ class TPPClient(BaseClient):
         permissions_map = {
             # Key = desired field name
             # Value = (Desired Class for field, origin of value)
-            "access_system_connect": (Permissions, "Access SystmConnect"),
-            "book_appointments": (Permissions, "Appointments"),
-            "change_pharamacy": (Permissions, "Access SystmConnect"),
-            "messsage_practice": (Permissions, "Messaging"),
-            "provide_information_to_practice": (
+            "accessSystemConnect": (Permissions, "Access SystmConnect"),
+            "bookAppointments": (Permissions, "Appointments"),
+            "changePharamacy": (Permissions, "Access SystmConnect"),
+            "messagePractice": (Permissions, "Messaging"),
+            "provideInformationToPractice": (
                 Permissions,
                 "Questionnaires",
             ),
-            "request_medication": (Permissions, "Request Medication"),
-            "update_demographics": (Permissions, None),  # EMIS only
-            "manage_online_triage": (Permissions, "Access SystmConnect"),
-            "medical_record": (ViewPermissions, "Detailed Coded Record"),
-            "summary_medical_record": (ViewPermissions, "Summary Record"),
-            "allergies_medical_record": (
+            "requestMedication": (Permissions, "Request Medication"),
+            "updateDemographics": (Permissions, None),  # EMIS only
+            "manageOnlineTriage": (Permissions, "Access SystmConnect"),
+            "medicalRecord": (ViewPermissions, "Detailed Coded Record"),
+            "summaryMedicalRecord": (ViewPermissions, "Summary Record"),
+            "allergiesMedicalRecord": (
                 ViewPermissions,
                 "Summary Record",
             ),
-            "consultations_medical_record": (
+            "consultationsMedicalRecord": (
                 ViewPermissions,
                 "Detailed Coded Record",
             ),
-            "immunisations_medical_record": (
+            "immunisationsMedicalRecord": (
                 ViewPermissions,
                 "Detailed Coded Record",
             ),
-            "documents_medical_record": (
+            "documentsMedicalRecord": (
                 ViewPermissions,
                 "Detailed Coded Record",
             ),
-            "medication_medical_record": (
+            "medicationMedicalRecord": (
                 ViewPermissions,
                 "Summary Record",
             ),
-            "problems_medical_record": (
+            "problemsMedicalRecord": (
                 ViewPermissions,
                 "Detailed Coded Record",
             ),
-            "test_results_medical_record": (
+            "testResultsMedicalRecord": (
                 ViewPermissions,
                 "Detailed Coded Record",
             ),
-            "record_audit": (ViewPermissions, "Record Audit"),
-            "record_sharing": (ViewPermissions, "Manage Sharing Rules And Requests"),
+            "recordAudit": (ViewPermissions, "Record Audit"),
+            "recordSharing": (ViewPermissions, "Manage Sharing Rules And Requests"),
         }
 
         permission_kwargs = {}

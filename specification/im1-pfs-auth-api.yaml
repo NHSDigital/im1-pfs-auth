@@ -228,7 +228,7 @@ components:
         patients:
           type: array
           items:
-            $ref: "#/components/schemas/DemographicsModel"
+            $ref: "#/components/schemas/PatientModel"
       additionalProperties: false
 
     DemographicsModel:
@@ -244,6 +244,86 @@ components:
           type: string
         title:
           type: string
+
+    PermissionsModel:
+      required:
+        - accessSystemConnect
+          bookAppointments
+          changePharamacy
+          messssagePractice
+          provideInformationToPractice
+          requestMedication
+          updateDemographics
+          manageOnlineTriage
+          view
+      type: object
+      properties:
+        accessSystemConnect:
+          type: boolean
+        bookAppointments:
+          type: boolean
+        changePharamacy:
+          type: boolean
+        messssagePractice:
+          type: boolean
+        provideInformationToPractice:
+          type: boolean
+        requestMedication:
+          type: boolean
+        updateDemographics:
+          type: boolean
+        manageOnlineTriage:
+          type: boolean
+        view:
+          $ref: "#/components/schemas/ViewPermissionsModel"
+
+    ViewPermissionsModel:
+      required:
+        - medicalRecord
+          summaryMedicalRecord
+          allergiesMedicalRecord
+          consultationsMedicalRecord
+          immunisationsMedicalRecord
+          documentsMedicalRecord
+          medicationMedicalRecord
+          problemsMedicalRecord
+          testResultsMedicalRecord
+          recordAudit
+          recordSharing
+      type: object
+      properties:
+        medicalRecord:
+          type: boolean
+        summaryMedicalRecord:
+          type: boolean
+        allergiesMedicalRecord:
+          type: boolean
+        consultationsMedicalRecord:
+          type: boolean
+        immunisationsMedicalRecord:
+          type: boolean
+        documentsMedicalRecord:
+          type: boolean
+        medicationMedicalRecord:
+          type: boolean
+        problemsMedicalRecord:
+          type: boolean
+        testResultsMedicalRecord:
+          type: boolean
+        recordAudit:
+          type: boolean
+        recordSharing:
+          type: boolean
+
+    PatientModel:
+      allOf:
+        - $ref: "#/components/schemas/DemographicsModel"
+        - required:
+            - permissions
+          type: object
+          properties:
+            permissions:
+              $ref: "#/components/schemas/PermissionsModel"
 
     ErrorResponseModel:
       required:
