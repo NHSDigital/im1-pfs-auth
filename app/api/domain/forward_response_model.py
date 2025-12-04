@@ -15,17 +15,17 @@ class Demographics(BaseModel):
 class ViewPermissions(BaseModel):
     """All the view permissions data the proxy holds for a pateint."""
 
-    medical_record: bool  # tpp = coded_medical_record
-    summary_medical_record: bool  # EMIS view medical record
-    allergies_medical_record: bool  # tpp summary
-    consultations_medical_record: bool  # tpp coded
-    immunisations_medical_record: bool  # tpp coded
-    documents_medical_record: bool  # tpp coded
-    medication_medical_record: bool  # tpp summary
-    problems_medical_record: bool  # tpp coded
-    test_results_medical_record: bool  # tpp coded
+    medical_record: bool
+    summary_medical_record: bool
+    allergies_medical_record: bool
+    consultations_medical_record: bool
+    immunisations_medical_record: bool
+    documents_medical_record: bool
+    medication_medical_record: bool
+    problems_medical_record: bool
+    test_results_medical_record: bool
     record_audit: bool
-    record_sharing: bool  # thes come back to
+    record_sharing: bool
 
 
 class Permissions(BaseModel):
@@ -35,14 +35,10 @@ class Permissions(BaseModel):
     book_appointments: bool
     change_pharamacy: bool
     messsage_practice: bool
-    provide_information_to_practice: (
-        bool  # tpp questionnaires emis patient practice communications
-    )
+    provide_information_to_practice: bool
     request_medication: bool
     update_demographics: bool  # emis only
-    manage_online_triage: (
-        bool  # for tpp is system connect, questionnaires and messaging
-    )
+    manage_online_triage: bool
     view: ViewPermissions
 
 

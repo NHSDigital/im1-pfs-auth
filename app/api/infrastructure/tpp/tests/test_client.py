@@ -8,7 +8,13 @@ from pydantic import ValidationError
 from requests import HTTPError
 
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Patient,
+    Permissions,
+    ViewPermissions,
+)
 from app.api.infrastructure.tpp.client import TPPClient
 
 
@@ -118,7 +124,36 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
         sessionId="xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",
         supplier="TPP",
         proxy=Demographics(firstName="Sam", surname="Jones", title="Mr"),
-        patients=[Demographics(firstName="Clare", surname="Jones", title="Mrs")],
+        patients=[
+            Patient(
+                firstName="Clare",
+                surname="Jones",
+                title="Mrs",
+                permissions=Permissions(
+                    access_system_connect=False,
+                    book_appointments=True,
+                    change_pharamacy=False,
+                    messsage_practice=True,
+                    provide_information_to_practice=False,
+                    request_medication=True,
+                    update_demographics=False,
+                    manage_online_triage=False,
+                    view=ViewPermissions(
+                        medical_record=False,
+                        summary_medical_record=True,
+                        allergies_medical_record=True,
+                        consultations_medical_record=False,
+                        immunisations_medical_record=False,
+                        documents_medical_record=False,
+                        medication_medical_record=True,
+                        problems_medical_record=False,
+                        test_results_medical_record=False,
+                        record_audit=True,
+                        record_sharing=False,
+                    ),
+                ),
+            ),
+        ],
     )
 
 
