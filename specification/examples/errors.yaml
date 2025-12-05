@@ -1,4 +1,4 @@
-AccessDeniedErrorError:
+AccessDeniedError:
   summary: Access Denied
   description: The request was unsuccessful due to invalid authentication credentials being provided.
   value:
@@ -12,17 +12,22 @@ ForbiddenError:
   summary: Forbidden
   description: The request was unsuccessful due to authentication credentials is not valid for requested resource.
   value:
-    message: "Access denied to resource."
-InvalidValueErrorError:
+    message: "User does not have access to online services."
+InvalidValueError:
   summary: Invalid Value
   description: The request was unsuccessful due to invalid value.
   value:
     message: "Invalid header request."
-MissingValueErrorError:
+MissingValueError:
   summary: Missing Value
   description: The request was unsuccessful due to missing required value.
   value:
     message: "Missing required header request."
+notFoundError:
+  summary: Resource not found
+  description: The request was unsuccessful due to no online account for user found.
+  value:
+    message: "User does not have an online account."
 ThrottledError:
   summary: Throttled
   description: The request was unsuccessful due to application's rate limit has been exceeded.

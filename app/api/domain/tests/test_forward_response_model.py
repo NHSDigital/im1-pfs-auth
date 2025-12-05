@@ -1,4 +1,10 @@
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Patient,
+    Permissions,
+    ViewPermissions,
+)
 
 
 def test_forward_response() -> None:
@@ -6,8 +12,36 @@ def test_forward_response() -> None:
     # Act & Assert
     ForwardResponse(
         sessionId="some session id",
-        endUserSessionId="some end user session id",
         supplier="some supplier",
         proxy=Demographics(firstName="Betty", surname="Jones", title="Ms"),
-        patients=[Demographics(firstName="John", surname="Jones", title="Mr")],
+        patients=[
+            Patient(
+                firstName="John",
+                surname="Jones",
+                title="Mr",
+                permissions=Permissions(
+                    accessSystemConnect=True,
+                    bookAppointments=True,
+                    changePharmacy=True,
+                    messagePractice=True,
+                    provideInformationToPractice=True,
+                    requestMedication=True,
+                    updateDemographics=True,
+                    manageOnlineTriage=True,
+                    view=ViewPermissions(
+                        medicalRecord=False,
+                        summaryMedicalRecord=False,
+                        allergiesMedicalRecord=False,
+                        consultationsMedicalRecord=False,
+                        immunisationsMedicalRecord=False,
+                        documentsMedicalRecord=False,
+                        medicationMedicalRecord=False,
+                        problemsMedicalRecord=False,
+                        testResultsMedicalRecord=False,
+                        recordAudit=False,
+                        recordSharing=False,
+                    ),
+                ),
+            )
+        ],
     )

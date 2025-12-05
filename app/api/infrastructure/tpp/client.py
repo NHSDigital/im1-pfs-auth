@@ -1,16 +1,28 @@
 import os
-from json import load
 from pathlib import Path
 
 import requests
+import xmltodict
 
 from ...domain.base_client import BaseClient
-from ...domain.forward_response_model import Demographics, ForwardResponse
+from ...domain.exception import (
+    DownstreamError,
+    ForbiddenError,
+    InvalidValueError,
+    NotFoundError,
+)
+from ...domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Patient,
+    Permissions,
+    ViewPermissions,
+)
 from .models import (
     Application,
-    CreateSessionRequestData,
-    CreateSessionRequestHeaders,
     Identifier,
+    SessionRequestData,
+    SessionRequestHeaders,
 )
 
 BASE_DIR = Path(__file__).parent
@@ -34,7 +46,7 @@ class TPPClient(BaseClient):
         Returns:
             dict: Data dictionary
         """
-        session_request = CreateSessionRequestData(
+        session_request = SessionRequestData(
             application=Application(provider_id=self.request.application_id),
             patient=Identifier(value=self.request.patient_nhs_number),
             patient_ods_code=self.request.patient_ods_code,
@@ -48,7 +60,7 @@ class TPPClient(BaseClient):
         Returns:
             dict: Header dictionary
         """
-        request_headers = CreateSessionRequestHeaders()
+        request_headers = SessionRequestHeaders()
         return request_headers.to_dict()
 
     def forward_request(self) -> dict:
@@ -58,15 +70,25 @@ class TPPClient(BaseClient):
             dict: Response body from forwarded request
         """
         if os.environ.get("USE_MOCK") == "True":
-            return self.__mock_response()
+            return self._mock_response()
         response = requests.post(
             url=self.request.forward_to,
             headers=self.get_headers(),
             data=self.get_data(),
             timeout=30,
         )
-        response.raise_for_status()
-        return response.json()
+        response_json = xmltodict.parse(response.text)
+        match response.status_code:
+            case 201:
+                return response_json
+            case 400:
+                raise InvalidValueError(response_json.get("Error", {}).get("message"))
+            case 401:
+                raise ForbiddenError(response_json.get("Error", {}).get("message"))
+            case 404:
+                raise NotFoundError(response_json.get("Error", {}).get("message"))
+            case _:
+                raise DownstreamError
 
     def transform_response(self, response: dict) -> ForwardResponse:
         """Function transform TPP client response.
@@ -77,33 +99,129 @@ class TPPClient(BaseClient):
         Returns:
             ForwardResponse: Homogenised response with other clients
         """
+        response = response.get("CreateSessionReply", {})
         proxy_link = response.get("User", {})
         proxy_person = proxy_link.get("Person", {})
-        patient_links = response.get("PatientAccess", [{}])
         return ForwardResponse(
-            sessionId=response.get("suid"),
-            endUserSessionId=proxy_link.get("onlineUserId"),
+            sessionId=response.get("@suid"),
             supplier=self.supplier,
             proxy=Demographics(
-                firstName=proxy_person.get("PersonName", {}).get("firstName"),
-                surname=proxy_person.get("PersonName", {}).get("surname"),
-                title=proxy_person.get("PersonName", {}).get("title"),
+                firstName=proxy_person.get("PersonName", {}).get("@firstName"),
+                surname=proxy_person.get("PersonName", {}).get("@surname"),
+                title=proxy_person.get("PersonName", {}).get("@title"),
             ),
-            patients=[
-                Demographics(
-                    firstName=patient_link.get("PersonName", {}).get("firstName"),
-                    surname=patient_link.get("PersonName", {}).get("surname"),
-                    title=patient_link.get("PersonName", {}).get("title"),
-                )
-                for patient_link in patient_links
-            ],
+            patients=self._parse_patients(response),
         )
 
-    def __mock_response(self) -> dict:
+    def _mock_response(self) -> dict:
         """Function to return hard coded response.
 
         Returns:
-            dict: Hard coded response rather than forwarding request to TPP client
+            dict: Hard coded response rather than forwarding request to Emis client
         """
-        with Path((BASE_DIR) / "data" / "mocked_response.json").open("r") as f:
-            return load(f)
+        with Path((BASE_DIR) / "data" / "mocked_response.xml", encoding="utf-8").open(
+            "r"
+        ) as f:
+            mocked_response = f.read()
+        return xmltodict.parse(mocked_response)
+
+    def _parse_patients(self, data: dict) -> list[Patient]:
+        """Parsing raw data from Client into structual model.
+
+        Args:
+            data (dict): Raw data containing information about multiple patients
+
+        Returns:
+            list[Patient]: Parsed information about multiple patients
+        """
+        # Extra Patient data
+        patient_links = data.get("PatientAccess")
+        if isinstance(
+            patient_links, dict
+        ):  # if only one patient xmltodict will not register this an array
+            patient_links = [patient_links]
+
+        parsed_patients = []
+        for patient in patient_links:
+            person = patient["Person"]
+            raw_permissions = person.get("EffectiveServiceAccess", []).get(
+                "ServiceAccess", []
+            )
+            parsed_patients.append(
+                Patient(
+                    firstName=person.get("PersonName", {}).get("@firstName"),
+                    surname=person.get("PersonName", {}).get("@surname"),
+                    title=person.get("PersonName", {}).get("@title"),
+                    permissions=self._parse_permissions(raw_permissions),
+                )
+            )
+        return parsed_patients
+
+    def _parse_permissions(self, raw_permissions: dict) -> Permissions:
+        permissions_map = {
+            # Key = desired field name
+            # Value = (Desired Class for field, origin of value)
+            "accessSystemConnect": (Permissions, "Access SystmConnect"),
+            "bookAppointments": (Permissions, "Appointments"),
+            "changePharmacy": (Permissions, "Change Pharmacy"),
+            "messagePractice": (Permissions, "Messaging"),
+            "provideInformationToPractice": (
+                Permissions,
+                "Questionnaires",
+            ),
+            "requestMedication": (Permissions, "Request Medication"),
+            "updateDemographics": (Permissions, None),  # EMIS only
+            "manageOnlineTriage": (Permissions, "Access SystmConnect"),
+            "medicalRecord": (ViewPermissions, "Detailed Coded Record"),
+            "summaryMedicalRecord": (ViewPermissions, "Summary Record"),
+            "allergiesMedicalRecord": (
+                ViewPermissions,
+                "Summary Record",
+            ),
+            "consultationsMedicalRecord": (
+                ViewPermissions,
+                "Detailed Coded Record",
+            ),
+            "immunisationsMedicalRecord": (
+                ViewPermissions,
+                "Detailed Coded Record",
+            ),
+            "documentsMedicalRecord": (
+                ViewPermissions,
+                "Detailed Coded Record",
+            ),
+            "medicationMedicalRecord": (
+                ViewPermissions,
+                "Summary Record",
+            ),
+            "problemsMedicalRecord": (
+                ViewPermissions,
+                "Detailed Coded Record",
+            ),
+            "testResultsMedicalRecord": (
+                ViewPermissions,
+                "Detailed Coded Record",
+            ),
+            "recordAudit": (ViewPermissions, "Record Audit"),
+            "recordSharing": (ViewPermissions, "Manage Sharing Rules And Requests"),
+        }
+
+        permission_kwargs = {}
+        view_kwargs = {}
+
+        for field_name, (target_model, origin) in permissions_map.items():
+            # find the matching service by description
+            service = next(
+                (s for s in raw_permissions if s["@description"] == origin), None
+            )
+            # bucket into correct model
+            value = service["@status"] == "A" if service else False
+            if target_model is Permissions:
+                permission_kwargs[field_name] = value
+            elif target_model is ViewPermissions:
+                view_kwargs[field_name] = value
+
+        return Permissions(
+            **permission_kwargs,
+            view=ViewPermissions(**view_kwargs),
+        )

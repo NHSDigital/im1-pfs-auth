@@ -19,7 +19,7 @@ class Identifier(BaseModel):
     type: str = "NhsNumber"
 
 
-class CreateSessionRequestData(BaseModel):
+class SessionRequestData(BaseModel):
     """Base Model for the request data required to create a session."""
 
     application: Application
@@ -49,7 +49,7 @@ class CreateSessionRequestData(BaseModel):
         }
 
 
-class CreateSessionRequestHeaders(BaseModel):
+class SessionRequestHeaders(BaseModel):
     """Base Model for the request headers required to create a session."""
 
     type: str = "CreateSession"

@@ -105,7 +105,7 @@ servers:
   - url: https://int.api.service.nhs.uk/im1-pfs-auth/
 
 paths:
-  /authentication:
+  /authenticate:
     post:
       tags:
         - sessions
@@ -158,23 +158,26 @@ paths:
           description: |
             Errors will be returned for the first error encountered in the request. An error occurred as follows:
 
-            | HTTP status | Error code               | Description                                                                                                                               |
-            | ----------- | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
-            | 400         | `MISSING_VALUE`          | Missing header.                                                                                                                           |
-            | 400         | `INVALID_VALUE`          | Invalid header.                                                                                                                           |
-            | 401         | `ACCESS_DENIED`          | Missing or invalid OAuth 2.0 bearer token in request.                                                                                     |
-            | 403         | `FORBIDDEN`              | Access denied to resource.                                                                                                                |
-            | 408         | `TIMEOUT`                | Request timed out.                                                                                                                        |
-            | 429         | `THROTTLED`              | You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits). |
+            | HTTP status | Error code              | Description                                                                                                                               |
+            | ----------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+            | 400         | `BAD_REQUEST`           | Missing header.                                                                                                                           |
+            | 400         | `BAD_REQUEST`           | Invalid header.                                                                                                                           |
+            | 401         | `UNAUTHORIZED`          | Missing or invalid OAuth 2.0 bearer token in request.                                                                                     |
+            | 404         | `NOT_FOUND`             | Resource not found.                                                                                                                       |
+            | 403         | `FORBIDDEN`             | Access denied to resource.                                                                                                                |
+            | 408         | `REQUEST_TIMEOUT`       | Request timed out.                                                                                                                        |
+            | 429         | `TOO_MANY_REQUESTS`     | You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits). |
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponseModel"
               examples:
                 missingValueError:
-                  externalValue: "./examples/errors.yaml#/MissingValueErrorError"
+                  externalValue: "./examples/errors.yaml#/MissingValueError"
                 invalidValueError:
-                  externalValue: "./examples/errors.yaml#/InvalidValueErrorError"
+                  externalValue: "./examples/errors.yaml#/InvalidValueError"
+                notFoundError:
+                  externalValue: "./examples/errors.yaml#/notFoundError"
                 accessDeniedError:
                   externalValue: "./examples/errors.yaml#/AccessDeniedErrorError"
                 forbiddenError:
@@ -228,7 +231,7 @@ components:
         patients:
           type: array
           items:
-            $ref: "#/components/schemas/DemographicsModel"
+            $ref: "#/components/schemas/PatientModel"
       additionalProperties: false
 
     DemographicsModel:
@@ -244,6 +247,86 @@ components:
           type: string
         title:
           type: string
+
+    PermissionsModel:
+      required:
+        - accessSystemConnect
+          bookAppointments
+          changePharmacy
+          messagePractice
+          provideInformationToPractice
+          requestMedication
+          updateDemographics
+          manageOnlineTriage
+          view
+      type: object
+      properties:
+        accessSystemConnect:
+          type: boolean
+        bookAppointments:
+          type: boolean
+        changePharmacy:
+          type: boolean
+        messagePractice:
+          type: boolean
+        provideInformationToPractice:
+          type: boolean
+        requestMedication:
+          type: boolean
+        updateDemographics:
+          type: boolean
+        manageOnlineTriage:
+          type: boolean
+        view:
+          $ref: "#/components/schemas/ViewPermissionsModel"
+
+    ViewPermissionsModel:
+      required:
+        - medicalRecord
+          summaryMedicalRecord
+          allergiesMedicalRecord
+          consultationsMedicalRecord
+          immunisationsMedicalRecord
+          documentsMedicalRecord
+          medicationMedicalRecord
+          problemsMedicalRecord
+          testResultsMedicalRecord
+          recordAudit
+          recordSharing
+      type: object
+      properties:
+        medicalRecord:
+          type: boolean
+        summaryMedicalRecord:
+          type: boolean
+        allergiesMedicalRecord:
+          type: boolean
+        consultationsMedicalRecord:
+          type: boolean
+        immunisationsMedicalRecord:
+          type: boolean
+        documentsMedicalRecord:
+          type: boolean
+        medicationMedicalRecord:
+          type: boolean
+        problemsMedicalRecord:
+          type: boolean
+        testResultsMedicalRecord:
+          type: boolean
+        recordAudit:
+          type: boolean
+        recordSharing:
+          type: boolean
+
+    PatientModel:
+      allOf:
+        - $ref: "#/components/schemas/DemographicsModel"
+        - required:
+            - permissions
+          type: object
+          properties:
+            permissions:
+              $ref: "#/components/schemas/PermissionsModel"
 
     ErrorResponseModel:
       required:

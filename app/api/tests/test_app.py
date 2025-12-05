@@ -24,20 +24,20 @@ def client() -> FlaskClient:
 @patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value=("patient", "proxy"))
 @patch(f"{FILE_PATH}.ForwardRequest")
 @patch(f"{FILE_PATH}.route_and_forward")
-def test_authentication_post(
+def test_authenticate_post(
     mock_route_and_forward: MagicMock,
     mock_forward_request: MagicMock,
     _mock_get_nhs_number_from_jwt_token: MagicMock,
     client: FlaskClient,
 ) -> None:
-    """Test the POST /authentication endpoint."""
+    """Test the POST /authenticate endpoint."""
     # Arrange
     mocked_forward_request_response = {"body": "Hello World!"}
     mock_instance = MagicMock()
     mock_instance.model_dump.return_value = mocked_forward_request_response
     mock_route_and_forward.return_value = mock_instance
     # Act
-    actual_result = client.post("/authentication")
+    actual_result = client.post("/authenticate")
 
     # Assert
     assert actual_result.status_code == 201
@@ -70,7 +70,7 @@ def test_authentication_post(
 @patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value=("patient", "proxy"))
 @patch(f"{FILE_PATH}.ForwardRequest")
 @patch(f"{FILE_PATH}.route_and_forward")
-def test_authentication_post_api_exception(
+def test_authenticate_post_api_exception(
     mock_route_and_forward: MagicMock,
     mock_forward_request: MagicMock,
     _mock_get_nhs_number_from_jwt_token: MagicMock,
@@ -79,12 +79,12 @@ def test_authentication_post_api_exception(
     expected_message: str,
     client: FlaskClient,
 ) -> None:
-    """Test the POST /authentication endpoint with an api exception."""
+    """Test the POST /authenticate endpoint with an api exception."""
     # Arrange
     mock_forward_request.side_effect = exception("Testing")
 
     # Act
-    actual_result = client.post("/authentication")
+    actual_result = client.post("/authenticate")
 
     # Assert
     assert actual_result.status_code == expected_status_code
@@ -96,18 +96,18 @@ def test_authentication_post_api_exception(
 @patch(f"{FILE_PATH}.get_nhs_number_from_jwt_token", return_value=("patient", "proxy"))
 @patch(f"{FILE_PATH}.ForwardRequest")
 @patch(f"{FILE_PATH}.route_and_forward")
-def test_authentication_post_exception(
+def test_authenticate_post_exception(
     mock_route_and_forward: MagicMock,
     mock_forward_request: MagicMock,
     _mock_get_nhs_number_from_jwt_token: MagicMock,
     client: FlaskClient,
 ) -> None:
-    """Test the POST /authentication endpoint with unknown exception."""
+    """Test the POST /authenticate endpoint with unknown exception."""
     # Arrange
     mock_route_and_forward.side_effect = Exception("Testing")
 
     # Act
-    actual_result = client.post("/authentication")
+    actual_result = client.post("/authenticate")
 
     # Assert
     assert actual_result.status_code == HTTPStatus.INTERNAL_SERVER_ERROR

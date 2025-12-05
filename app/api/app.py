@@ -10,12 +10,12 @@ from .domain.forward_request_model import ForwardRequest
 app = Flask(__name__)
 
 
-@app.route("/authentication", methods=["POST"])
-def authentication() -> Response:
-    """Application API for POST /authentication.
+@app.route("/authenticate", methods=["POST"])
+def authenticate() -> Response:
+    """Application API for POST /authenticate.
 
     Returns:
-        Response: Response for POST /authentication
+        Response: Response for POST /authenticate
     """
     try:
         (patient_nhs_number, proxy_nhs_number) = get_nhs_number_from_jwt_token(
@@ -36,7 +36,7 @@ def authentication() -> Response:
     except ApiError as e:
         return make_response(jsonify(message=e.message), e.status_code)
     except Exception as e:
-        app.logger.exception("Error in POST /authentication")
+        app.logger.exception("Error in POST /authenticate")
         return make_response(
             jsonify(error=f"Exception: {type(e).__name__}"),
             HTTPStatus.INTERNAL_SERVER_ERROR,

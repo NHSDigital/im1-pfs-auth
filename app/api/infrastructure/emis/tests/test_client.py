@@ -5,10 +5,22 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 from pydantic import ValidationError
-from requests import HTTPError
 
+from app.api.domain.exception import (
+    ApiError,
+    DownstreamError,
+    ForbiddenError,
+    InvalidValueError,
+    NotFoundError,
+)
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Patient,
+    Permissions,
+    ViewPermissions,
+)
 from app.api.infrastructure.emis.client import EmisClient
 
 
@@ -77,6 +89,7 @@ def test_emis_forward_request_use_mock_off(
     # Arrange
     expected_response = {"Message": "Happy Days!"}
     mock_instance = MagicMock()
+    mock_instance.status_code = 201
     mock_instance.json.return_value = expected_response
     mock_request.post.return_value = mock_instance
     # Act
@@ -86,18 +99,32 @@ def test_emis_forward_request_use_mock_off(
     assert actual_result == expected_response
 
 
+@pytest.mark.parametrize(
+    ("status_code", "error_msg", "api_error"),
+    [
+        (400, "No online account exists for the given user.", InvalidValueError),
+        (401, "Unauthorised.", ForbiddenError),
+        (404, "Not Found.", NotFoundError),
+        (500, "", DownstreamError),
+    ],
+)
 @patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.emis.client.requests")
-def test_emis_forward_request_use_mock_off_exception(
-    mock_request: MagicMock, client: EmisClient
+def test_tpp_forward_request_use_mock_off_exception(
+    mock_request: MagicMock,
+    client: EmisClient,
+    status_code: int,
+    error_msg: str,
+    api_error: ApiError,
 ) -> None:
     """Test the EmisClient forward_request function when mock is turned off and there is an error."""  # noqa: E501
     # Arrange
     mock_instance = MagicMock()
-    mock_instance.raise_for_status.side_effect = HTTPError("Oops")
+    mock_instance.status_code = status_code
+    mock_instance.json.return_value = {"message": error_msg}
     mock_request.post.return_value = mock_instance
     # Act & Assert
-    with pytest.raises(HTTPError, match="Oops"):
+    with pytest.raises(api_error, match=error_msg):
         client.forward_request()
 
 
@@ -112,13 +139,93 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
     # Assert
     assert actual_result == ForwardResponse(
         sessionId="SID_2qZ9yJpVxHq4N3b",
-        endUserSessionId="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
         proxy=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
         patients=[
-            Demographics(firstName="Alex", surname="Taylor", title="Mr"),
-            Demographics(firstName="Jane", surname="Doe", title="Mrs"),
-            Demographics(firstName="Ella", surname="Taylor", title="Ms"),
+            Patient(
+                firstName="Alex",
+                surname="Taylor",
+                title="Mr",
+                permissions=Permissions(
+                    accessSystemConnect=False,
+                    bookAppointments=True,
+                    changePharmacy=True,
+                    messagePractice=False,
+                    provideInformationToPractice=False,
+                    requestMedication=True,
+                    updateDemographics=True,
+                    manageOnlineTriage=False,
+                    view=ViewPermissions(
+                        medicalRecord=True,
+                        summaryMedicalRecord=True,
+                        allergiesMedicalRecord=True,
+                        consultationsMedicalRecord=True,
+                        immunisationsMedicalRecord=True,
+                        documentsMedicalRecord=True,
+                        medicationMedicalRecord=True,
+                        problemsMedicalRecord=True,
+                        testResultsMedicalRecord=True,
+                        recordAudit=True,
+                        recordSharing=False,
+                    ),
+                ),
+            ),
+            Patient(
+                firstName="Jane",
+                surname="Doe",
+                title="Mrs",
+                permissions=Permissions(
+                    accessSystemConnect=False,
+                    bookAppointments=False,
+                    changePharmacy=True,
+                    messagePractice=True,
+                    provideInformationToPractice=True,
+                    requestMedication=True,
+                    updateDemographics=True,
+                    manageOnlineTriage=True,
+                    view=ViewPermissions(
+                        medicalRecord=True,
+                        summaryMedicalRecord=True,
+                        allergiesMedicalRecord=True,
+                        consultationsMedicalRecord=True,
+                        immunisationsMedicalRecord=True,
+                        documentsMedicalRecord=True,
+                        medicationMedicalRecord=True,
+                        problemsMedicalRecord=True,
+                        testResultsMedicalRecord=True,
+                        recordAudit=True,
+                        recordSharing=False,
+                    ),
+                ),
+            ),
+            Patient(
+                firstName="Ella",
+                surname="Taylor",
+                title="Ms",
+                permissions=Permissions(
+                    accessSystemConnect=False,
+                    bookAppointments=True,
+                    changePharmacy=False,
+                    messagePractice=True,
+                    provideInformationToPractice=True,
+                    requestMedication=False,
+                    updateDemographics=True,
+                    manageOnlineTriage=False,
+                    view=ViewPermissions(
+                        medicalRecord=True,
+                        summaryMedicalRecord=True,
+                        allergiesMedicalRecord=True,
+                        consultationsMedicalRecord=True,
+                        immunisationsMedicalRecord=True,
+                        documentsMedicalRecord=True,
+                        medicationMedicalRecord=True,
+                        problemsMedicalRecord=True,
+                        testResultsMedicalRecord=True,
+                        recordAudit=True,
+                        recordSharing=False,
+                    ),
+                ),
+            ),
         ],
     )
 

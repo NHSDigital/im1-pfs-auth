@@ -10,7 +10,7 @@ install:
 
 lint:
 	npm run lint
-	uv run ruff check .
+	uv run ruff check . --fix
 
 format:
 	npm run format
