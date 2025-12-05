@@ -106,7 +106,6 @@ logger = getLogger(__name__)
                 ],
                 "proxy": {"firstName": "Alex", "surname": "Taylor", "title": "Mr"},
                 "sessionId": "SID_2qZ9yJpVxHq4N3b",
-                "endUserSessionId": "SESS_mDq6nE2b8R7KQ0v",
                 "supplier": "EMIS",
             },
         ),
@@ -145,7 +144,6 @@ logger = getLogger(__name__)
                 ],
                 "proxy": {"firstName": "Sam", "surname": "Jones", "title": "Mr"},
                 "sessionId": "xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",  # noqa: E501
-                "endUserSessionId": "9cbf400000000000",
                 "supplier": "TPP",
             },
         ),
