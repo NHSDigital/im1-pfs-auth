@@ -149,7 +149,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 permissions=Permissions(
                     accessSystemConnect=False,
                     bookAppointments=True,
-                    changePharamacy=True,
+                    changePharmacy=True,
                     messagePractice=False,
                     provideInformationToPractice=False,
                     requestMedication=True,
@@ -177,7 +177,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 permissions=Permissions(
                     accessSystemConnect=False,
                     bookAppointments=False,
-                    changePharamacy=True,
+                    changePharmacy=True,
                     messagePractice=True,
                     provideInformationToPractice=True,
                     requestMedication=True,
@@ -205,7 +205,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 permissions=Permissions(
                     accessSystemConnect=False,
                     bookAppointments=True,
-                    changePharamacy=False,
+                    changePharmacy=False,
                     messagePractice=True,
                     provideInformationToPractice=True,
                     requestMedication=False,

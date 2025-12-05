@@ -154,7 +154,7 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
                 permissions=Permissions(
                     accessSystemConnect=False,
                     bookAppointments=True,
-                    changePharamacy=False,
+                    changePharmacy=False,
                     messagePractice=True,
                     provideInformationToPractice=False,
                     requestMedication=True,

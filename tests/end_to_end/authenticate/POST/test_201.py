@@ -26,7 +26,7 @@ logger = getLogger(__name__)
                         "permissions": {
                             "accessSystemConnect": False,
                             "bookAppointments": True,
-                            "changePharamacy": True,
+                            "changePharmacy": True,
                             "manageOnlineTriage": False,
                             "messagePractice": False,
                             "provideInformationToPractice": False,
@@ -54,7 +54,7 @@ logger = getLogger(__name__)
                         "permissions": {
                             "accessSystemConnect": False,
                             "bookAppointments": False,
-                            "changePharamacy": True,
+                            "changePharmacy": True,
                             "manageOnlineTriage": True,
                             "messagePractice": True,
                             "provideInformationToPractice": True,
@@ -82,7 +82,7 @@ logger = getLogger(__name__)
                         "permissions": {
                             "accessSystemConnect": False,
                             "bookAppointments": True,
-                            "changePharamacy": False,
+                            "changePharmacy": False,
                             "manageOnlineTriage": False,
                             "messagePractice": True,
                             "provideInformationToPractice": True,
@@ -120,7 +120,7 @@ logger = getLogger(__name__)
                         "permissions": {
                             "accessSystemConnect": False,
                             "bookAppointments": True,
-                            "changePharamacy": False,
+                            "changePharmacy": False,
                             "manageOnlineTriage": False,
                             "messagePractice": True,
                             "provideInformationToPractice": False,

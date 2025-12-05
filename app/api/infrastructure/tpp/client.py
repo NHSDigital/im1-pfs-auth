@@ -141,13 +141,13 @@ class TPPClient(BaseClient):
         ):  # if only one patient xmltodict will not register this an array
             patient_links = [patient_links]
 
-        parsed_patinets = []
+        parsed_patients = []
         for patient in patient_links:
             person = patient["Person"]
             raw_permissions = person.get("EffectiveServiceAccess", []).get(
                 "ServiceAccess", []
             )
-            parsed_patinets.append(
+            parsed_patients.append(
                 Patient(
                     firstName=person.get("PersonName", {}).get("@firstName"),
                     surname=person.get("PersonName", {}).get("@surname"),
@@ -155,7 +155,7 @@ class TPPClient(BaseClient):
                     permissions=self._parse_permissions(raw_permissions),
                 )
             )
-        return parsed_patinets
+        return parsed_patients
 
     def _parse_permissions(self, raw_permissions: dict) -> Permissions:
         permissions_map = {
@@ -163,7 +163,7 @@ class TPPClient(BaseClient):
             # Value = (Desired Class for field, origin of value)
             "accessSystemConnect": (Permissions, "Access SystmConnect"),
             "bookAppointments": (Permissions, "Appointments"),
-            "changePharamacy": (Permissions, "Access SystmConnect"),
+            "changePharmacy": (Permissions, "Change Pharmacy"),
             "messagePractice": (Permissions, "Messaging"),
             "provideInformationToPractice": (
                 Permissions,

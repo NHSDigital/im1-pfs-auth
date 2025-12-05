@@ -126,10 +126,10 @@ class EmisClient(BaseClient):
         """
         # Extra Patient data
         patient_links = data.get("UserPatientLinks", [])
-        parsed_patinets = []
+        parsed_patients = []
         for patient in patient_links:
             raw_permissions = patient.get("EffectiveServices", {})
-            parsed_patinets.append(
+            parsed_patients.append(
                 Patient(
                     firstName=patient.get("FirstName"),
                     surname=patient.get("Surname"),
@@ -137,7 +137,7 @@ class EmisClient(BaseClient):
                     permissions=self._parse_permissions(raw_permissions),
                 )
             )
-        return parsed_patinets
+        return parsed_patients
 
     def _parse_permissions(self, raw_permissions: dict) -> Permissions:
         permissions_map = {
@@ -145,7 +145,7 @@ class EmisClient(BaseClient):
             # Value = (Desired Class for field, origin of value from raw data)
             "accessSystemConnect": (Permissions, None),  # only for TPP"
             "bookAppointments": (Permissions, "AppointmentsEnabled"),
-            "changePharamacy": (Permissions, "PrescribingEnabled"),
+            "changePharmacy": (Permissions, "PrescribingEnabled"),
             "messagePractice": (Permissions, "PracticePatientCommunicationEnabled"),
             "provideInformationToPractice": (
                 Permissions,

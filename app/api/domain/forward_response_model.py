@@ -13,7 +13,7 @@ class Demographics(BaseModel):
 
 
 class ViewPermissions(BaseModel):
-    """All the view permissions data the proxy holds for a pateint."""
+    """All the view permissions data the proxy holds for a patient."""
 
     model_config = ConfigDict(alias_generator=to_camel)
 
@@ -37,7 +37,7 @@ class Permissions(BaseModel):
 
     access_system_connect: bool  # tpp only
     book_appointments: bool
-    change_pharamacy: bool
+    change_pharmacy: bool
     message_practice: bool
     provide_information_to_practice: bool
     request_medication: bool

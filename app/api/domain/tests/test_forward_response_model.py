@@ -22,7 +22,7 @@ def test_forward_response() -> None:
                 permissions=Permissions(
                     accessSystemConnect=True,
                     bookAppointments=True,
-                    changePharamacy=True,
+                    changePharmacy=True,
                     messagePractice=True,
                     provideInformationToPractice=True,
                     requestMedication=True,

@@ -173,11 +173,11 @@ paths:
                 $ref: "#/components/schemas/ErrorResponseModel"
               examples:
                 missingValueError:
-                  externalValue: "./examples/errors.yaml#/MissingValueErrorError"
+                  externalValue: "./examples/errors.yaml#/MissingValueError"
                 invalidValueError:
-                  externalValue: "./examples/errors.yaml#/InvalidValueErrorError"
-                notFoundErrorError:
-                  externalValue: ".examples/errors.yaml#/NotFoundErrorError"
+                  externalValue: "./examples/errors.yaml#/InvalidValueError"
+                notFoundError:
+                  externalValue: "./examples/errors.yaml#/notFoundError"
                 accessDeniedError:
                   externalValue: "./examples/errors.yaml#/AccessDeniedErrorError"
                 forbiddenError:
@@ -252,8 +252,8 @@ components:
       required:
         - accessSystemConnect
           bookAppointments
-          changePharamacy
-          messssagePractice
+          changePharmacy
+          messagePractice
           provideInformationToPractice
           requestMedication
           updateDemographics
@@ -265,9 +265,9 @@ components:
           type: boolean
         bookAppointments:
           type: boolean
-        changePharamacy:
+        changePharmacy:
           type: boolean
-        messssagePractice:
+        messagePractice:
           type: boolean
         provideInformationToPractice:
           type: boolean
