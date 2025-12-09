@@ -147,6 +147,7 @@ paths:
         - $ref: "./components/parameters/X-Forward-To.yaml"
         - $ref: "./components/parameters/X-ODS-Code.yaml"
         - $ref: "./components/parameters/X-Correlation-ID.yaml"
+        - $ref: "./components/parameters/X-Use-Mock.yaml"
       responses:
         "201":
           description: The session was created successfully
@@ -337,4 +338,4 @@ components:
           type: string
 
 x-nhsd-apim:
-  $ref: "x-nhsd-apim/x-nhsd-apim.generated.yaml"
+  $ref: "#/x-nhsd-apim/x-nhsd-apim.generated.yaml"

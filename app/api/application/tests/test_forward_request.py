@@ -17,6 +17,7 @@ def test_route_and_forward() -> None:
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
     mock_client = MagicMock()
     mock_client.return_value.transform_response.return_value = (
@@ -39,6 +40,7 @@ def test_route_and_forward_raises_api_error() -> None:
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
     mock_client = MagicMock()
     mock_client.return_value.forward_request.side_effect = ForbiddenError("Oops")
@@ -57,6 +59,7 @@ def test_route_and_forward_raises_downstream_error() -> None:
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
     mock_client = MagicMock()
     mock_client.return_value.forward_request.side_effect = Exception("Oops")

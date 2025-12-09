@@ -1,4 +1,3 @@
-import os
 from json import load
 from pathlib import Path
 
@@ -65,7 +64,7 @@ class EmisClient(BaseClient):
         Returns:
             dict: Response body from forwarded request
         """
-        if os.environ.get("USE_MOCK") == "True":
+        if self.request.use_mock:
             return self._mock_response()
         response = requests.post(
             url=self.request.forward_to,

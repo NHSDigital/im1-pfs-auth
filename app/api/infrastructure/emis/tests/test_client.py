@@ -32,6 +32,7 @@ def setup_client() -> EmisClient:
         patient_nhs_number="1234567890",
         patient_ods_code="some patient ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
     return EmisClient(request)
 
@@ -67,12 +68,12 @@ def test_emis_client_get_data(client: EmisClient) -> None:
     }
 
 
-@patch.dict(environ, {"USE_MOCK": "True"})
 def test_emis_forward_request_use_mock_on(client: EmisClient) -> None:
     """Test the EmisClient forward_request function when mock is turned on."""
     # Arrange
     with Path("app/api/infrastructure/emis/data/mocked_response.json").open("r") as f:
         expected_response = load(f)
+    client.request.use_mock = True
     # Act
     actual_result = client.forward_request()
 
@@ -108,7 +109,6 @@ def test_emis_forward_request_use_mock_off(
         (500, "", DownstreamError),
     ],
 )
-@patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.emis.client.requests")
 def test_tpp_forward_request_use_mock_off_exception(
     mock_request: MagicMock,

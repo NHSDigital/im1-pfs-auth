@@ -27,6 +27,7 @@ def authenticate() -> Response:
             patient_nhs_number=patient_nhs_number,
             patient_ods_code=request.headers.get("X-ODS-Code"),
             proxy_nhs_number=proxy_nhs_number,
+            use_mock=request.headers.get("X-Use-Mock") == "True",
         )
         response = route_and_forward(forward_request)
         return make_response(

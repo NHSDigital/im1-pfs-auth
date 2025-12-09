@@ -37,6 +37,7 @@ def setup_client() -> TPPClient:
         patient_nhs_number="1234567890",
         patient_ods_code="some patient ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
     return TPPClient(request)
 
@@ -79,6 +80,8 @@ def test_tpp_client_get_data(_: MagicMock, client: TPPClient) -> None:
 @patch.dict(environ, {"USE_MOCK": "True"})
 def test_tpp_forward_request_use_mock_on(client: TPPClient) -> None:
     """Test the TPPClient forward_request function when mock is turned on."""
+    # Assert
+    client.request.use_mock = True
     # Act
     actual_result = client.forward_request()
 
