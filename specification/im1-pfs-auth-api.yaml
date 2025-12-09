@@ -212,8 +212,15 @@ components:
 
   schemas:
     ResponseModel:
+      oneOf:
+        - $ref: "#/components/schemas/EMISResponseModel"
+        - $ref: "#/components/schemas/TPPResponseModel"
+
+    
+    EMISResponseModel:
       required:
         - sessionId
+          endUserSessionId
           supplier
           proxy
           patients
@@ -225,14 +232,36 @@ components:
         endUserSessionId:
           type: string
         supplier:
-          enum: [EMIS, TPP]
+          enum: [EMIS]
           type: string
         proxy:
           $ref: "#/components/schemas/DemographicsModel"
         patients:
           type: array
           items:
-            $ref: "#/components/schemas/PatientModel"
+            $ref: "#/components/schemas/EMISPatientModel"
+      additionalProperties: false
+
+    TPPResponseModel:
+      required:
+        - sessionId
+          supplier
+          proxy
+          patients
+      type: object
+      properties:
+        sessionId:
+          minLength: 1
+          type: string
+        supplier:
+          enum: [TPP]
+          type: string
+        proxy:
+          $ref: "#/components/schemas/DemographicsModel"
+        patients:
+          type: array
+          items:
+            $ref: "#/components/schemas/TPPPatientModel"
       additionalProperties: false
 
     DemographicsModel:
@@ -249,77 +278,7 @@ components:
         title:
           type: string
 
-    PermissionsModel:
-      required:
-        - accessSystemConnect
-          bookAppointments
-          changePharmacy
-          messagePractice
-          provideInformationToPractice
-          requestMedication
-          updateDemographics
-          manageOnlineTriage
-          view
-      type: object
-      properties:
-        accessSystemConnect:
-          type: boolean
-        bookAppointments:
-          type: boolean
-        changePharmacy:
-          type: boolean
-        messagePractice:
-          type: boolean
-        provideInformationToPractice:
-          type: boolean
-        requestMedication:
-          type: boolean
-        updateDemographics:
-          type: boolean
-        manageOnlineTriage:
-          type: boolean
-        view:
-          $ref: "#/components/schemas/ViewPermissionsModel"
-
-    ViewPermissionsModel:
-      required:
-        - medicalRecord
-          summaryMedicalRecord
-          allergiesMedicalRecord
-          consultationsMedicalRecord
-          immunisationsMedicalRecord
-          documentsMedicalRecord
-          medicationMedicalRecord
-          problemsMedicalRecord
-          testResultsMedicalRecord
-          recordAudit
-          recordSharing
-      type: object
-      properties:
-        medicalRecord:
-          type: boolean
-        summaryMedicalRecord:
-          type: boolean
-        allergiesMedicalRecord:
-          type: boolean
-        consultationsMedicalRecord:
-          type: boolean
-        immunisationsMedicalRecord:
-          type: boolean
-        documentsMedicalRecord:
-          type: boolean
-        medicationMedicalRecord:
-          type: boolean
-        problemsMedicalRecord:
-          type: boolean
-        testResultsMedicalRecord:
-          type: boolean
-        recordAudit:
-          type: boolean
-        recordSharing:
-          type: boolean
-
-    PatientModel:
+    EMISPatientModel:
       allOf:
         - $ref: "#/components/schemas/DemographicsModel"
         - required:
@@ -327,7 +286,181 @@ components:
           type: object
           properties:
             permissions:
-              $ref: "#/components/schemas/PermissionsModel"
+              $ref: "#/components/schemas/EMISPermissionsModel"
+
+    EMISPermissionsModel:
+      required:
+        - appointmentsEnabled
+          demographicsUpdateEnabled
+          epsEnabled
+          medicalRecordEnabled
+          onlineTriageEnabled
+          practicePatientCommunicationEnabled
+          prescribingEnabled
+          recordSharingEnabled
+          recordViewAuditEnabled
+          medicalRecord
+      type: object
+      properties:
+        appointmentsEnabled:
+          type: boolean
+        demographicsUpdateEnabled:
+          type: boolean
+        epsEnabled:
+          type: boolean
+        medicalRecordEnabled:
+          type: boolean
+        onlineTriageEnabled:
+          type: boolean
+        practicePatientCommunicationEnabled:
+          type: boolean
+        prescribingEnabled:
+          type: boolean
+        recordSharingEnabled:
+          type: boolean
+        recordViewAuditEnabled:
+          type: boolean
+        medicalRecord:
+          $ref: "#/components/schemas/EMISMedicalRecordModel"
+
+    EMISMedicalRecordModel:
+      required:
+        - recordAccessScheme
+          allergiesEnabled
+          consultationsEnabled
+          immunisationsEnabled
+          documentsEnabled
+          medicationEnabled
+          problemsEnabled
+          testResultsEnabled
+      type: object
+      properties:
+        recordAccessScheme:
+          type: boolean
+        allergiesEnabled:
+          type: boolean
+        consultationsEnabled:
+          type: boolean
+        immunisationsEnabled:
+          type: boolean
+        documentsEnabled:
+          type: boolean
+        medicationEnabled:
+          type: boolean
+        problemsEnabled:
+          type: boolean
+        testResultsEnabled:
+          type: boolean
+
+    TPPPatientModel:
+      allOf:
+        - $ref: "#/components/schemas/DemographicsModel"
+        - required:
+            - permissions
+          type: object
+          properties:
+            permissions:
+              $ref: "#/components/schemas/TPPPermissionsModel"
+
+    TPPPermissionsModel:
+      required:
+        - fullClinicalRecord
+          appointments
+          requestMedication
+          questionnaires
+          summaryRecord
+          detailedCodedRecord
+          messaging
+          viewSharingStatus
+          recordAudit
+          changePharmacy
+          manageSharingRulesAndRequests
+          accessSystmConnect
+      type: object
+      properties:
+        fullClinicalRecord:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        appointments:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        requestMedication:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        questionnaires:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        summaryRecord:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        detailedCodedRecord:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        messaging:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        viewSharingStatus:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        recordAudit:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        changePharmacy:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        manageSharingRulesAndRequests:
+          $ref: "#/components/schemas/TPPServiceAccess"
+        accessSystmConnect:
+          $ref: "#/components/schemas/TPPServiceAccess"
+    
+    TPPServiceAccess:
+      required:
+        - description
+          serviceIdentifier
+          status
+          statusDescription
+      type: object
+      properties:
+        description:
+          type: string
+          enum: [
+            "Full Clinical Record",
+            "Appointments",
+            "Request Medication",
+            "Questionnaires",
+            "Summary Record",
+            "Detailed Coded Record",
+            "Messaging",
+            "View Sharing Status",
+            "Record Audit",
+            "Change Pharmacy",
+            "Manage Sharing Rules And Requests",
+            "Access SystmConnect"
+          ]
+        serviceIdentifier:
+          type: integer
+          enum: [
+            1,
+            2,
+            4,
+            8,
+            64,
+            128,
+            512,
+            1024,
+            2048,
+            4096,
+            8192,
+            65536
+          ]
+        status:
+          type: string
+          enum: [
+            "A",
+            "U",
+            "N",
+            "G",
+            "O"
+          ]
+        statusDescription:
+          type: string
+          enum: [
+            "Available",
+            "Unavailable",
+            "Not offered by unit",
+            "Only available to GMS registered patients",
+            "Other"
+          ]
 
     ErrorResponseModel:
       required:
