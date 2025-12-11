@@ -420,4 +420,4 @@ components:
           type: string
 
 x-nhsd-apim:
-  $ref: "#/x-nhsd-apim/x-nhsd-apim.generated.yaml"
+  $ref: "x-nhsd-apim/x-nhsd-apim.generated.yaml"

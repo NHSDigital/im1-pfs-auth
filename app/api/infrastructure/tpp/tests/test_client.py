@@ -19,12 +19,12 @@ from app.api.domain.forward_response_model import (
 )
 from app.api.infrastructure.tpp.client import TPPClient
 from app.api.infrastructure.tpp.models import (
-    SessionResponse,
     Patient,
     ServiceAccess,
     ServiceAccessDescription,
     ServiceAccessStatus,
     ServiceAccessStatusDescription,
+    SessionResponse,
 )
 
 with Path("app/api/infrastructure/tpp/data/mocked_response.xml", encoding="utf-8").open(

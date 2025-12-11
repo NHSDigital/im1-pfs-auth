@@ -48,6 +48,8 @@ class SessionRequestHeaders(BaseModel):
 
 
 class MedicalRecordPermissions(BaseModel):
+    """Base Model for Medical Record Permissions."""
+
     model_config = ConfigDict(alias_generator=to_camel)
 
     record_access_scheme: str
@@ -61,6 +63,8 @@ class MedicalRecordPermissions(BaseModel):
 
 
 class Permissions(BaseModel):
+    """Base Model for Permissions."""
+
     model_config = ConfigDict(alias_generator=to_camel)
 
     appointments_enabled: bool
@@ -76,10 +80,14 @@ class Permissions(BaseModel):
 
 
 class Patient(Demographics):
+    """Base Model for Patient."""
+
     permissions: Permissions
 
 
 class SessionResponse(ForwardResponse):
+    """Extension of Forward Response."""
+
     model_config = ConfigDict(alias_generator=to_camel)
 
     end_user_session_id: str

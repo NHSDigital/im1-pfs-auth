@@ -1,7 +1,8 @@
 from enum import Enum
+from uuid import uuid4
+
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
-from uuid import uuid4
 
 from app.api.domain.forward_response_model import Demographics, ForwardResponse
 
@@ -65,6 +66,8 @@ class SessionRequestHeaders(BaseModel):
 
 
 class ServiceAccessDescription(Enum):
+    """Enum Class for Service Access Description."""
+
     FULL_CLINCAL_RECORD = "Full Clinical Record"
     APPOINTMENTS = "Appointments"
     REQUEST_MEDICATION = "Request Medication"
@@ -80,6 +83,8 @@ class ServiceAccessDescription(Enum):
 
 
 class ServiceAccessStatus(Enum):
+    """Enum Class for Service Access Status."""
+
     AVAILABLE = "A"
     UNAVAILABLE = "U"
     NOT_OFFERED = "N"
@@ -88,6 +93,8 @@ class ServiceAccessStatus(Enum):
 
 
 class ServiceAccessStatusDescription(Enum):
+    """Enum Class for Service Access Status Description."""
+
     AVAILABLE = "Available"
     UNAVAILABLE = "Unavailable"
     NOT_OFFERED = "Not offered by unit"
@@ -96,6 +103,8 @@ class ServiceAccessStatusDescription(Enum):
 
 
 class ServiceAccess(BaseModel):
+    """Base Model for Service Access which holds data per permission."""
+
     model_config = ConfigDict(alias_generator=to_camel)
 
     description: ServiceAccessDescription
@@ -105,10 +114,14 @@ class ServiceAccess(BaseModel):
 
 
 class Patient(Demographics):
+    """Base Model for Patient."""
+
     permissions: list[ServiceAccess]
 
 
 class SessionResponse(ForwardResponse):
+    """Extension of Forward Response."""
+
     model_config = ConfigDict(alias_generator=to_camel)
 
     patients: list[Patient]

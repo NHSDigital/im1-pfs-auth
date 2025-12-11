@@ -17,9 +17,9 @@ from app.api.domain.forward_request_model import ForwardRequest
 from app.api.domain.forward_response_model import Demographics, ForwardResponse
 from app.api.infrastructure.emis.client import EmisClient
 from app.api.infrastructure.emis.models import (
+    MedicalRecordPermissions,
     Patient,
     Permissions,
-    MedicalRecordPermissions,
 )
 
 
