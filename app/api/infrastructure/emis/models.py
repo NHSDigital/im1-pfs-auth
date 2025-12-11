@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from ...domain.forward_response_model import Demographics, ForwardResponse
 
 
 class Identifier(BaseModel):

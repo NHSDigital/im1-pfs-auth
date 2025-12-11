@@ -14,9 +14,7 @@ from app.api.domain.exception import (
     NotFoundError,
 )
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import (
-    Demographics,
-)
+from app.api.domain.forward_response_model import Demographics
 from app.api.infrastructure.tpp.client import TPPClient
 from app.api.infrastructure.tpp.models import (
     Patient,
@@ -142,7 +140,6 @@ def test_tpp_forward_request_use_mock_off_exception(
         client.forward_request()
 
 
-@pytest.mark.wip
 def test_tpp_client_transform_response(client: TPPClient) -> None:
     """Test the TPPClient transform_response function."""
     # Act

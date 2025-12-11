@@ -1,7 +1,4 @@
-from app.api.domain.forward_response_model import (
-    Demographics,
-    ForwardResponse,
-)
+from app.api.domain.forward_response_model import Demographics, ForwardResponse
 
 
 def test_forward_response() -> None:
