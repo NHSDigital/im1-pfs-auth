@@ -38,7 +38,7 @@ def test_authenticate_post(
     use_mock = True
     mocked_forward_request_response = {"body": "Hello World!"}
     mock_instance = MagicMock()
-    mock_instance.model_dump.return_value = mocked_forward_request_response
+    mock_instance.model_dump_json.return_value = mocked_forward_request_response
     mock_route_and_forward.return_value = mock_instance
     # Act
     actual_result = client.post(

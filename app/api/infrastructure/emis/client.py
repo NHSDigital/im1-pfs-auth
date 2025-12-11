@@ -10,7 +10,7 @@ from ...domain.exception import (
     InvalidValueError,
     NotFoundError,
 )
-from ...domain.forward_response_model import Demographics, ForwardResponse
+from ...domain.forward_response_model import Demographics
 from .models import (
     Identifier,
     MedicalRecordPermissions,
@@ -18,6 +18,7 @@ from .models import (
     Permissions,
     SessionRequestData,
     SessionRequestHeaders,
+    SessionResponse,
 )
 
 BASE_DIR = Path(__file__).parent
@@ -86,16 +87,16 @@ class EmisClient(BaseClient):
             case _:
                 raise DownstreamError
 
-    def transform_response(self, response: dict) -> ForwardResponse:
+    def transform_response(self, response: dict) -> SessionResponse:
         """Function transform Emis client response.
 
         Args:
             response (dict): Response body from forwarded request
 
         Returns:
-            ForwardResponse: Homogenised response with other clients
+            SessionResponse: Homogenised response with other clients
         """
-        return ForwardResponse(
+        return SessionResponse(
             sessionId=response.get("SessionId"),
             endUserSessionId=response.get("EndUserSessionId"),
             supplier=self.supplier,

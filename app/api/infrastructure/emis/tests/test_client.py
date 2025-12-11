@@ -14,12 +14,13 @@ from app.api.domain.exception import (
     NotFoundError,
 )
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import Demographics
 from app.api.infrastructure.emis.client import EmisClient
 from app.api.infrastructure.emis.models import (
     MedicalRecordPermissions,
     Patient,
     Permissions,
+    SessionResponse,
 )
 
 
@@ -136,8 +137,9 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
     actual_result = client.transform_response(response)
 
     # Assert
-    assert actual_result == ForwardResponse(
+    assert actual_result == SessionResponse(
         sessionId="SID_2qZ9yJpVxHq4N3b",
+        endUserSessionId="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
         proxy=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
         patients=[
