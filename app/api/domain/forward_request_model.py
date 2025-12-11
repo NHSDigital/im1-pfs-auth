@@ -15,6 +15,7 @@ class ForwardRequest(BaseModel):
     patient_nhs_number: str
     patient_ods_code: str
     proxy_nhs_number: str
+    use_mock: bool
 
     @model_validator(mode="before")
     def validate_required_value(cls, values: list) -> list:

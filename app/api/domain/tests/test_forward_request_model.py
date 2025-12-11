@@ -17,6 +17,7 @@ def test_forward_request() -> None:
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
 
 
@@ -43,6 +44,7 @@ def test_forward_request_validates_required_field(
             patient_nhs_number="1234567890",
             patient_ods_code=ods_code,
             proxy_nhs_number="0987654321",
+            use_mock=False,
         )
 
 
@@ -69,6 +71,7 @@ def test_forward_request_validates_nhs_numbers(
             patient_nhs_number=patient_nhs_number,
             patient_ods_code="some ods code",
             proxy_nhs_number=proxy_nhs_number,
+            use_mock=False,
         )
 
 
@@ -84,4 +87,5 @@ def test_forward_request_validates_forward_to() -> None:
             patient_nhs_number="1234567890",
             patient_ods_code="some ods code",
             proxy_nhs_number="0987654321",
+            use_mock=False,
         )

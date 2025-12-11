@@ -27,10 +27,11 @@ def authenticate() -> Response:
             patient_nhs_number=patient_nhs_number,
             patient_ods_code=request.headers.get("X-ODS-Code"),
             proxy_nhs_number=proxy_nhs_number,
+            use_mock=request.headers.get("X-Use-Mock") == "True",
         )
         response = route_and_forward(forward_request)
         return make_response(
-            jsonify(response.model_dump(by_alias=True)),
+            response.model_dump_json(by_alias=True),
             HTTPStatus.CREATED,
         )
     except ApiError as e:

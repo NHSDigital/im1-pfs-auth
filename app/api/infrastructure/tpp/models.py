@@ -1,6 +1,10 @@
+from enum import Enum
 from uuid import uuid4
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+from pydantic.alias_generators import to_camel
+
+from ...domain.forward_response_model import Demographics, ForwardResponse
 
 
 class Application(BaseModel):
@@ -59,3 +63,65 @@ class SessionRequestHeaders(BaseModel):
         return {
             "type": self.type,
         }
+
+
+class ServiceAccessDescription(Enum):
+    """Enum Class for Service Access Description."""
+
+    FULL_CLINCAL_RECORD = "Full Clinical Record"
+    APPOINTMENTS = "Appointments"
+    REQUEST_MEDICATION = "Request Medication"
+    QUESTIONNAIRES = "Questionnaires"
+    SUMMARY_RECORD = "Summary Record"
+    DETAILED_CODED_RECORD = "Detailed Coded Record"
+    MESSAGING = "Messaging"
+    VIEW_SHARING_STATUS = "View Sharing Status"
+    RECORD_AUDIT = "Record Audit"
+    CHANGE_PARMACY = "Change Pharmacy"
+    MANAGE_SCHARING_RULES_AND_REQUESTS = "Manage Sharing Rules And Requests"
+    ACCESS_SYSTM_CONNECT = "Access SystmConnect"
+
+
+class ServiceAccessStatus(Enum):
+    """Enum Class for Service Access Status."""
+
+    AVAILABLE = "A"
+    UNAVAILABLE = "U"
+    NOT_OFFERED = "N"
+    GMS_REGISTERED_PATEINTS_ONLY = "G"
+    OTHER = "O"
+
+
+class ServiceAccessStatusDescription(Enum):
+    """Enum Class for Service Access Status Description."""
+
+    AVAILABLE = "Available"
+    UNAVAILABLE = "Unavailable"
+    NOT_OFFERED = "Not offered by unit"
+    GMS_REGISTERED_PATEINTS_ONLY = "Only available to GMS registered patients"
+    OTHER = "Other"
+
+
+class ServiceAccess(BaseModel):
+    """Base Model for Service Access which holds data per permission."""
+
+    model_config = ConfigDict(alias_generator=to_camel)
+
+    description: ServiceAccessDescription
+    service_identifier: int
+    status: ServiceAccessStatus
+    status_description: ServiceAccessStatusDescription
+
+
+class Patient(Demographics):
+    """Base Model for Patient."""
+
+    permissions: list[ServiceAccess]
+
+
+class SessionResponse(ForwardResponse):
+    """Extension of Forward Response."""
+
+    model_config = ConfigDict(alias_generator=to_camel)
+
+    patients: list[Patient]

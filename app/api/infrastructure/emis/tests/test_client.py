@@ -14,14 +14,14 @@ from app.api.domain.exception import (
     NotFoundError,
 )
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import (
-    Demographics,
-    ForwardResponse,
+from app.api.domain.forward_response_model import Demographics
+from app.api.infrastructure.emis.client import EmisClient
+from app.api.infrastructure.emis.models import (
+    MedicalRecordPermissions,
     Patient,
     Permissions,
-    ViewPermissions,
+    SessionResponse,
 )
-from app.api.infrastructure.emis.client import EmisClient
 
 
 @pytest.fixture(name="client")
@@ -32,6 +32,7 @@ def setup_client() -> EmisClient:
         patient_nhs_number="1234567890",
         patient_ods_code="some patient ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
     return EmisClient(request)
 
@@ -67,12 +68,12 @@ def test_emis_client_get_data(client: EmisClient) -> None:
     }
 
 
-@patch.dict(environ, {"USE_MOCK": "True"})
 def test_emis_forward_request_use_mock_on(client: EmisClient) -> None:
     """Test the EmisClient forward_request function when mock is turned on."""
     # Arrange
     with Path("app/api/infrastructure/emis/data/mocked_response.json").open("r") as f:
         expected_response = load(f)
+    client.request.use_mock = True
     # Act
     actual_result = client.forward_request()
 
@@ -108,7 +109,6 @@ def test_emis_forward_request_use_mock_off(
         (500, "", DownstreamError),
     ],
 )
-@patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.emis.client.requests")
 def test_tpp_forward_request_use_mock_off_exception(
     mock_request: MagicMock,
@@ -137,8 +137,9 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
     actual_result = client.transform_response(response)
 
     # Assert
-    assert actual_result == ForwardResponse(
+    assert actual_result == SessionResponse(
         sessionId="SID_2qZ9yJpVxHq4N3b",
+        endUserSessionId="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
         proxy=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
         patients=[
@@ -147,26 +148,24 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 surname="Taylor",
                 title="Mr",
                 permissions=Permissions(
-                    accessSystemConnect=False,
-                    bookAppointments=True,
-                    changePharmacy=True,
-                    messagePractice=False,
-                    provideInformationToPractice=False,
-                    requestMedication=True,
-                    updateDemographics=True,
-                    manageOnlineTriage=False,
-                    view=ViewPermissions(
-                        medicalRecord=True,
-                        summaryMedicalRecord=True,
-                        allergiesMedicalRecord=True,
-                        consultationsMedicalRecord=True,
-                        immunisationsMedicalRecord=True,
-                        documentsMedicalRecord=True,
-                        medicationMedicalRecord=True,
-                        problemsMedicalRecord=True,
-                        testResultsMedicalRecord=True,
-                        recordAudit=True,
-                        recordSharing=False,
+                    appointmentsEnabled=True,
+                    demographicsUpdateEnabled=True,
+                    epsEnabled=True,
+                    medicalRecordEnabled=True,
+                    onlineTriageEnabled=False,
+                    practicePatientCommunicationEnabled=False,
+                    prescribingEnabled=True,
+                    recordSharingEnabled=False,
+                    recordViewAuditEnabled=True,
+                    medicalRecord=MedicalRecordPermissions(
+                        recordAccessScheme="DetailedCodedCareRecord",
+                        allergiesEnabled=True,
+                        consultationsEnabled=True,
+                        immunisationsEnabled=True,
+                        documentsEnabled=True,
+                        medicationEnabled=True,
+                        problemsEnabled=True,
+                        testResultsEnabled=True,
                     ),
                 ),
             ),
@@ -175,26 +174,24 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 surname="Doe",
                 title="Mrs",
                 permissions=Permissions(
-                    accessSystemConnect=False,
-                    bookAppointments=False,
-                    changePharmacy=True,
-                    messagePractice=True,
-                    provideInformationToPractice=True,
-                    requestMedication=True,
-                    updateDemographics=True,
-                    manageOnlineTriage=True,
-                    view=ViewPermissions(
-                        medicalRecord=True,
-                        summaryMedicalRecord=True,
-                        allergiesMedicalRecord=True,
-                        consultationsMedicalRecord=True,
-                        immunisationsMedicalRecord=True,
-                        documentsMedicalRecord=True,
-                        medicationMedicalRecord=True,
-                        problemsMedicalRecord=True,
-                        testResultsMedicalRecord=True,
-                        recordAudit=True,
-                        recordSharing=False,
+                    appointmentsEnabled=False,
+                    demographicsUpdateEnabled=True,
+                    epsEnabled=False,
+                    medicalRecordEnabled=True,
+                    onlineTriageEnabled=True,
+                    practicePatientCommunicationEnabled=True,
+                    prescribingEnabled=True,
+                    recordSharingEnabled=False,
+                    recordViewAuditEnabled=True,
+                    medicalRecord=MedicalRecordPermissions(
+                        recordAccessScheme="CoreSummaryCareRecord",
+                        allergiesEnabled=True,
+                        consultationsEnabled=True,
+                        immunisationsEnabled=True,
+                        documentsEnabled=True,
+                        medicationEnabled=True,
+                        problemsEnabled=True,
+                        testResultsEnabled=True,
                     ),
                 ),
             ),
@@ -203,26 +200,24 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 surname="Taylor",
                 title="Ms",
                 permissions=Permissions(
-                    accessSystemConnect=False,
-                    bookAppointments=True,
-                    changePharmacy=False,
-                    messagePractice=True,
-                    provideInformationToPractice=True,
-                    requestMedication=False,
-                    updateDemographics=True,
-                    manageOnlineTriage=False,
-                    view=ViewPermissions(
-                        medicalRecord=True,
-                        summaryMedicalRecord=True,
-                        allergiesMedicalRecord=True,
-                        consultationsMedicalRecord=True,
-                        immunisationsMedicalRecord=True,
-                        documentsMedicalRecord=True,
-                        medicationMedicalRecord=True,
-                        problemsMedicalRecord=True,
-                        testResultsMedicalRecord=True,
-                        recordAudit=True,
-                        recordSharing=False,
+                    appointmentsEnabled=True,
+                    demographicsUpdateEnabled=True,
+                    epsEnabled=False,
+                    medicalRecordEnabled=True,
+                    onlineTriageEnabled=False,
+                    practicePatientCommunicationEnabled=True,
+                    prescribingEnabled=False,
+                    recordSharingEnabled=False,
+                    recordViewAuditEnabled=True,
+                    medicalRecord=MedicalRecordPermissions(
+                        recordAccessScheme="DetailedCodedCareRecord",
+                        allergiesEnabled=True,
+                        consultationsEnabled=True,
+                        immunisationsEnabled=True,
+                        documentsEnabled=True,
+                        medicationEnabled=True,
+                        problemsEnabled=True,
+                        testResultsEnabled=True,
                     ),
                 ),
             ),
