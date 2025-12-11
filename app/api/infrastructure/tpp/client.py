@@ -10,18 +10,18 @@ from ...domain.exception import (
     InvalidValueError,
     NotFoundError,
 )
-from ...domain.forward_response_model import (
-    Demographics,
-    ForwardResponse,
-    Patient,
-    Permissions,
-    ViewPermissions,
-)
+from ...domain.forward_response_model import Demographics, ForwardResponse
 from .models import (
     Application,
     Identifier,
     SessionRequestData,
     SessionRequestHeaders,
+    SessionResponse,
+    Patient,
+    ServiceAccess,
+    ServiceAccessDescription,
+    ServiceAccessStatus,
+    ServiceAccessStatusDescription,
 )
 
 BASE_DIR = Path(__file__).parent
@@ -101,7 +101,7 @@ class TPPClient(BaseClient):
         response = response.get("CreateSessionReply", {})
         proxy_link = response.get("User", {})
         proxy_person = proxy_link.get("Person", {})
-        return ForwardResponse(
+        return SessionResponse(
             sessionId=response.get("@suid"),
             supplier=self.supplier,
             proxy=Demographics(
@@ -156,71 +156,15 @@ class TPPClient(BaseClient):
             )
         return parsed_patients
 
-    def _parse_permissions(self, raw_permissions: dict) -> Permissions:
-        permissions_map = {
-            # Key = desired field name
-            # Value = (Desired Class for field, origin of value)
-            "accessSystemConnect": (Permissions, "Access SystmConnect"),
-            "bookAppointments": (Permissions, "Appointments"),
-            "changePharmacy": (Permissions, "Change Pharmacy"),
-            "messagePractice": (Permissions, "Messaging"),
-            "provideInformationToPractice": (
-                Permissions,
-                "Questionnaires",
-            ),
-            "requestMedication": (Permissions, "Request Medication"),
-            "updateDemographics": (Permissions, None),  # EMIS only
-            "manageOnlineTriage": (Permissions, "Access SystmConnect"),
-            "medicalRecord": (ViewPermissions, "Detailed Coded Record"),
-            "summaryMedicalRecord": (ViewPermissions, "Summary Record"),
-            "allergiesMedicalRecord": (
-                ViewPermissions,
-                "Summary Record",
-            ),
-            "consultationsMedicalRecord": (
-                ViewPermissions,
-                "Detailed Coded Record",
-            ),
-            "immunisationsMedicalRecord": (
-                ViewPermissions,
-                "Detailed Coded Record",
-            ),
-            "documentsMedicalRecord": (
-                ViewPermissions,
-                "Detailed Coded Record",
-            ),
-            "medicationMedicalRecord": (
-                ViewPermissions,
-                "Summary Record",
-            ),
-            "problemsMedicalRecord": (
-                ViewPermissions,
-                "Detailed Coded Record",
-            ),
-            "testResultsMedicalRecord": (
-                ViewPermissions,
-                "Detailed Coded Record",
-            ),
-            "recordAudit": (ViewPermissions, "Record Audit"),
-            "recordSharing": (ViewPermissions, "Manage Sharing Rules And Requests"),
-        }
-
-        permission_kwargs = {}
-        view_kwargs = {}
-
-        for field_name, (target_model, origin) in permissions_map.items():
-            # find the matching service by description
-            service = next(
-                (s for s in raw_permissions if s["@description"] == origin), None
+    def _parse_permissions(self, raw_permissions: dict) -> list[ServiceAccess]:
+        return [
+            ServiceAccess(
+                description=ServiceAccessDescription(service["@description"]),
+                serviceIdentifier=int(service["@serviceIdentifier"]),
+                status=ServiceAccessStatus(service["@status"]),
+                statusDescription=ServiceAccessStatusDescription(
+                    service["@statusDesc"]
+                ),
             )
-            # bucket into correct model
-            value = service["@status"] == "A" if service else False
-            if target_model is Permissions:
-                permission_kwargs[field_name] = value
-            elif target_model is ViewPermissions:
-                view_kwargs[field_name] = value
-
-        return Permissions(
-            **permission_kwargs,
-            view=ViewPermissions(**view_kwargs),
-        )
+            for service in raw_permissions
+        ]

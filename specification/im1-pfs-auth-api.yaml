@@ -216,7 +216,6 @@ components:
         - $ref: "#/components/schemas/EMISResponseModel"
         - $ref: "#/components/schemas/TPPResponseModel"
 
-    
     EMISResponseModel:
       required:
         - sessionId
@@ -336,7 +335,14 @@ components:
       type: object
       properties:
         recordAccessScheme:
-          type: boolean
+          type: string
+          enum:
+            [
+              "Legacy",
+              "None",
+              "CoreSummaryCareRecord",
+              "DetailedCodedCareRecord",
+            ]
         allergiesEnabled:
           type: boolean
         consultationsEnabled:
@@ -360,49 +366,10 @@ components:
           type: object
           properties:
             permissions:
-              $ref: "#/components/schemas/TPPPermissionsModel"
+              type: array
+              items:
+                $ref: "#/components/schemas/TPPServiceAccess"
 
-    TPPPermissionsModel:
-      required:
-        - fullClinicalRecord
-          appointments
-          requestMedication
-          questionnaires
-          summaryRecord
-          detailedCodedRecord
-          messaging
-          viewSharingStatus
-          recordAudit
-          changePharmacy
-          manageSharingRulesAndRequests
-          accessSystmConnect
-      type: object
-      properties:
-        fullClinicalRecord:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        appointments:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        requestMedication:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        questionnaires:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        summaryRecord:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        detailedCodedRecord:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        messaging:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        viewSharingStatus:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        recordAudit:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        changePharmacy:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        manageSharingRulesAndRequests:
-          $ref: "#/components/schemas/TPPServiceAccess"
-        accessSystmConnect:
-          $ref: "#/components/schemas/TPPServiceAccess"
-    
     TPPServiceAccess:
       required:
         - description
@@ -413,54 +380,36 @@ components:
       properties:
         description:
           type: string
-          enum: [
-            "Full Clinical Record",
-            "Appointments",
-            "Request Medication",
-            "Questionnaires",
-            "Summary Record",
-            "Detailed Coded Record",
-            "Messaging",
-            "View Sharing Status",
-            "Record Audit",
-            "Change Pharmacy",
-            "Manage Sharing Rules And Requests",
-            "Access SystmConnect"
-          ]
+          enum:
+            [
+              "Full Clinical Record",
+              "Appointments",
+              "Request Medication",
+              "Questionnaires",
+              "Summary Record",
+              "Detailed Coded Record",
+              "Messaging",
+              "View Sharing Status",
+              "Record Audit",
+              "Change Pharmacy",
+              "Manage Sharing Rules And Requests",
+              "Access SystmConnect",
+            ]
         serviceIdentifier:
           type: integer
-          enum: [
-            1,
-            2,
-            4,
-            8,
-            64,
-            128,
-            512,
-            1024,
-            2048,
-            4096,
-            8192,
-            65536
-          ]
         status:
           type: string
-          enum: [
-            "A",
-            "U",
-            "N",
-            "G",
-            "O"
-          ]
+          enum: ["A", "U", "N", "G", "O"]
         statusDescription:
           type: string
-          enum: [
-            "Available",
-            "Unavailable",
-            "Not offered by unit",
-            "Only available to GMS registered patients",
-            "Other"
-          ]
+          enum:
+            [
+              "Available",
+              "Unavailable",
+              "Not offered by unit",
+              "Only available to GMS registered patients",
+              "Other",
+            ]
 
     ErrorResponseModel:
       required:
