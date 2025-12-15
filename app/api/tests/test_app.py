@@ -32,17 +32,37 @@ def test_authenticate_post(
 ) -> None:
     """Test the POST /authenticate endpoint."""
     # Arrange
+    application_id = "some application id"
+    forward_url = "some url"
+    ods_code = "some ods code"
+    use_mock = True
     mocked_forward_request_response = {"body": "Hello World!"}
     mock_instance = MagicMock()
-    mock_instance.model_dump.return_value = mocked_forward_request_response
+    mock_instance.model_dump_json.return_value = mocked_forward_request_response
     mock_route_and_forward.return_value = mock_instance
     # Act
-    actual_result = client.post("/authenticate")
+    actual_result = client.post(
+        "/authenticate",
+        headers={
+            "X-Application-ID": application_id,
+            "X-Forward-To": forward_url,
+            "X-ODS-Code": ods_code,
+            "X-Use-Mock": use_mock,
+            "X-ID-Token": "some token",
+        },
+    )
 
     # Assert
     assert actual_result.status_code == 201
     assert actual_result.get_json() == mocked_forward_request_response
-    mock_forward_request.assert_called_once()
+    mock_forward_request.assert_called_once_with(
+        application_id=application_id,
+        forward_to=forward_url,
+        patient_nhs_number="patient",
+        patient_ods_code=ods_code,
+        proxy_nhs_number="proxy",
+        use_mock=use_mock,
+    )
     mock_route_and_forward.assert_called_once_with(mock_forward_request.return_value)
 
 

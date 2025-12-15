@@ -1,4 +1,3 @@
-import os
 from json import load
 from pathlib import Path
 
@@ -11,14 +10,16 @@ from ...domain.exception import (
     InvalidValueError,
     NotFoundError,
 )
-from ...domain.forward_response_model import (
-    Demographics,
-    ForwardResponse,
+from ...domain.forward_response_model import Demographics
+from .models import (
+    Identifier,
+    MedicalRecordPermissions,
     Patient,
     Permissions,
-    ViewPermissions,
+    SessionRequestData,
+    SessionRequestHeaders,
+    SessionResponse,
 )
-from .models import Identifier, SessionRequestData, SessionRequestHeaders
 
 BASE_DIR = Path(__file__).parent
 
@@ -65,7 +66,7 @@ class EmisClient(BaseClient):
         Returns:
             dict: Response body from forwarded request
         """
-        if os.environ.get("USE_MOCK") == "True":
+        if self.request.use_mock:
             return self._mock_response()
         response = requests.post(
             url=self.request.forward_to,
@@ -86,17 +87,18 @@ class EmisClient(BaseClient):
             case _:
                 raise DownstreamError
 
-    def transform_response(self, response: dict) -> ForwardResponse:
+    def transform_response(self, response: dict) -> SessionResponse:
         """Function transform Emis client response.
 
         Args:
             response (dict): Response body from forwarded request
 
         Returns:
-            ForwardResponse: Homogenised response with other clients
+            SessionResponse: Homogenised response with other clients
         """
-        return ForwardResponse(
+        return SessionResponse(
             sessionId=response.get("SessionId"),
+            endUserSessionId=response.get("EndUserSessionId"),
             supplier=self.supplier,
             proxy=Demographics(
                 firstName=response.get("FirstName"),
@@ -140,75 +142,42 @@ class EmisClient(BaseClient):
         return parsed_patients
 
     def _parse_permissions(self, raw_permissions: dict) -> Permissions:
-        permissions_map = {
-            # Key = desired field name
-            # Value = (Desired Class for field, origin of value from raw data)
-            "accessSystemConnect": (Permissions, None),  # only for TPP"
-            "bookAppointments": (Permissions, "AppointmentsEnabled"),
-            "changePharmacy": (Permissions, "PrescribingEnabled"),
-            "messagePractice": (Permissions, "PracticePatientCommunicationEnabled"),
-            "provideInformationToPractice": (
-                Permissions,
-                "PracticePatientCommunicationEnabled",
-            ),
-            "requestMedication": (Permissions, "PrescribingEnabled"),
-            "updateDemographics": (Permissions, "DemographicsUpdateEnabled"),
-            "manageOnlineTriage": (Permissions, "OnlineTriageEnabled"),
-            "medicalRecord": (ViewPermissions, "MedicalRecordEnabled"),
-            "summaryMedicalRecord": (ViewPermissions, "MedicalRecordEnabled"),
-            "allergiesMedicalRecord": (
-                ViewPermissions,
-                {"MedicalRecord": "AllergiesEnabled"},
-            ),
-            "consultationsMedicalRecord": (
-                ViewPermissions,
-                {"MedicalRecord": "ConsultationsEnabled"},
-            ),
-            "immunisationsMedicalRecord": (
-                ViewPermissions,
-                {"MedicalRecord": "ImmunisationsEnabled"},
-            ),
-            "documentsMedicalRecord": (
-                ViewPermissions,
-                {"MedicalRecord": "DocumentsEnabled"},
-            ),
-            "medicationMedicalRecord": (
-                ViewPermissions,
-                {"MedicalRecord": "MedicationEnabled"},
-            ),
-            "problemsMedicalRecord": (
-                ViewPermissions,
-                {"MedicalRecord": "ProblemsEnabled"},
-            ),
-            "testResultsMedicalRecord": (
-                ViewPermissions,
-                {"MedicalRecord": "TestResultsEnabled"},
-            ),
-            "recordAudit": (ViewPermissions, "RecordViewAuditEnabled"),
-            "recordSharing": (ViewPermissions, "RecordSharingEnabled"),
-        }
-
-        permission_kwargs = {}
-        view_kwargs = {}
-
-        for field_name, (target_model, origin) in permissions_map.items():
-            # resolve value
-            if isinstance(origin, str):
-                value = raw_permissions.get(origin)
-            elif isinstance(origin, dict):
-                # nested lookup: {"MedicalRecord": "AllergiesEnabled"}
-                parent, child = next(iter(origin.items()))
-                value = raw_permissions.get(parent, {}).get(child)
-            else:
-                value = False
-
-            # bucket into correct model
-            if target_model is Permissions:
-                permission_kwargs[field_name] = value
-            elif target_model is ViewPermissions:
-                view_kwargs[field_name] = value
-
         return Permissions(
-            **permission_kwargs,
-            view=ViewPermissions(**view_kwargs),
+            appointmentsEnabled=raw_permissions.get("AppointmentsEnabled"),
+            demographicsUpdateEnabled=raw_permissions.get("DemographicsUpdateEnabled"),
+            epsEnabled=raw_permissions.get("EpsEnabled"),
+            medicalRecordEnabled=raw_permissions.get("MedicalRecordEnabled"),
+            onlineTriageEnabled=raw_permissions.get("OnlineTriageEnabled"),
+            practicePatientCommunicationEnabled=raw_permissions.get(
+                "PracticePatientCommunicationEnabled"
+            ),
+            prescribingEnabled=raw_permissions.get("PrescribingEnabled"),
+            recordSharingEnabled=raw_permissions.get("RecordSharingEnabled"),
+            recordViewAuditEnabled=raw_permissions.get("RecordViewAuditEnabled"),
+            medicalRecord=MedicalRecordPermissions(
+                recordAccessScheme=raw_permissions.get("MedicalRecord", {}).get(
+                    "RecordAccessScheme"
+                ),
+                allergiesEnabled=raw_permissions.get("MedicalRecord", {}).get(
+                    "AllergiesEnabled"
+                ),
+                consultationsEnabled=raw_permissions.get("MedicalRecord", {}).get(
+                    "ConsultationsEnabled"
+                ),
+                immunisationsEnabled=raw_permissions.get("MedicalRecord", {}).get(
+                    "ImmunisationsEnabled"
+                ),
+                documentsEnabled=raw_permissions.get("MedicalRecord", {}).get(
+                    "DocumentsEnabled"
+                ),
+                medicationEnabled=raw_permissions.get("MedicalRecord", {}).get(
+                    "MedicationEnabled"
+                ),
+                problemsEnabled=raw_permissions.get("MedicalRecord", {}).get(
+                    "ProblemsEnabled"
+                ),
+                testResultsEnabled=raw_permissions.get("MedicalRecord", {}).get(
+                    "TestResultsEnabled"
+                ),
+            ),
         )

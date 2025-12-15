@@ -14,14 +14,16 @@ from app.api.domain.exception import (
     NotFoundError,
 )
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import (
-    Demographics,
-    ForwardResponse,
-    Patient,
-    Permissions,
-    ViewPermissions,
-)
+from app.api.domain.forward_response_model import Demographics
 from app.api.infrastructure.tpp.client import TPPClient
+from app.api.infrastructure.tpp.models import (
+    Patient,
+    ServiceAccess,
+    ServiceAccessDescription,
+    ServiceAccessStatus,
+    ServiceAccessStatusDescription,
+    SessionResponse,
+)
 
 with Path("app/api/infrastructure/tpp/data/mocked_response.xml", encoding="utf-8").open(
     "r"
@@ -37,6 +39,7 @@ def setup_client() -> TPPClient:
         patient_nhs_number="1234567890",
         patient_ods_code="some patient ods code",
         proxy_nhs_number="0987654321",
+        use_mock=False,
     )
     return TPPClient(request)
 
@@ -79,6 +82,8 @@ def test_tpp_client_get_data(_: MagicMock, client: TPPClient) -> None:
 @patch.dict(environ, {"USE_MOCK": "True"})
 def test_tpp_forward_request_use_mock_on(client: TPPClient) -> None:
     """Test the TPPClient forward_request function when mock is turned on."""
+    # Assert
+    client.request.use_mock = True
     # Act
     actual_result = client.forward_request()
 
@@ -135,14 +140,13 @@ def test_tpp_forward_request_use_mock_off_exception(
         client.forward_request()
 
 
-@pytest.mark.wip
 def test_tpp_client_transform_response(client: TPPClient) -> None:
     """Test the TPPClient transform_response function."""
     # Act
     actual_result = client.transform_response(xmltodict.parse(MOCKED_RESPONSE))
 
     # Assert
-    assert actual_result == ForwardResponse(
+    assert actual_result == SessionResponse(
         sessionId="xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",
         supplier="TPP",
         proxy=Demographics(firstName="Sam", surname="Jones", title="Mr"),
@@ -151,30 +155,91 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
                 firstName="Clare",
                 surname="Jones",
                 title="Mrs",
-                permissions=Permissions(
-                    accessSystemConnect=False,
-                    bookAppointments=True,
-                    changePharmacy=False,
-                    messagePractice=True,
-                    provideInformationToPractice=False,
-                    requestMedication=True,
-                    updateDemographics=False,
-                    manageOnlineTriage=False,
-                    view=ViewPermissions(
-                        medicalRecord=False,
-                        summaryMedicalRecord=True,
-                        allergiesMedicalRecord=True,
-                        consultationsMedicalRecord=False,
-                        immunisationsMedicalRecord=False,
-                        documentsMedicalRecord=False,
-                        medicationMedicalRecord=True,
-                        problemsMedicalRecord=False,
-                        testResultsMedicalRecord=False,
-                        recordAudit=True,
-                        recordSharing=False,
+                permissions=[
+                    ServiceAccess(
+                        description=ServiceAccessDescription("Full Clinical Record"),
+                        serviceIdentifier=1,
+                        status=ServiceAccessStatus("U"),
+                        statusDescription=ServiceAccessStatusDescription("Unavailable"),
                     ),
-                ),
-            ),
+                    ServiceAccess(
+                        serviceIdentifier=2,
+                        description=ServiceAccessDescription("Appointments"),
+                        status=ServiceAccessStatus("A"),
+                        statusDescription=ServiceAccessStatusDescription("Available"),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=4,
+                        description=ServiceAccessDescription("Request Medication"),
+                        status=ServiceAccessStatus("A"),
+                        statusDescription=ServiceAccessStatusDescription("Available"),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=8,
+                        description=ServiceAccessDescription("Questionnaires"),
+                        status=ServiceAccessStatus("N"),
+                        statusDescription=ServiceAccessStatusDescription(
+                            "Not offered by unit"
+                        ),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=64,
+                        description=ServiceAccessDescription("Summary Record"),
+                        status=ServiceAccessStatus("A"),
+                        statusDescription=ServiceAccessStatusDescription("Available"),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=128,
+                        description=ServiceAccessDescription("Detailed Coded Record"),
+                        status=ServiceAccessStatus("U"),
+                        statusDescription=ServiceAccessStatusDescription("Unavailable"),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=512,
+                        description=ServiceAccessDescription("Messaging"),
+                        status=ServiceAccessStatus("A"),
+                        statusDescription=ServiceAccessStatusDescription("Available"),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=1024,
+                        description=ServiceAccessDescription("View Sharing Status"),
+                        status=ServiceAccessStatus("N"),
+                        statusDescription=ServiceAccessStatusDescription(
+                            "Not offered by unit"
+                        ),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=2048,
+                        description=ServiceAccessDescription("Record Audit"),
+                        status=ServiceAccessStatus("A"),
+                        statusDescription=ServiceAccessStatusDescription("Available"),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=4096,
+                        description=ServiceAccessDescription("Change Pharmacy"),
+                        status=ServiceAccessStatus("N"),
+                        statusDescription=ServiceAccessStatusDescription(
+                            "Not offered by unit"
+                        ),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=8192,
+                        description=ServiceAccessDescription(
+                            "Manage Sharing Rules And Requests"
+                        ),
+                        status=ServiceAccessStatus("G"),
+                        statusDescription=ServiceAccessStatusDescription(
+                            "Only available to GMS registered patients"
+                        ),
+                    ),
+                    ServiceAccess(
+                        serviceIdentifier=65536,
+                        description=ServiceAccessDescription("Access SystmConnect"),
+                        status=ServiceAccessStatus("O"),
+                        statusDescription=ServiceAccessStatusDescription("Other"),
+                    ),
+                ],
+            )
         ],
     )
 
