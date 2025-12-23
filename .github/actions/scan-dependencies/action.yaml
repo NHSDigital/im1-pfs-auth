@@ -28,7 +28,7 @@ runs:
     - name: "Scan vulnerabilities"
       shell: bash
       env:
-        GRYPE_VERSION: v0.80.0
+        ANCHORE_GRYPE_VERSION: v0.80.0
       run: |
         export BUILD_DATETIME=${{ inputs.build_datetime }}
         ./scripts/reports/scan-vulnerabilities.sh
