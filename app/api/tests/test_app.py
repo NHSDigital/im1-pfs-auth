@@ -44,11 +44,11 @@ def test_authenticate_post(
     actual_result = client.post(
         "/authenticate",
         headers={
-            "X-Application-ID": application_id,
-            "X-Forward-To": forward_url,
-            "X-ODS-Code": ods_code,
-            "X-Use-Mock": use_mock,
-            "X-ID-Token": "some token",
+            "NHSE-Application-ID": application_id,
+            "NHSE-Forward-To": forward_url,
+            "NHSE-ODS-Code": ods_code,
+            "NHSE-Use-Mock": use_mock,
+            "NHSE-ID-Token": "some token",
         },
     )
 

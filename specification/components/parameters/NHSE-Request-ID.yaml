@@ -1,4 +1,4 @@
-name: X-Request-ID
+name: NHSE-Request-ID
 in: header
 description: >-
   An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.

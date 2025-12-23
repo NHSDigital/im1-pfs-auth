@@ -1,4 +1,4 @@
-name: X-Use-Mock
+name: NHSE-Use-Mock
 in: header
 description: >-
   A flag to determine whether of not to use the mocked response. Or call the GPIT suppliers.

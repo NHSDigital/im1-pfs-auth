@@ -24,7 +24,7 @@ def test_health_success(path: str, client: FlaskClient) -> None:
 
 def test_post_authenticate__success(client: FlaskClient) -> None:
     # Arrange
-    headers = {"X-Forward-To": "https://example.com", "X-ODS-Code": "A29929"}
+    headers = {"NHSE-Forward-To": "https://example.com", "NHSE-ODS-Code": "A29929"}
 
     # Act
     actual_result = client.post("/authenticate", headers=headers)
@@ -42,11 +42,11 @@ def test_post_authenticate__success(client: FlaskClient) -> None:
 @pytest.mark.parametrize(
     "headers",
     [
-        {"X-Forward-To": "https://example.com"},
-        {"X-ODS-Code": "A29929"},
-        {"X-Forward-To": "https://bad_example.com", "X-ODS-Code": "A29929"},
-        {"X-Forward-To": "https://example.com", "X-ODS-Code": "bad ods code"},
-        {"X-Forward-To": 123, "X-ODS-Code": 123},
+        {"NHSE-Forward-To": "https://example.com"},
+        {"NHSE-ODS-Code": "A29929"},
+        {"NHSE-Forward-To": "https://bad_example.com", "NHSE-ODS-Code": "A29929"},
+        {"NHSE-Forward-To": "https://example.com", "NHSE-ODS-Code": "bad ods code"},
+        {"NHSE-Forward-To": 123, "NHSE-ODS-Code": 123},
         {},
     ],
 )

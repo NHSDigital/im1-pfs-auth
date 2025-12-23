@@ -25,6 +25,11 @@ runs:
         name: sbom-repository-report.json.zip
         path: ./sbom-repository-report.json.zip
         retention-days: 21
+    - name: "Install pinned Grype version"
+      shell: bash
+      run: |
+        curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
+          | sudo sh -s -- -b /usr/bin v0.80.0
     - name: "Scan vulnerabilities"
       shell: bash
       run: |

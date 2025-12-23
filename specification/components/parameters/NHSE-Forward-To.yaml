@@ -1,4 +1,4 @@
-name: X-Forward-To
+name: NHSE-Forward-To
 in: header
 description: The base URL to forward requests to.
 required: true

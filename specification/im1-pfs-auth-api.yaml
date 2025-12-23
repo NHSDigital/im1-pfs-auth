@@ -57,7 +57,7 @@ info:
     - `P9.Cm`
 
     ## Headers
-    This API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. X-Request-Id, x-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.
+    This API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. NHSE-Request-Id, nhse-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.
 
     ## Errors
     We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
@@ -142,12 +142,12 @@ paths:
         Or perhaps you'd like to try out the sandbox using our 'Try it out' feature.
       parameters:
         - $ref: "./components/parameters/Authorization.yaml"
-        - $ref: "./components/parameters/X-Application-ID.yaml"
-        - $ref: "./components/parameters/X-Request-ID.yaml"
-        - $ref: "./components/parameters/X-Forward-To.yaml"
-        - $ref: "./components/parameters/X-ODS-Code.yaml"
-        - $ref: "./components/parameters/X-Correlation-ID.yaml"
-        - $ref: "./components/parameters/X-Use-Mock.yaml"
+        - $ref: "./components/parameters/NHSE-Application-ID.yaml"
+        - $ref: "./components/parameters/NHSE-Request-ID.yaml"
+        - $ref: "./components/parameters/NHSE-Forward-To.yaml"
+        - $ref: "./components/parameters/NHSE-ODS-Code.yaml"
+        - $ref: "./components/parameters/NHSE-Correlation-ID.yaml"
+        - $ref: "./components/parameters/NHSE-Use-Mock.yaml"
       responses:
         "201":
           description: The session was created successfully

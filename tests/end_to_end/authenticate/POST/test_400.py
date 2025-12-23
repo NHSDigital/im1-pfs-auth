@@ -20,7 +20,7 @@ def test_missing_forward_to_header(
 
     Test Scenario:
         Given: API is ready
-        When: an invalid request is made with no X-Forward-To header
+        When: an invalid request is made with no NHSE-Forward-To header
         Then: the response status code is 400
         And: the response body contains the expected message
 
@@ -30,11 +30,11 @@ def test_missing_forward_to_header(
     proxy_identifier = "9912003071"
     headers = {
         "Authorization": get_authentication_token(proxy_identifier, request),
-        "X-Application-ID": request.node.name,
-        "X-Request-ID": uuid,
-        "X-Forward-To": forward_to_url,
-        "X-ODS-Code": "ODS123",
-        "X-Correlation-ID": uuid,
+        "NHSE-Application-ID": request.node.name,
+        "NHSE-Request-ID": uuid,
+        "NHSE-Forward-To": forward_to_url,
+        "NHSE-ODS-Code": "ODS123",
+        "NHSE-Correlation-ID": uuid,
     }
     # Act
     response = post(api_url, headers=headers, timeout=5)
@@ -54,7 +54,7 @@ def test_invalid_forward_to_header(
 
     Test Scenario:
         Given: API is ready
-        When: an invalid request is made with an invalid X-Forward-To header
+        When: an invalid request is made with an invalid NHSE-Forward-To header
         Then: the response status code is 400
         And: the response body contains the expected message
 
@@ -64,11 +64,11 @@ def test_invalid_forward_to_header(
     proxy_identifier = "9912003071"
     headers = {
         "Authorization": get_authentication_token(proxy_identifier, request),
-        "X-Application-ID": request.node.name,
-        "X-Request-ID": uuid,
-        "X-Forward-To": forward_to_url,
-        "X-ODS-Code": "ODS123",
-        "X-Correlation-ID": uuid,
+        "NHSE-Application-ID": request.node.name,
+        "NHSE-Request-ID": uuid,
+        "NHSE-Forward-To": forward_to_url,
+        "NHSE-ODS-Code": "ODS123",
+        "NHSE-Correlation-ID": uuid,
     }
     # Act
     response = post(api_url, headers=headers, timeout=5)
@@ -88,7 +88,7 @@ def test_missing_ods_header(
 
     Test Scenario:
         Given: API is ready
-        When: an invalid request is made with no X-ODS-Code header
+        When: an invalid request is made with no NHSE-ODS-Code header
         Then: the response status code is 400
         And: the response body contains the expected message
 
@@ -98,11 +98,11 @@ def test_missing_ods_header(
     proxy_identifier = "9912003071"
     headers = {
         "Authorization": get_authentication_token(proxy_identifier, request),
-        "X-Application-ID": request.node.name,
-        "X-Request-ID": uuid,
-        "X-Forward-To": "http://emis.com",
-        "X-ODS-Code": ods_code,
-        "X-Correlation-ID": uuid,
+        "NHSE-Application-ID": request.node.name,
+        "NHSE-Request-ID": uuid,
+        "NHSE-Forward-To": "http://emis.com",
+        "NHSE-ODS-Code": ods_code,
+        "NHSE-Correlation-ID": uuid,
     }
     # Act
     response = post(api_url, headers=headers, timeout=5)
