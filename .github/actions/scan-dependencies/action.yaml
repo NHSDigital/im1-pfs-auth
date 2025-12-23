@@ -25,6 +25,9 @@ runs:
         name: sbom-repository-report.json.zip
         path: ./sbom-repository-report.json.zip
         retention-days: 21
+    - name: Clear Grype DB cache
+      shell: bash
+      run: rm -rf ~/.cache/grype
     - name: "Scan vulnerabilities"
       shell: bash
       run: |
