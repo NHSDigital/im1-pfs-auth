@@ -19,15 +19,15 @@ def authenticate() -> Response:
     """
     try:
         (patient_nhs_number, proxy_nhs_number) = get_nhs_number_from_jwt_token(
-            request.headers.get("X-ID-Token")
+            request.headers.get("NHSE-ID-Token")
         )
         forward_request = ForwardRequest(
-            application_id=request.headers.get("X-Application-ID"),
-            forward_to=request.headers.get("X-Forward-To"),
+            application_id=request.headers.get("NHSE-Application-ID"),
+            forward_to=request.headers.get("NHSE-Forward-To"),
             patient_nhs_number=patient_nhs_number,
-            patient_ods_code=request.headers.get("X-ODS-Code"),
+            patient_ods_code=request.headers.get("NHSE-ODS-Code"),
             proxy_nhs_number=proxy_nhs_number,
-            use_mock=request.headers.get("X-Use-Mock") == "True",
+            use_mock=request.headers.get("NHSE-Use-Mock") == "True",
         )
         response = route_and_forward(forward_request)
         return make_response(

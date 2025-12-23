@@ -1,4 +1,4 @@
-name: X-ODS-Code
+name: NHSE-ODS-Code
 in: header
 description: The ODS code of the user to start a session with.
 required: true

@@ -217,12 +217,12 @@ def test_happy_path(
     proxy_identifier = "9912003071"  # P9 User with composite token
     headers = {
         "Authorization": get_authentication_token(proxy_identifier, request),
-        "X-Application-ID": request.node.name,
-        "X-Request-ID": uuid,
-        "X-Forward-To": forward_to_url,
-        "X-ODS-Code": "ODS123",
-        "X-Correlation-ID": uuid,
-        "X-Use-Mock": "True",
+        "NHSE-Application-ID": request.node.name,
+        "NHSE-Request-ID": uuid,
+        "NHSE-Forward-To": forward_to_url,
+        "NHSE-ODS-Code": "ODS123",
+        "NHSE-Correlation-ID": uuid,
+        "NHSE-Use-Mock": "True",
     }
     # Act
     response = post(api_url, headers=headers, timeout=5)

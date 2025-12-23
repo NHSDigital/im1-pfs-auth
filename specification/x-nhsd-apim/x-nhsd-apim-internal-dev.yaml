@@ -25,4 +25,4 @@ target:
         LOG_LEVEL: info
 target-identity:
   - name: id-token
-    header: "X-ID-Token"
+    header: "NHSE-ID-Token"

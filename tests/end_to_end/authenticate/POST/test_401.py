@@ -26,11 +26,11 @@ def test_p5_user(request: pytest.FixtureRequest, api_url: str) -> None:
     proxy_identifier = "9912003072"  # P5 User with composite token
     headers = {
         "Authorization": get_authentication_token(proxy_identifier, request),
-        "X-Application-ID": request.node.name,
-        "X-Request-ID": uuid,
-        "X-Forward-To": "https://emis.com",
-        "X-ODS-Code": "ODS123",
-        "X-Correlation-ID": uuid,
+        "NHSE-Application-ID": request.node.name,
+        "NHSE-Request-ID": uuid,
+        "NHSE-Forward-To": "https://emis.com",
+        "NHSE-ODS-Code": "ODS123",
+        "NHSE-Correlation-ID": uuid,
     }
     # Act
     response = post(api_url, headers=headers, timeout=5)
@@ -54,11 +54,11 @@ def test_missing_authorization_header(
     uuid = str(uuid4())
     headers = {
         "Authorization": None,
-        "X-Application-ID": request.node.name,
-        "X-Request-ID": uuid,
-        "X-Forward-To": "https://emis.com",
-        "X-ODS-Code": "ODS123",
-        "X-Correlation-ID": uuid,
+        "NHSE-Application-ID": request.node.name,
+        "NHSE-Request-ID": uuid,
+        "NHSE-Forward-To": "https://emis.com",
+        "NHSE-ODS-Code": "ODS123",
+        "NHSE-Correlation-ID": uuid,
     }
     # Act
     response = post(api_url, headers=headers, timeout=5)
@@ -82,11 +82,11 @@ def test_invalid_authorization_header(
     uuid = str(uuid4())
     headers = {
         "Authorization": "something random",
-        "X-Application-ID": request.node.name,
-        "X-Request-ID": uuid,
-        "X-Forward-To": "https://emis.com",
-        "X-ODS-Code": "ODS123",
-        "X-Correlation-ID": uuid,
+        "NHSE-Application-ID": request.node.name,
+        "NHSE-Request-ID": uuid,
+        "NHSE-Forward-To": "https://emis.com",
+        "NHSE-ODS-Code": "ODS123",
+        "NHSE-Correlation-ID": uuid,
     }
     # Act
     response = post(api_url, headers=headers, timeout=5)

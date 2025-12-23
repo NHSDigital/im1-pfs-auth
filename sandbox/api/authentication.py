@@ -8,8 +8,8 @@ def post_authenticate() -> Response:
         Response: Response for POST /authenticate
     """
     # Get request body
-    forward_to = request.headers.get("X-Forward-To")
-    ods_code = request.headers.get("X-ODS-Code")
+    forward_to = request.headers.get("NHSE-Forward-To")
+    ods_code = request.headers.get("NHSE-ODS-Code")
     if forward_to == "https://example.com" and ods_code == "A29929":
         # Successful Request
         data = {
