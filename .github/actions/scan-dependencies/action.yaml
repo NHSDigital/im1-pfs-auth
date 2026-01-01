@@ -20,7 +20,7 @@ runs:
       run: zip sbom-repository-report.json.zip sbom-repository-report.json
     - name: "Upload SBOM report as an artefact"
       if: ${{ !env.ACT }}
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
       with:
         name: sbom-repository-report.json.zip
         path: ./sbom-repository-report.json.zip
@@ -40,7 +40,7 @@ runs:
       run: zip vulnerabilities-repository-report.json.zip vulnerabilities-repository-report.json
     - name: "Upload vulnerabilities report as an artefact"
       if: ${{ !env.ACT }}
-      uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
       with:
         name: vulnerabilities-repository-report.json.zip
         path: ./vulnerabilities-repository-report.json.zip
