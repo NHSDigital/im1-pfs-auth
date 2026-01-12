@@ -4,11 +4,69 @@ from logging import getLogger
 from uuid import uuid4
 
 import pytest
-from requests import post
+from requests import Response, post
 
 from tests.end_to_end.utils.apigee_authentication import get_authentication_token
 
 logger = getLogger(__name__)
+
+
+def assert_invalid_header_error_response(response: Response) -> None:
+    """Asserts Response indicates request is bad due to invalid header value.
+
+    Args:
+        response (Response): Response to assert against
+    """
+    assert response.status_code == 400
+    assert response.json() == {
+        "issue": [
+            {
+                "code": "exception",
+                "details": {
+                    "coding": [
+                        {
+                            "code": "INVALID_HEADER",
+                            "display": "A header is invalid",
+                            "system": "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                            "version": "1",
+                        }
+                    ]
+                },
+                "diagnostics": "Invalid header request",
+                "severity": "error",
+            }
+        ],
+        "resourceType": "OperationOutcome",
+    }
+
+
+def assert_missing_header_error_response(response: Response) -> None:
+    """Asserts Response indicates request is bad.
+
+    Args:
+        response (Response): Response to assert against
+    """
+    assert response.status_code == 400
+    assert response.json() == {
+        "issue": [
+            {
+                "code": "exception",
+                "details": {
+                    "coding": [
+                        {
+                            "code": "MISSING_HEADER",
+                            "display": "A required header is missing",
+                            "system": "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                            "version": "1",
+                        }
+                    ]
+                },
+                "diagnostics": "The request was unsuccessful due to missing required value",  # noqa: E501
+                "severity": "error",
+            }
+        ],
+        "resourceType": "OperationOutcome",
+    }
 
 
 @pytest.mark.unhappy
@@ -39,10 +97,7 @@ def test_missing_forward_to_header(
     # Act
     response = post(api_url, headers=headers, timeout=5)
     # Assert
-    assert response.status_code == 400
-    assert response.json() == {
-        "message": "The request was unsuccessful due to missing required value."
-    }
+    assert_missing_header_error_response(response)
 
 
 @pytest.mark.unhappy
@@ -73,10 +128,7 @@ def test_invalid_forward_to_header(
     # Act
     response = post(api_url, headers=headers, timeout=5)
     # Assert
-    assert response.status_code == 400
-    assert response.json() == {
-        "message": "The request was unsuccessful due to invalid value."
-    }
+    assert_invalid_header_error_response(response)
 
 
 @pytest.mark.unhappy
@@ -107,7 +159,4 @@ def test_missing_ods_header(
     # Act
     response = post(api_url, headers=headers, timeout=5)
     # Assert
-    assert response.status_code == 400
-    assert response.json() == {
-        "message": "The request was unsuccessful due to missing required value."
-    }
+    assert_missing_header_error_response(response)

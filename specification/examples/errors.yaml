@@ -2,44 +2,134 @@ AccessDeniedError:
   summary: Access Denied
   description: The request was unsuccessful due to invalid authentication credentials being provided.
   value:
-    message: "Missing or invalid OAuth 2.0 bearer token in request."
+    issue:
+      - code: forbidden
+        details:
+          coding:
+            - code: "ACCESS_DENIED"
+              display: "Missing or invalid OAuth 2.0 bearer token in request"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "Missing or invalid OAuth 2.0 bearer token in request"
+        severity: error
+    resourceType: "OperationOutcome"
 DownstreamServiceError:
   summary: Downstream Service Error
-  description: The request was unsuccessful due to error in downstream service.
+  description: An unexpected condition was encountered in a downstream service preventing the server from fulfilling the request.
   value:
-    message: "Downstream Service Error."
+    issue:
+      - code: processing
+        details:
+          coding:
+            - code: "DOWNSTREAM_SERVICE_ERROR"
+              display: "Failed to generate response"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "Downstream Service Error - Failed to generate response is present in the response"
+        severity: error
+    resourceType: "OperationOutcome"
 ForbiddenError:
   summary: Forbidden
   description: The request was unsuccessful due to authentication credentials is not valid for requested resource.
   value:
-    message: "User does not have access to online services."
+    issue:
+      - code: forbidden
+        details:
+          coding:
+            - code: "ACCESS_DENIED"
+              display: "User does not have access to online services"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "User does not have access to online services"
+        severity: error
+    resourceType: "OperationOutcome"
 InvalidValueError:
   summary: Invalid Value
   description: The request was unsuccessful due to invalid value.
   value:
-    message: "Invalid header request."
+    issue:
+      - code: exception
+        details:
+          coding:
+            - code: "INVALID_HEADER"
+              display: "A header is invalid"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "Invalid header request"
+        severity: error
+    resourceType: "OperationOutcome"
 MissingValueError:
   summary: Missing Value
   description: The request was unsuccessful due to missing required value.
   value:
-    message: "Missing required header request."
-notFoundError:
+    issue:
+      - code: exception
+        details:
+          coding:
+            - code: "MISSING_HEADER"
+              display: "A required header is missing"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "The request was unsuccessful due to missing required value"
+        severity: error
+    resourceType: "OperationOutcome"
+NotFoundError:
   summary: Resource not found
   description: The request was unsuccessful due to no online account for user found.
   value:
-    message: "User does not have an online account."
+    issue:
+      - code: exception
+        details:
+          coding:
+            - code: "RESOURCE_NOT_FOUND"
+              display: "Resource not found"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "User does not have an online account"
+        severity: error
+    resourceType: "OperationOutcome"
 ThrottledError:
   summary: Throttled
   description: The request was unsuccessful due to application's rate limit has been exceeded.
   value:
-    message: "You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits)."
+    issue:
+      - code: exception
+        details:
+          coding:
+            - code: "TOO_MANY_REQUESTS"
+              display: "Your connection has exceeded the rate limit"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "You have exceeded your application's [rate limit](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#rate-limits)"
+        severity: error
+    resourceType: "OperationOutcome"
 TimeoutError:
   summary: Timeout
   description: The request was unsuccessful due to timeout.
   value:
-    message: "Request timed out."
-ServerError:
-  summary: Server Error
-  description: The request was unsuccessful due to server error.
+    issue:
+      - code: exception
+        details:
+          coding:
+            - code: "TIMEOUT"
+              display: "Request has timed out"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "Timeout Error - Request has timed out"
+        severity: error
+    resourceType: "OperationOutcome"
+InternalServerError:
+  summary: Internal Server Error
+  description: An unexpected condition was encountered preventing the server from fulfilling the request.
   value:
-    message: "Server error."
+    issue:
+      - code: exception
+        details:
+          coding:
+            - code: "SERVER_ERROR"
+              display: "Failed to generate response"
+              system: "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode"
+              version: "1"
+        diagnostics: "Internal Server Error - Failed to generate response is present in the response"
+        severity: error
+    resourceType: "OperationOutcome"

@@ -1,10 +1,10 @@
 from http import HTTPStatus
 
-from flask import Flask, Response, jsonify, make_response, request
+from flask import Flask, Response, make_response, request
 
 from .application.forward_request import route_and_forward
 from .application.jwt import get_nhs_number_from_jwt_token
-from .domain.exception import ApiError
+from .domain.exception import ApiError, InternalServierError
 from .domain.forward_request_model import ForwardRequest
 
 app = Flask(__name__)
@@ -34,11 +34,7 @@ def authenticate() -> Response:
             response.model_dump_json(by_alias=True),
             HTTPStatus.CREATED,
         )
-    except ApiError as e:
-        return make_response(jsonify(message=e.message), e.status_code)
     except Exception as e:
         app.logger.exception("Error in POST /authenticate")
-        return make_response(
-            jsonify(error=f"Exception: {type(e).__name__}"),
-            HTTPStatus.INTERNAL_SERVER_ERROR,
-        )
+        error = e if isinstance(e, ApiError) else InternalServierError()
+        return make_response(error.body, error.status_code)

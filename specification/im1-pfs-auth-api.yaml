@@ -171,14 +171,14 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponseModel"
+                $ref: "#/components/schemas/OperationOutcome"
               examples:
                 missingValueError:
                   externalValue: "./examples/errors.yaml#/MissingValueError"
                 invalidValueError:
                   externalValue: "./examples/errors.yaml#/InvalidValueError"
                 notFoundError:
-                  externalValue: "./examples/errors.yaml#/notFoundError"
+                  externalValue: "./examples/errors.yaml#/NotFoundError"
                 accessDeniedError:
                   externalValue: "./examples/errors.yaml#/AccessDeniedErrorError"
                 forbiddenError:
@@ -198,10 +198,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ErrorResponseModel"
+                $ref: "#/components/schemas/OperationOutcome"
               examples:
                 serverError:
-                  externalValue: "./examples/errors.yaml#/ServerError"
+                  externalValue: "./examples/errors.yaml#/InternalServerError"
                 downstreamError:
                   externalValue: "./examples/errors.yaml#/DownstreamError"
 
@@ -411,13 +411,68 @@ components:
               "Other",
             ]
 
-    ErrorResponseModel:
-      required:
-        - message
+    OperationOutcome:
       type: object
+      description: |
+        Outcome of an operation as a result of an error.
+        There are a number of possible error codes that can be returned along with a more detailed description in the `display` field.
       properties:
-        message:
+        resourceType:
           type: string
+          description: FHIR Resource Type.
+          default: OperationOutcome
+        issue:
+          type: array
+          description: List of issues that have occurred.
+          minItems: 1
+          items:
+            type: object
+            required:
+              - severity
+              - code
+            properties:
+              severity:
+                type: string
+                enum: [fatal, error, warning, information]
+                description: Severity of the error.
+              code:
+                type: string
+                description: FHIR error code.
+                enum:
+                  - forbidden
+                  - processing
+                  - exception
+              details:
+                type: object
+                description: Internal error code.
+                properties:
+                  coding:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        system:
+                          type: string
+                          description: URI of the coding system specification.
+                          enum:
+                            [
+                              "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                            ]
+                        version:
+                          type: string
+                          description: Version of the coding system in use.
+                        code:
+                          type: string
+                          description: Symbol in syntax defined by the system.
+                        display:
+                          type: string
+                          description: Representation defined by the system.
+              diagnostics:
+                type: string
+                description: Additional diagnostic information about the issue. This information is subject to change.
+              expression:
+                type: string
+                description: FHIRPath of element(s) related to the error.
 
 x-nhsd-apim:
   $ref: "x-nhsd-apim/x-nhsd-apim.generated.yaml"
