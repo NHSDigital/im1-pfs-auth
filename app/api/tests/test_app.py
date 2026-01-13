@@ -67,23 +67,103 @@ def test_authenticate_post(
 
 
 @pytest.mark.parametrize(
-    ("exception", "expected_status_code", "expected_message"),
+    ("exception", "expected_status_code", "expected_body"),
     [
         (
             AccessDeniedError,
             HTTPStatus.UNAUTHORIZED,
-            "Missing or invalid OAuth 2.0 bearer token in request.",
+            {
+                "issue": [
+                    {
+                        "code": "forbidden",
+                        "details": {
+                            "coding": [
+                                {
+                                    "code": "ACCESS_DENIED",
+                                    "display": "Missing or invalid OAuth 2.0 bearer token in request",  # noqa: E501
+                                    "system": "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                                    "version": "1",
+                                }
+                            ]
+                        },
+                        "diagnostics": "Missing or invalid OAuth 2.0 bearer token in request",  # noqa: E501
+                        "severity": "error",
+                    }
+                ],
+                "resourceType": "OperationOutcome",
+            },
         ),
-        (DownstreamError, HTTPStatus.BAD_GATEWAY, "Downstream Service Error."),
+        (
+            DownstreamError,
+            HTTPStatus.BAD_GATEWAY,
+            {
+                "issue": [
+                    {
+                        "code": "processing",
+                        "details": {
+                            "coding": [
+                                {
+                                    "code": "DOWNSTREAM_SERVICE_ERROR",
+                                    "display": "Failed to generate response",
+                                    "system": "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                                    "version": "1",
+                                }
+                            ]
+                        },
+                        "diagnostics": "Downstream Service Error - Failed to generate response is present in the response",  # noqa: E501
+                        "severity": "error",
+                    }
+                ],
+                "resourceType": "OperationOutcome",
+            },
+        ),
         (
             InvalidValueError,
             HTTPStatus.BAD_REQUEST,
-            "The request was unsuccessful due to invalid value.",
+            {
+                "issue": [
+                    {
+                        "code": "exception",
+                        "details": {
+                            "coding": [
+                                {
+                                    "code": "INVALID_HEADER",
+                                    "display": "A header is invalid",
+                                    "system": "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                                    "version": "1",
+                                }
+                            ]
+                        },
+                        "diagnostics": "Invalid header request",
+                        "severity": "error",
+                    }
+                ],
+                "resourceType": "OperationOutcome",
+            },
         ),
         (
             MissingValueError,
             HTTPStatus.BAD_REQUEST,
-            "The request was unsuccessful due to missing required value.",
+            {
+                "issue": [
+                    {
+                        "code": "exception",
+                        "details": {
+                            "coding": [
+                                {
+                                    "code": "MISSING_HEADER",
+                                    "display": "A required header is missing",
+                                    "system": "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                                    "version": "1",
+                                }
+                            ]
+                        },
+                        "diagnostics": "The request was unsuccessful due to missing required value",  # noqa: E501
+                        "severity": "error",
+                    }
+                ],
+                "resourceType": "OperationOutcome",
+            },
         ),
     ],
 )
@@ -96,7 +176,7 @@ def test_authenticate_post_api_exception(
     _mock_get_nhs_number_from_jwt_token: MagicMock,
     exception: ApiError,
     expected_status_code: HTTPStatus,
-    expected_message: str,
+    expected_body: dict,
     client: FlaskClient,
 ) -> None:
     """Test the POST /authenticate endpoint with an api exception."""
@@ -108,7 +188,7 @@ def test_authenticate_post_api_exception(
 
     # Assert
     assert actual_result.status_code == expected_status_code
-    assert actual_result.get_json() == {"message": expected_message}
+    assert actual_result.get_json() == expected_body
     mock_forward_request.assert_called_once()
     mock_route_and_forward.assert_not_called()
 
@@ -131,6 +211,25 @@ def test_authenticate_post_exception(
 
     # Assert
     assert actual_result.status_code == HTTPStatus.INTERNAL_SERVER_ERROR
-    assert actual_result.get_json() == {"error": "Exception: Exception"}
+    assert actual_result.get_json() == {
+        "issue": [
+            {
+                "code": "exception",
+                "details": {
+                    "coding": [
+                        {
+                            "code": "SERVER_ERROR",
+                            "display": "Failed to generate response",
+                            "system": "https://fhir.nhs.uk/R4/CodeSystem/IM1-PFS-Auth-ErrorOrWarningCode",
+                            "version": "1",
+                        }
+                    ]
+                },
+                "diagnostics": "Internal Server Error - Failed to generate response is present in the response",  # noqa: E501
+                "severity": "error",
+            }
+        ],
+        "resourceType": "OperationOutcome",
+    }
     mock_forward_request.assert_called_once()
     mock_route_and_forward.assert_called_once_with(mock_forward_request.return_value)
