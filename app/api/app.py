@@ -4,7 +4,7 @@ from flask import Flask, Response, make_response, request
 
 from .application.forward_request import route_and_forward
 from .application.jwt import get_nhs_number_from_jwt_token
-from .domain.exception import ApiError, InternalServierError
+from .domain.exception import ApiError, InternalServerError
 from .domain.forward_request_model import ForwardRequest
 
 app = Flask(__name__)
@@ -36,5 +36,5 @@ def authenticate() -> Response:
         )
     except Exception as e:
         app.logger.exception("Error in POST /authenticate")
-        error = e if isinstance(e, ApiError) else InternalServierError()
+        error = e if isinstance(e, ApiError) else InternalServerError()
         return make_response(error.body, error.status_code)

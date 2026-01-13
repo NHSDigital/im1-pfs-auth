@@ -164,7 +164,7 @@ class MissingValueError(ApiError):
     }
 
 
-class InternalServierError(ApiError):
+class InternalServerError(ApiError):
     """Generic Exception."""
 
     status_code = HTTPStatus.INTERNAL_SERVER_ERROR
