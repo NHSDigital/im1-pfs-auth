@@ -3,15 +3,15 @@ from pathlib import Path
 
 import requests
 
-from ...domain.base_client import BaseClient
-from ...domain.exception import (
+from app.api.domain.base_client import BaseClient
+from app.api.domain.exception import (
     DownstreamError,
     ForbiddenError,
     InvalidValueError,
     NotFoundError,
 )
-from ...domain.forward_response_model import Demographics
-from .models import (
+from app.api.domain.forward_response_model import Demographics
+from app.api.infrastructure.emis.models import (
     Identifier,
     MedicalRecordPermissions,
     Patient,

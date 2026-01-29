@@ -35,7 +35,7 @@ with Path("app/api/infrastructure/tpp/data/mocked_response.xml", encoding="utf-8
 def setup_client() -> TPPClient:
     request = ForwardRequest(
         application_id="some application id",
-        forward_to="https://somewhere",
+        forward_to="https://tpp.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some patient ods code",
         proxy_nhs_number="0987654321",

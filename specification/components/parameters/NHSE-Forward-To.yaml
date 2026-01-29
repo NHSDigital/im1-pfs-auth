@@ -1,7 +1,9 @@
 name: NHSE-Forward-To
 in: header
-description: The base URL to forward requests to.
+description: The GPIT Supplier base URL to forward requests to.
 required: true
 schema:
   type: string
-  example: https://example.com
+  enum:
+    - https://tpp.com
+    - https://enum.com

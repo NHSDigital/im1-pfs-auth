@@ -2,10 +2,10 @@ from http import HTTPStatus
 
 from flask import Flask, Response, make_response, request
 
-from .application.forward_request import route_and_forward
-from .application.jwt import get_nhs_number_from_jwt_token
-from .domain.exception import ApiError, InternalServerError
-from .domain.forward_request_model import ForwardRequest
+from app.api.application.forward_request import route_and_forward
+from app.api.application.jwt import get_nhs_number_from_jwt_token
+from app.api.domain.exception import ApiError, InternalServerError
+from app.api.domain.forward_request_model import ForwardRequest
 
 app = Flask(__name__)
 

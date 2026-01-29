@@ -8,12 +8,16 @@ from app.api.domain.exception import (
 from app.api.domain.forward_request_model import ForwardRequest
 
 
-def test_forward_request() -> None:
+@pytest.mark.parametrize(
+    "forward_to",
+    ["https://emis.com", "https://tpp.com"],
+)
+def test_forward_request(forward_to: str) -> None:
     """Tests the ForwardRequest model."""
     # Act & Assert
     ForwardRequest(
         application_id="some application",
-        forward_to="https://example.com",
+        forward_to=forward_to,
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -24,10 +28,10 @@ def test_forward_request() -> None:
 @pytest.mark.parametrize(
     ("application_id", "ods_code", "forward_to"),
     [
-        (None, "ods code", "https://example.com"),
-        ("", "ods code", "https://example.com"),
-        ("application id", None, "https://example.com"),
-        ("application id", "", "https://example.com"),
+        (None, "ods code", "https://emis.com"),
+        ("", "ods code", "https://emis.com"),
+        ("application id", None, "https://emis.com"),
+        ("application id", "", "https://emis.com"),
         ("application id", "ods code", None),
         ("application id", "ods code", ""),
     ],
@@ -67,7 +71,7 @@ def test_forward_request_validates_nhs_numbers(
     with pytest.raises(AccessDeniedError, match="Failed to retrieve NHS Number"):
         ForwardRequest(
             application_id="some application",
-            forward_to="https://example.com",
+            forward_to="https://emis.com",
             patient_nhs_number=patient_nhs_number,
             patient_ods_code="some ods code",
             proxy_nhs_number=proxy_nhs_number,
@@ -75,10 +79,12 @@ def test_forward_request_validates_nhs_numbers(
         )
 
 
-def test_forward_request_validates_forward_to() -> None:
+@pytest.mark.parametrize(
+    "forward_to",
+    ["some random value", "https://invalid.com", "www.google.com"],
+)
+def test_forward_request_validates_forward_to(forward_to: str) -> None:
     """Tests the ForwardRequest model validates forward to is a url."""
-    # Arrange
-    forward_to = "some random value"
     # Act & Assert
     with pytest.raises(InvalidValueError, match="Invalid url"):
         ForwardRequest(

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, field_validator, model_validator
 
-from .exception import (
+from app.api.domain.exception import (
     AccessDeniedError,
     InvalidValueError,
     MissingValueError,
@@ -18,6 +18,7 @@ class ForwardRequest(BaseModel):
     use_mock: bool
 
     @model_validator(mode="before")
+    @classmethod
     def validate_required_value(cls, values: list) -> list:
         """Validates if required value is present.
 
@@ -31,6 +32,7 @@ class ForwardRequest(BaseModel):
         return values
 
     @model_validator(mode="before")
+    @classmethod
     def validate_string(cls, values: list) -> list:
         """Validates if value is a string.
 
@@ -44,6 +46,7 @@ class ForwardRequest(BaseModel):
         return values
 
     @model_validator(mode="before")
+    @classmethod
     def validate_nhs_number(cls, values: list) -> list:
         """Validates nhs number.
 
@@ -66,12 +69,13 @@ class ForwardRequest(BaseModel):
         return values
 
     @field_validator("forward_to")
+    @classmethod
     def validate_url(cls, value: str) -> str:
-        """Validates url.
+        """Validates url is one of the allowed urls.
 
         If unsuccessful will raise An InvalidValueError Exception
         """
-        if not value.startswith("https:"):
+        if value not in ["https://emis.com", "https://tpp.com"]:
             msg = "Invalid url"
             raise InvalidValueError(msg)
 

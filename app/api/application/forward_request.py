@@ -1,8 +1,8 @@
-from ..domain.exception import ApiError, DownstreamError
-from ..domain.forward_request_model import ForwardRequest
-from ..domain.forward_response_model import ForwardResponse
-from ..infrastructure.emis.client import EmisClient
-from ..infrastructure.tpp.client import TPPClient
+from app.api.domain.exception import ApiError, DownstreamError
+from app.api.domain.forward_request_model import ForwardRequest
+from app.api.domain.forward_response_model import ForwardResponse
+from app.api.infrastructure.emis.client import EmisClient
+from app.api.infrastructure.tpp.client import TPPClient
 
 client_map = {"https://emis.com": EmisClient, "https://tpp.com": TPPClient}
 

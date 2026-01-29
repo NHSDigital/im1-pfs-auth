@@ -13,7 +13,7 @@ def test_route_and_forward() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://example.com",
+        forward_to="https://emis.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -23,7 +23,7 @@ def test_route_and_forward() -> None:
     mock_client.return_value.transform_response.return_value = (
         "mocked transformed response"
     )
-    forward_request_module.client_map["https://example.com"] = mock_client
+    forward_request_module.client_map["https://emis.com"] = mock_client
     # Act
     actual_result = route_and_forward(forward_request)
 
@@ -36,7 +36,7 @@ def test_route_and_forward_raises_api_error() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://example.com",
+        forward_to="https://emis.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -44,7 +44,7 @@ def test_route_and_forward_raises_api_error() -> None:
     )
     mock_client = MagicMock()
     mock_client.return_value.forward_request.side_effect = ForbiddenError("Oops")
-    forward_request_module.client_map["https://example.com"] = mock_client
+    forward_request_module.client_map["https://emis.com"] = mock_client
     # Act & Assert
     with pytest.raises(ForbiddenError, match="Oops"):
         route_and_forward(forward_request)
@@ -55,7 +55,7 @@ def test_route_and_forward_raises_downstream_error() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://example.com",
+        forward_to="https://emis.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -63,7 +63,7 @@ def test_route_and_forward_raises_downstream_error() -> None:
     )
     mock_client = MagicMock()
     mock_client.return_value.forward_request.side_effect = Exception("Oops")
-    forward_request_module.client_map["https://example.com"] = mock_client
+    forward_request_module.client_map["https://emis.com"] = mock_client
     # Act & Assert
     with pytest.raises(DownstreamError, match="Error occurred with downstream service"):
         route_and_forward(forward_request)

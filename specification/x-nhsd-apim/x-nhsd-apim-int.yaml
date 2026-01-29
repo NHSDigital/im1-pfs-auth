@@ -8,10 +8,10 @@ access:
     visible: false
 ratelimiting:
   proxy:
-    limit: 2
+    limit: 10
     timeunit: second
   app-default:
-    limit: 2
+    limit: 10
     timeunit: second
 target:
   type: hosted

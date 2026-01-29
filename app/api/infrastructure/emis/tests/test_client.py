@@ -28,7 +28,7 @@ from app.api.infrastructure.emis.models import (
 def setup_client() -> EmisClient:
     request = ForwardRequest(
         application_id="some application id",
-        forward_to="https://somewhere",
+        forward_to="https://emis.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some patient ods code",
         proxy_nhs_number="0987654321",
