@@ -4,23 +4,26 @@ info:
   version: "0.1"
   description: |
     ## Overview
+
+    IM1 PFS Auth is an interface mechanism that provides authentication for PFS (Patient‑Facing Services).
+    This API lets a proxy act on behalf of a patient, regardless of the patient’s GP practice.
+    It authenticates the proxy using an NHS login proxy token and starts a session with the correct supplier system based on the patient’s ODS code.
+    If the patient’s online account can be matched, the API returns newly created IM1 session details.
+
     ![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)
 
-    An intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued "proxy token" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.
+    You can use this API to:
 
-    You can:
-
-    - Authenticate a user and initiate a session with the approporiate supplier
+    - authenticate a proxy user and initiate a session with the appropriate supplier
 
     ## Who can use this API
-    This API can only be used where there is a legal basis to do so. Make sure you have this and a valid use case before
-    you go too far with your development by [contacting us](https://digital.nhs.uk/developer/help-and-support)
+    You can only use this API if you have a valid legal basis.
+    Before investing significant time in development, confirm that your use case is appropriate by [contacting us](https://digital.nhs.uk/developer/help-and-support).
 
-    You must do this before you can go live (see 'Onboarding' below).
+    You must do this before you can go live.
 
     ## API status and roadmap
-    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses), meaning:
-    - we will be making breaking changes
+    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
     ## Technology
     This API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).
@@ -42,22 +45,16 @@ info:
 
     ### User-restricted access
 
-    User-restricted access meaning an end user must be present, authenticated and authorised.
+    This API has user-restricted access, meaning an end user must be present, authenticated and authorised.
 
     #### Patient access mode
     If the end user is a patient then you must use this access mode.
 
     [Review all patient access modes](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#patient-access-mode)
 
-    Validated Relationships Service API checks the patient is P9 verified and has a high [vector of trust](https://nhsconnect.github.io/nhslogin/vectors-of-trust/) (VOT).
-
-    Allowed vectors of trust are:
-    - `P9.Cp.Cd`
-    - `P9.Cp.Ck`
-    - `P9.Cm`
 
     ## Headers
-    This API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. NHSE-Request-Id, nhse-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.
+    This API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. For example, NHSE-Request-Id, nhse-request-id are treated the same.
 
     ## Errors
     We use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:
@@ -66,7 +63,7 @@ info:
     * 400 to 499 if it failed because of a client error by your application
     * 500 to 599 if it failed because of an error on our server
 
-    Errors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
+    Each endpoint lists its own specific errors in the Responses section. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.
 
     ## Open source
     You might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:
@@ -91,11 +88,6 @@ info:
     [![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/postman/postman_collection.json)
 
     Import the  postman collection to run requests against sandbox.
-
-    ## Onboarding
-    You must get your software onboarded before it can go live.
-
-    For more details, contact us at [england.vrs-team@nhs.net](mailto:england.vrs-team@nhs.net).
 
     ## Contact us
     For help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).
