@@ -23,7 +23,7 @@ info:
     You must do this before you can go live.
 
     ## API status and roadmap
-    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses), meaning:
+    This API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).
 
     ## Technology
     This API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).
