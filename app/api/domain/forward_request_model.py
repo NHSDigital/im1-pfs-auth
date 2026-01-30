@@ -75,7 +75,7 @@ class ForwardRequest(BaseModel):
 
         If unsuccessful will raise An InvalidValueError Exception
         """
-        if value not in ["https://emis.com", "https://tpp.com"]:
+        if not value.startswith("https:"):
             msg = "Invalid url"
             raise InvalidValueError(msg)
 

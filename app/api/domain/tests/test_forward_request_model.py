@@ -8,16 +8,12 @@ from app.api.domain.exception import (
 from app.api.domain.forward_request_model import ForwardRequest
 
 
-@pytest.mark.parametrize(
-    "forward_to",
-    ["https://emis.com", "https://tpp.com"],
-)
-def test_forward_request(forward_to: str) -> None:
+def test_forward_request() -> None:
     """Tests the ForwardRequest model."""
     # Act & Assert
     ForwardRequest(
         application_id="some application",
-        forward_to=forward_to,
+        forward_to="https://google.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -28,10 +24,10 @@ def test_forward_request(forward_to: str) -> None:
 @pytest.mark.parametrize(
     ("application_id", "ods_code", "forward_to"),
     [
-        (None, "ods code", "https://emis.com"),
-        ("", "ods code", "https://emis.com"),
-        ("application id", None, "https://emis.com"),
-        ("application id", "", "https://emis.com"),
+        (None, "ods code", "https://google.com"),
+        ("", "ods code", "https://google.com"),
+        ("application id", None, "https://google.com"),
+        ("application id", "", "https://google.com"),
         ("application id", "ods code", None),
         ("application id", "ods code", ""),
     ],
@@ -71,7 +67,7 @@ def test_forward_request_validates_nhs_numbers(
     with pytest.raises(AccessDeniedError, match="Failed to retrieve NHS Number"):
         ForwardRequest(
             application_id="some application",
-            forward_to="https://emis.com",
+            forward_to="https://google.com",
             patient_nhs_number=patient_nhs_number,
             patient_ods_code="some ods code",
             proxy_nhs_number=proxy_nhs_number,
@@ -81,7 +77,7 @@ def test_forward_request_validates_nhs_numbers(
 
 @pytest.mark.parametrize(
     "forward_to",
-    ["some random value", "https://invalid.com", "www.google.com"],
+    ["some random value", "invalid.com", "www.google.com"],
 )
 def test_forward_request_validates_forward_to(forward_to: str) -> None:
     """Tests the ForwardRequest model validates forward to is a url."""

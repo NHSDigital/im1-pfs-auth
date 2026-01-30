@@ -1,9 +1,19 @@
 name: NHSE-Forward-To
 in: header
-description: The GPIT Supplier base URL to forward requests to.
+description: |
+  The GPIT Supplier base URL to forward requests to.
+
+  TPP:
+  | Environment | Allowed URLs                    |
+  |-------------|---------------------------------|
+  | Integration | https://systmonline2.tpp-uk.com |
+  | Production  | https://systmonline.tpp-uk.com  |
+
+  EMIS:
+  | Environment | Allowed URLs                        |
+  |-------------|-------------------------------------|
+  | Integration | https://nhs70apptest.emishealth.com |
+  | Production  | https://api.pfs.emis-x.uk           |
 required: true
 schema:
   type: string
-  enum:
-    - https://tpp.com
-    - https://enum.com

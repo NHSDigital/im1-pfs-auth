@@ -1,34 +1,138 @@
-from unittest.mock import MagicMock
+from importlib import reload
+from os import environ
+from unittest.mock import patch, MagicMock
 
 import pytest
 
-from app.api.application import forward_request as forward_request_module
-from app.api.application.forward_request import route_and_forward
-from app.api.domain.exception import DownstreamError, ForbiddenError
+from app.api.domain.exception import DownstreamError, ForbiddenError, InvalidValueError
 from app.api.domain.forward_request_model import ForwardRequest
 
 
-def test_route_and_forward() -> None:
+FILE_PATH = "app.api.application.forward_request"
+
+
+@pytest.mark.parametrize(
+    "forward_to, environment",
+    [
+        ("https://nhs70apptest.emishealth.com", "pre-prod"),
+        ("https://api.pfs.emis-x.uk", "prod"),
+    ],
+)
+def test_route_and_forward_emis(forward_to: str, environment: str) -> None:
     """Tests the route_and_forward function."""
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://emis.com",
+        forward_to=forward_to,
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
         use_mock=False,
     )
-    mock_client = MagicMock()
-    mock_client.return_value.transform_response.return_value = (
-        "mocked transformed response"
-    )
-    forward_request_module.client_map["https://emis.com"] = mock_client
-    # Act
-    actual_result = route_and_forward(forward_request)
 
-    # Assert
-    assert actual_result == "mocked transformed response"
+    with patch.dict("os.environ", {"ENVIRONMENT": environment}):
+        with patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client:
+            with patch(
+                "app.api.infrastructure.tpp.client.TPPClient"
+            ) as mock_tpp_client:
+                from app.api.application import (
+                    forward_request as forward_request_module,
+                )
+
+                mock_emis_client.return_value.transform_response.return_value = (
+                    "mocked transformed response"
+                )
+
+                reload(forward_request_module)
+
+                # Act
+                actual_result = forward_request_module.route_and_forward(
+                    forward_request
+                )
+
+                # Assert
+                assert actual_result == "mocked transformed response"
+                mock_emis_client.return_value.forward_request.assert_called_once()
+                mock_emis_client.return_value.transform_response.assert_called_once()
+                mock_tpp_client.assert_not_called()
+
+
+@pytest.mark.parametrize(
+    "forward_to, environment",
+    [
+        ("https://systmonline2.tpp-uk.com", "pre-prod"),
+        ("https://systmonline.tpp-uk.com", "prod"),
+    ],
+)
+def test_route_and_forward_tpp(forward_to: str, environment: str) -> None:
+    """Tests the route_and_forward function."""
+    # Arrange
+    forward_request = ForwardRequest(
+        application_id="some application",
+        forward_to=forward_to,
+        patient_nhs_number="1234567890",
+        patient_ods_code="some ods code",
+        proxy_nhs_number="0987654321",
+        use_mock=False,
+    )
+
+    with patch.dict("os.environ", {"ENVIRONMENT": environment}):
+        with patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client:
+            with patch(
+                "app.api.infrastructure.tpp.client.TPPClient"
+            ) as mock_tpp_client:
+                from app.api.application import (
+                    forward_request as forward_request_module,
+                )
+
+                mock_tpp_client.return_value.transform_response.return_value = (
+                    "mocked transformed response"
+                )
+
+                reload(forward_request_module)
+
+                # Act
+                actual_result = forward_request_module.route_and_forward(
+                    forward_request
+                )
+
+                # Assert
+                assert actual_result == "mocked transformed response"
+                mock_emis_client.assert_not_called()
+                mock_tpp_client.return_value.forward_request.assert_called_once()
+                mock_tpp_client.return_value.transform_response.assert_called_once()
+
+
+def test_route_and_forward_invalid_url() -> None:
+    """Tests the route_and_forward function."""
+    # Arrange
+    forward_request = ForwardRequest(
+        application_id="some application",
+        forward_to="https://google.com",
+        patient_nhs_number="1234567890",
+        patient_ods_code="some ods code",
+        proxy_nhs_number="0987654321",
+        use_mock=False,
+    )
+
+    with patch.dict("os.environ", {"ENVIRONMENT": "pre-prod"}):
+        with patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client:
+            with patch(
+                "app.api.infrastructure.tpp.client.TPPClient"
+            ) as mock_tpp_client:
+                from app.api.application import (
+                    forward_request as forward_request_module,
+                )
+
+                reload(forward_request_module)
+
+                # Act & Assert
+                with pytest.raises(
+                    InvalidValueError, match="Invalid URL: 'https://google.com'"
+                ):
+                    forward_request_module.route_and_forward(forward_request)
+                mock_emis_client.assert_not_called()
+                mock_tpp_client.assert_not_called()
 
 
 def test_route_and_forward_raises_api_error() -> None:
@@ -36,18 +140,25 @@ def test_route_and_forward_raises_api_error() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://emis.com",
+        forward_to="https://nhs70apptest.emishealth.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
         use_mock=False,
     )
-    mock_client = MagicMock()
-    mock_client.return_value.forward_request.side_effect = ForbiddenError("Oops")
-    forward_request_module.client_map["https://emis.com"] = mock_client
-    # Act & Assert
-    with pytest.raises(ForbiddenError, match="Oops"):
-        route_and_forward(forward_request)
+    with patch.dict("os.environ", {"ENVIRONMENT": "pre-prod"}):
+        with patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client:
+            from app.api.application import forward_request as forward_request_module
+
+            mock_emis_client.return_value.forward_request.side_effect = ForbiddenError(
+                "Oops"
+            )
+
+            reload(forward_request_module)
+
+            # Act & Assert
+            with pytest.raises(ForbiddenError, match="Oops"):
+                forward_request_module.route_and_forward(forward_request)
 
 
 def test_route_and_forward_raises_downstream_error() -> None:
@@ -55,15 +166,24 @@ def test_route_and_forward_raises_downstream_error() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://emis.com",
+        forward_to="https://nhs70apptest.emishealth.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
         use_mock=False,
     )
-    mock_client = MagicMock()
-    mock_client.return_value.forward_request.side_effect = Exception("Oops")
-    forward_request_module.client_map["https://emis.com"] = mock_client
-    # Act & Assert
-    with pytest.raises(DownstreamError, match="Error occurred with downstream service"):
-        route_and_forward(forward_request)
+    with patch.dict("os.environ", {"ENVIRONMENT": "pre-prod"}):
+        with patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client:
+            from app.api.application import forward_request as forward_request_module
+
+            mock_emis_client.return_value.forward_request.side_effect = Exception(
+                "Oops"
+            )
+
+            reload(forward_request_module)
+
+            # Act & Assert
+            with pytest.raises(
+                DownstreamError, match="Error occurred with downstream service"
+            ):
+                forward_request_module.route_and_forward(forward_request)
