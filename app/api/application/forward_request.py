@@ -6,7 +6,7 @@ from app.api.domain.forward_response_model import ForwardResponse
 from app.api.infrastructure.emis.client import EmisClient
 from app.api.infrastructure.tpp.client import TPPClient
 
-ENVIRONMENT = environ.get("ENVIRONMENT")
+ENVIRONMENT = environ.get("ENVIRONMENT", "")
 EMIS_URL = (
     "https://api.pfs.emis-x.uk"
     if ENVIRONMENT == "prod"
