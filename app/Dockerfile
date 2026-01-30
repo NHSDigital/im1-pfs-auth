@@ -9,10 +9,11 @@ RUN find /app -type d -name "test*" -exec rm -rf {} + && \
     find /app -type d \( -name ".pytest_cache" -o -name ".ruff_cache" \) -exec rm -rf {} +
 
 WORKDIR /app
+ENV PYTHONPATH="/app:/"
 
 RUN uv sync --project=app/pyproject.toml --only-group=app
 RUN rm pyproject.toml uv.lock Dockerfile
 
 EXPOSE 9000
 
-CMD ["uv", "run", "gunicorn", "api.app:app", "--bind=0.0.0.0:9000"]
+CMD ["uv", "run", "gunicorn", "app.api.app:app", "--bind=0.0.0.0:9000"]
