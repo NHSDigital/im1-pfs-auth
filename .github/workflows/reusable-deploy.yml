@@ -42,6 +42,7 @@ on:
 permissions: {}
 
 env:
+  ENVIRONMENT: ${{ inputs.environment }}
   CONTAINER_TAG: ${{inputs.type_of_deployment}}-${{ github.sha }}
   PROXYGEN_DOCKER_REGISTRY_URL: 958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth
 

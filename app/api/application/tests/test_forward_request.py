@@ -1,12 +1,10 @@
 from importlib import reload
-from os import environ
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 import pytest
 
 from app.api.domain.exception import DownstreamError, ForbiddenError, InvalidValueError
 from app.api.domain.forward_request_model import ForwardRequest
-
 
 FILE_PATH = "app.api.application.forward_request"
 
