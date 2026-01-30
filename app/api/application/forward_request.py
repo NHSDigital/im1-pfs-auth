@@ -33,7 +33,8 @@ def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
         response = client.forward_request()
         return client.transform_response(response)
     except KeyError as exc:
-        raise InvalidValueError(f"Invalid URL: {exc}")
+        msg = "Invalid URL"
+        raise InvalidValueError(msg) from exc
     except ApiError:
         raise
     except Exception as exc:
