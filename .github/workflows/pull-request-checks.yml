@@ -32,6 +32,8 @@ jobs:
       environment: "internal-dev"
       type_of_deployment: "app"
       additional_path: "pr-${{ github.event.number }}"
+      emis_base_url: https://nhs70apptest.emishealth.com
+      tpp_base_url: https://systmonline2.tpp-uk.com
     secrets:
       PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
       PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}

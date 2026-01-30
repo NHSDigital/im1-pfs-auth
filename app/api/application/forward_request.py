@@ -6,18 +6,9 @@ from app.api.domain.forward_response_model import ForwardResponse
 from app.api.infrastructure.emis.client import EmisClient
 from app.api.infrastructure.tpp.client import TPPClient
 
-ENVIRONMENT = environ.get("ENVIRONMENT", "")
-EMIS_URL = (
-    "https://api.pfs.emis-x.uk"
-    if ENVIRONMENT == "prod"
-    else "https://nhs70apptest.emishealth.com"
-)
-TPP_URL = (
-    "https://systmonline.tpp-uk.com"
-    if ENVIRONMENT == "prod"
-    else "https://systmonline2.tpp-uk.com"
-)
-CLIENT_MAP = {EMIS_URL: EmisClient, TPP_URL: TPPClient}
+EMIS_BASE_URL = environ.get("EMIS_BASE_URL")
+TPP_BASE_URL = environ.get("TPP_BASE_URL")
+CLIENT_MAP = {EMIS_BASE_URL: EmisClient, TPP_BASE_URL: TPPClient}
 
 
 def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:

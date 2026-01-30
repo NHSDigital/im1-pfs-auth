@@ -13,7 +13,7 @@ def test_forward_request() -> None:
     # Act & Assert
     ForwardRequest(
         application_id="some application",
-        forward_to="https://google.com",
+        forward_to="https://example.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -24,10 +24,10 @@ def test_forward_request() -> None:
 @pytest.mark.parametrize(
     ("application_id", "ods_code", "forward_to"),
     [
-        (None, "ods code", "https://google.com"),
-        ("", "ods code", "https://google.com"),
-        ("application id", None, "https://google.com"),
-        ("application id", "", "https://google.com"),
+        (None, "ods code", "https://example.com"),
+        ("", "ods code", "https://example.com"),
+        ("application id", None, "https://example.com"),
+        ("application id", "", "https://example.com"),
         ("application id", "ods code", None),
         ("application id", "ods code", ""),
     ],
@@ -67,7 +67,7 @@ def test_forward_request_validates_nhs_numbers(
     with pytest.raises(AccessDeniedError, match="Failed to retrieve NHS Number"):
         ForwardRequest(
             application_id="some application",
-            forward_to="https://google.com",
+            forward_to="https://example.com",
             patient_nhs_number=patient_nhs_number,
             patient_ods_code="some ods code",
             proxy_nhs_number=proxy_nhs_number,
@@ -77,7 +77,7 @@ def test_forward_request_validates_nhs_numbers(
 
 @pytest.mark.parametrize(
     "forward_to",
-    ["some random value", "invalid.com", "www.google.com"],
+    ["some random value", "invalid.com", "www.example.com"],
 )
 def test_forward_request_validates_forward_to(forward_to: str) -> None:
     """Tests the ForwardRequest model validates forward to is a url."""

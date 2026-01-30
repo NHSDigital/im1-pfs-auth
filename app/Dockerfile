@@ -8,8 +8,11 @@ RUN find /app -type d -name "test*" -exec rm -rf {} + && \
     find /app -type f \( -name "*cache*" -o -name "*.cache*" -o -name ".pytest_cache*" -o -name ".ruff_cache*" \) -exec rm -f {} + && \
     find /app -type d \( -name ".pytest_cache" -o -name ".ruff_cache" \) -exec rm -rf {} +
 
-ARG ENVIRONMENT
-ENV ENVIRONMENT=${ENVIRONMENT}
+ARG EMIS_BASE_URL
+ARG TPP_BASE_URL
+
+ENV EMIS_BASE_URL=${EMIS_BASE_URL}
+ENV TPP_BASE_URL=${TPP_BASE_URL}
 
 WORKDIR /app
 ENV PYTHONPATH="/app:/"

@@ -9,19 +9,12 @@ from app.api.domain.forward_request_model import ForwardRequest
 FILE_PATH = "app.api.application.forward_request"
 
 
-@pytest.mark.parametrize(
-    ("forward_to", "environment"),
-    [
-        ("https://nhs70apptest.emishealth.com", "pre-prod"),
-        ("https://api.pfs.emis-x.uk", "prod"),
-    ],
-)
-def test_route_and_forward_emis(forward_to: str, environment: str) -> None:
+def test_route_and_forward_emis() -> None:
     """Tests the route_and_forward function."""
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to=forward_to,
+        forward_to="https://emis.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -29,7 +22,7 @@ def test_route_and_forward_emis(forward_to: str, environment: str) -> None:
     )
 
     with (
-        patch.dict("os.environ", {"ENVIRONMENT": environment}),
+        patch.dict("os.environ", {"EMIS_BASE_URL": "https://emis.com"}),
         patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client,
         patch("app.api.infrastructure.tpp.client.TPPClient") as mock_tpp_client,
     ):
@@ -53,19 +46,12 @@ def test_route_and_forward_emis(forward_to: str, environment: str) -> None:
         mock_tpp_client.assert_not_called()
 
 
-@pytest.mark.parametrize(
-    ("forward_to", "environment"),
-    [
-        ("https://systmonline2.tpp-uk.com", "pre-prod"),
-        ("https://systmonline.tpp-uk.com", "prod"),
-    ],
-)
-def test_route_and_forward_tpp(forward_to: str, environment: str) -> None:
+def test_route_and_forward_tpp() -> None:
     """Tests the route_and_forward function."""
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to=forward_to,
+        forward_to="https://tpp.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -73,7 +59,7 @@ def test_route_and_forward_tpp(forward_to: str, environment: str) -> None:
     )
 
     with (
-        patch.dict("os.environ", {"ENVIRONMENT": environment}),
+        patch.dict("os.environ", {"TPP_BASE_URL": "https://tpp.com"}),
         patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client,
         patch("app.api.infrastructure.tpp.client.TPPClient") as mock_tpp_client,
     ):
@@ -102,7 +88,7 @@ def test_route_and_forward_invalid_url() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://google.com",
+        forward_to="https://example.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
@@ -110,7 +96,10 @@ def test_route_and_forward_invalid_url() -> None:
     )
 
     with (
-        patch.dict("os.environ", {"ENVIRONMENT": "pre-prod"}),
+        patch.dict(
+            "os.environ",
+            {"EMIS_BASE_URL": "https://emis.com", "TPP_BASE_URL": "https://tpp.com"},
+        ),
         patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client,
         patch("app.api.infrastructure.tpp.client.TPPClient") as mock_tpp_client,
     ):
@@ -132,14 +121,17 @@ def test_route_and_forward_raises_api_error() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://nhs70apptest.emishealth.com",
+        forward_to="https://emis.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
         use_mock=False,
     )
     with (
-        patch.dict("os.environ", {"ENVIRONMENT": "pre-prod"}),
+        patch.dict(
+            "os.environ",
+            {"EMIS_BASE_URL": "https://emis.com", "TPP_BASE_URL": "https://tpp.com"},
+        ),
         patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client,
     ):
         from app.api.application import forward_request as forward_request_module
@@ -160,14 +152,17 @@ def test_route_and_forward_raises_downstream_error() -> None:
     # Arrange
     forward_request = ForwardRequest(
         application_id="some application",
-        forward_to="https://nhs70apptest.emishealth.com",
+        forward_to="https://emis.com",
         patient_nhs_number="1234567890",
         patient_ods_code="some ods code",
         proxy_nhs_number="0987654321",
         use_mock=False,
     )
     with (
-        patch.dict("os.environ", {"ENVIRONMENT": "pre-prod"}),
+        patch.dict(
+            "os.environ",
+            {"EMIS_BASE_URL": "https://emis.com", "TPP_BASE_URL": "https://tpp.com"},
+        ),
         patch("app.api.infrastructure.emis.client.EmisClient") as mock_emis_client,
     ):
         from app.api.application import forward_request as forward_request_module

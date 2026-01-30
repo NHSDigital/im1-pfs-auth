@@ -71,7 +71,7 @@ class ForwardRequest(BaseModel):
     @field_validator("forward_to")
     @classmethod
     def validate_url(cls, value: str) -> str:
-        """Validates url is one of the allowed urls.
+        """Validates url.
 
         If unsuccessful will raise An InvalidValueError Exception
         """

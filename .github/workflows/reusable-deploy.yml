@@ -19,6 +19,14 @@ on:
         description: "Type of deployment, e.g. 'app', 'sandbox'"
         required: true
         type: string
+      emis_base_url:
+        description: "The base url to connecto to EMIS APIs"
+        required: false
+        type: string
+      tpp_base_url:
+        description: "The base url to connecto to TPP APIs"
+        required: false
+        type: string
 
     outputs:
       environment_url:
@@ -42,9 +50,10 @@ on:
 permissions: {}
 
 env:
-  ENVIRONMENT: ${{ inputs.environment }}
   CONTAINER_TAG: ${{inputs.type_of_deployment}}-${{ github.sha }}
   PROXYGEN_DOCKER_REGISTRY_URL: 958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth
+  EMIS_BASE_URL: ${{ inputs.emis_base_url }}
+  TPP_BASE_URL: ${{ inputs.tpp_base_url }}
 
 jobs:
   validate-inputs:
