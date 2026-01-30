@@ -1,5 +1,4 @@
 from json import load
-from os import environ
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -81,7 +80,6 @@ def test_emis_forward_request_use_mock_on(client: EmisClient) -> None:
     assert actual_result == expected_response
 
 
-@patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.emis.client.requests")
 def test_emis_forward_request_use_mock_off(
     mock_request: MagicMock, client: EmisClient

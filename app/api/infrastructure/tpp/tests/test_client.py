@@ -1,4 +1,3 @@
-from os import environ
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
@@ -79,7 +78,6 @@ def test_tpp_client_get_data(_: MagicMock, client: TPPClient) -> None:
     }
 
 
-@patch.dict(environ, {"USE_MOCK": "True"})
 def test_tpp_forward_request_use_mock_on(client: TPPClient) -> None:
     """Test the TPPClient forward_request function when mock is turned on."""
     # Assert
@@ -91,7 +89,6 @@ def test_tpp_forward_request_use_mock_on(client: TPPClient) -> None:
     assert actual_result == xmltodict.parse(MOCKED_RESPONSE)
 
 
-@patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.tpp.client.requests")
 def test_tpp_forward_request_use_mock_off(
     mock_request: MagicMock, client: TPPClient
@@ -118,7 +115,6 @@ def test_tpp_forward_request_use_mock_off(
         (500, "", DownstreamError),
     ],
 )
-@patch.dict(environ, {"USE_MOCK": "False"})
 @patch("app.api.infrastructure.tpp.client.requests")
 def test_tpp_forward_request_use_mock_off_exception(
     mock_request: MagicMock,

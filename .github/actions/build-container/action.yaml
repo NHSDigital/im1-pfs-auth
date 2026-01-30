@@ -5,10 +5,6 @@ inputs:
   type_of_deployment:
     description: "Type of deployment (app or sandbox)"
     required: true
-  use_mock:
-    description: "Whether or not the mock for routing requests is on or off"
-    type: string
-    required: false
 
 runs:
   using: "composite"
@@ -19,4 +15,3 @@ runs:
       env:
         PROXYGEN_DOCKER_REGISTRY_URL: example.com/${{ inputs.type_of_deployment }}
         CONTAINER_TAG: ${{ github.sha }}
-        USE_MOCK: ${{ inputs.use_mock }}

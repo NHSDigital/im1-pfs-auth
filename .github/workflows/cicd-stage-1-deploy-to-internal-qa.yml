@@ -13,7 +13,6 @@ jobs:
     with:
       environment: "internal-qa"
       type_of_deployment: "app"
-      use_mock: "True"
     secrets:
       PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
       PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}

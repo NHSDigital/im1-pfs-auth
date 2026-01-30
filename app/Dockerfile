@@ -8,8 +8,6 @@ RUN find /app -type d -name "test*" -exec rm -rf {} + && \
     find /app -type f \( -name "*cache*" -o -name "*.cache*" -o -name ".pytest_cache*" -o -name ".ruff_cache*" \) -exec rm -f {} + && \
     find /app -type d \( -name ".pytest_cache" -o -name ".ruff_cache" \) -exec rm -rf {} +
 
-ARG USE_MOCK
-ENV USE_MOCK=${USE_MOCK}
 WORKDIR /app
 
 RUN uv sync --project=app/pyproject.toml --only-group=app
