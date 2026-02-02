@@ -101,7 +101,9 @@ def test_missing_forward_to_header(
 
 
 @pytest.mark.unhappy
-@pytest.mark.parametrize("forward_to_url", ["something random", "http://example.com"])
+@pytest.mark.parametrize(
+    "forward_to_url", ["something random", "www.google.com", "https://google.com"]
+)
 def test_invalid_forward_to_header(
     request: pytest.FixtureRequest, api_url: str, forward_to_url: str
 ) -> None:

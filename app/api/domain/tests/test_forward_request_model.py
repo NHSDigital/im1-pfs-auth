@@ -75,10 +75,12 @@ def test_forward_request_validates_nhs_numbers(
         )
 
 
-def test_forward_request_validates_forward_to() -> None:
+@pytest.mark.parametrize(
+    "forward_to",
+    ["some random value", "invalid.com", "www.example.com"],
+)
+def test_forward_request_validates_forward_to(forward_to: str) -> None:
     """Tests the ForwardRequest model validates forward to is a url."""
-    # Arrange
-    forward_to = "some random value"
     # Act & Assert
     with pytest.raises(InvalidValueError, match="Invalid url"):
         ForwardRequest(

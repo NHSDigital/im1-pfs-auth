@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from .forward_request_model import ForwardRequest
-from .forward_response_model import ForwardResponse
+from app.api.domain.forward_request_model import ForwardRequest
+from app.api.domain.forward_response_model import ForwardResponse
 
 
 class BaseClient(ABC):

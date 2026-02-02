@@ -122,7 +122,7 @@ postman-test-pr-environment:
 app-build:
 	cp pyproject.toml app/
 	cp uv.lock app/
-	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --build-arg USE_MOCK=$(USE_MOCK) --load app/
+	docker buildx build -t "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)" --build-arg EMIS_BASE_URL=$(EMIS_BASE_URL) --build-arg TPP_BASE_URL=$(TPP_BASE_URL) --load app/
 
 app-push:
 	proxygen docker get-login | bash

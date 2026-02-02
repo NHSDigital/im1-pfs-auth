@@ -16,7 +16,7 @@ logger = getLogger(__name__)
     ("forward_to_url", "expected_response"),
     [
         (
-            "https://emis.com",
+            "https://nhs70apptest.emishealth.com",
             {
                 "patients": [
                     {
@@ -105,7 +105,7 @@ logger = getLogger(__name__)
             },
         ),
         (
-            "https://tpp.com",
+            "https://systmonline2.tpp-uk.com",
             {
                 "patients": [
                     {

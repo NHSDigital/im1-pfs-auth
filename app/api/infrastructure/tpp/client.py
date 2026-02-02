@@ -3,15 +3,15 @@ from pathlib import Path
 import requests
 import xmltodict
 
-from ...domain.base_client import BaseClient
-from ...domain.exception import (
+from app.api.domain.base_client import BaseClient
+from app.api.domain.exception import (
     DownstreamError,
     ForbiddenError,
     InvalidValueError,
     NotFoundError,
 )
-from ...domain.forward_response_model import Demographics, ForwardResponse
-from .models import (
+from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.infrastructure.tpp.models import (
     Application,
     Identifier,
     Patient,

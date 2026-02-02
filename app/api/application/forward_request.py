@@ -1,10 +1,14 @@
-from ..domain.exception import ApiError, DownstreamError
-from ..domain.forward_request_model import ForwardRequest
-from ..domain.forward_response_model import ForwardResponse
-from ..infrastructure.emis.client import EmisClient
-from ..infrastructure.tpp.client import TPPClient
+from os import environ
 
-client_map = {"https://emis.com": EmisClient, "https://tpp.com": TPPClient}
+from app.api.domain.exception import ApiError, DownstreamError, InvalidValueError
+from app.api.domain.forward_request_model import ForwardRequest
+from app.api.domain.forward_response_model import ForwardResponse
+from app.api.infrastructure.emis.client import EmisClient
+from app.api.infrastructure.tpp.client import TPPClient
+
+EMIS_BASE_URL = environ.get("EMIS_BASE_URL")
+TPP_BASE_URL = environ.get("TPP_BASE_URL")
+CLIENT_MAP = {EMIS_BASE_URL: EmisClient, TPP_BASE_URL: TPPClient}
 
 
 def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
@@ -16,9 +20,12 @@ def route_and_forward(forward_request: ForwardRequest) -> ForwardResponse:
         ForwardResponse: Transformed response from client
     """
     try:
-        client = client_map[forward_request.forward_to](forward_request)
+        client = CLIENT_MAP[forward_request.forward_to](forward_request)
         response = client.forward_request()
         return client.transform_response(response)
+    except KeyError as exc:
+        msg = "Invalid URL"
+        raise InvalidValueError(msg) from exc
     except ApiError:
         raise
     except Exception as exc:
