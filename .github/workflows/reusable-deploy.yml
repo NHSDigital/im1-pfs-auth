@@ -20,11 +20,11 @@ on:
         required: true
         type: string
       emis_base_url:
-        description: "The base url to connecto to EMIS APIs"
+        description: "The base url to connect to to EMIS APIs"
         required: false
         type: string
       tpp_base_url:
-        description: "The base url to connecto to TPP APIs"
+        description: "The base url to connect to to TPP APIs"
         required: false
         type: string
 
