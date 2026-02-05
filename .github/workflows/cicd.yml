@@ -49,7 +49,7 @@ jobs:
       - run: echo "Approved — now calling CICD stage 3 Deploy to Produciton workflow"
 
   deploy-to-prod:
-    name: "Deploy to Production Environments"
+    name: "Deploy to Production Environment"
     uses: ./.github/workflows/cicd-stage-3-deploy-to-prod.yml
     needs: deploy-to-prod-require-appoval
     secrets: inherit
