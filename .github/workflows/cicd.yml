@@ -38,3 +38,16 @@ jobs:
     uses: ./.github/workflows/cicd-stage-2-deploy-to-int-and-sandbox.yml
     needs: deploy-to-internal-qa
     secrets: inherit
+  
+  deploy-to-prod-require-appoval:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - run: echo "Approved — now calling CICD stage 3 Deploy to Produciton workflow"
+  
+  deploy-to-prod:
+    name: "Deploy to Production Environments"
+    uses: ./.github/workflows/cicd-stage-3-deploy-to-prod.yml
+    needs: deploy-to-prod-require-appoval
+    secrets: inherit
