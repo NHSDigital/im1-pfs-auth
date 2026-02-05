@@ -40,6 +40,8 @@ jobs:
     secrets: inherit
 
   deploy-to-prod-require-appoval:
+    name: "Require approval for production workflow"
+    needs: deploy-to-int-and-sandbox
     runs-on: ubuntu-latest
     environment:
       name: production
