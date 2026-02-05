@@ -6,18 +6,7 @@ on:
 permissions: {}
 
 jobs:
-  deploy-int-app:
-    name: "Deploy Pull Request App Environment"
-    uses: ./.github/workflows/reusable-deploy.yml
-    with:
-      environment: "production"
-      type_of_deployment: "app"
-      emis_base_url: https://api.pfs.emis-x.uk
-      tpp_base_url: https://systmonline.tpp-uk.com 
-    secrets:
-      PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
-      PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
-      PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
+  # Add prod app deploy
 
   deploy-prod-spec:
     name: "Deploy Specification to Production"
