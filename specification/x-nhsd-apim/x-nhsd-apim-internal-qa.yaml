@@ -1,4 +1,4 @@
-monitoring: true
+monitoring: false
 temporary: false
 access:
   - title: IM1 PFS Auth - P9 User Restricted Access (dev)
