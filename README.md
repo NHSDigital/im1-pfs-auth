@@ -60,6 +60,14 @@ Installation of the toolchain dependencies.
 make install
 ```
 
+#### Optional: Install proxygen-cli for Deployment
+
+If you need to deploy to NHS API Platform environments, you'll need to install the proxygen CLI separately due to dependency incompatibilities (proxygen-cli requires pydantic v1, while this project uses pydantic v2).
+
+See the [Proxygen CLI guide](./docs/user-guides/Proxygen_CLI.md) for detailed installation and configuration instructions.
+
+> **Note**: `proxygen-cli` is not required for local development and testing. It's primarily used for deploying to actual NHS API Platform environments and is automatically available in CI/CD pipelines.
+
 ## Usage
 
 ### Repository Structure

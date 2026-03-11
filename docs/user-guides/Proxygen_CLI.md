@@ -14,30 +14,37 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
 
 ## Installation and Configuration
 
-1. Using your favourite Python package manager, install the proxygen CLI:
+1. Install proxygen-cli in a separate virtual environment:
+
+   **Why a separate environment?** `proxygen-cli` (latest version: 3.0.2) requires `pydantic` v1 (`pydantic>=1.9.1,<2.0.0`), while this project uses `pydantic` v2 (`pydantic==2.9.2`). These versions are incompatible, so proxygen-cli must be installed in its own virtual environment.
 
    ```shell
-   # UV
-   uv pip install proxygen-cli
+   # Create a separate directory for proxygen
+   mkdir -p ~/.proxygen-venv
+   cd ~/.proxygen-venv
+
+   # Create a virtual environment (will use Python 3.13 needed for the specified proxygen version)
+   uv venv -p 3.13
+
+   # Activate the virtual environment
+   source .venv/bin/activate
+
+   # Install proxygen-cli (latest version: 3.0.2)
+   uv pip install proxygen-cli==3.0.2
+
+   # Deactivate and return to your project
+   deactivate
+   cd -
    ```
 
-   If your favourite Python package manager fails to install the package, you can use `pip` as a fallback:
+   **Make proxygen available globally** by creating a wrapper script or adding to your PATH:
 
    ```shell
-   # PIP
-   pip install proxygen-cli
-   ```
+   # Option 1: Create a symlink (recommended)
+   sudo ln -s ~/.proxygen-venv/.venv/bin/proxygen /usr/local/bin/proxygen
 
-   Alternative proxygen install
-
-   Proxygen currently, 2025-10-09, fails to build with Python 3.13, the version used in the IM1 repository, due to an inability to build `lxml==4.9.4`.
-
-   A workaround is to create a separate virtual environment at a lower Python version, then build proxygen for that environment, and transfer the binary to the IM1 repository virtual environment.
-
-   ```shell
-   uv venv -p 3.12 # In a directory not containing the IM1 repository
-   uv pip install proxygen-cli
-   cp .venv/bin/proxygen <IM1 Repository>/.venv/bin/
+   # Option 2: Add to PATH in your shell profile (~/.bashrc, ~/.zshrc, etc.)
+   export PATH="$HOME/.proxygen-venv/.venv/bin:$PATH"
    ```
 
 2. Confirm the installation by checking the version:
