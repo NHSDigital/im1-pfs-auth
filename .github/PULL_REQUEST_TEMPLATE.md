@@ -2,15 +2,17 @@
 
 ## 🧾 Ticket Link
 
+<!-- Add the Jira ticket link here -->
+
 https://nhsd-jira.digital.nhs.uk/browse/NPA-XXXX
 
 ---
 
 ## 📄 Description/Summary of Changes
 
-<!-- Describe the changes made in this PR. Include the purpose/scope/impact/context of the changes -->
+<!-- Describe the changes made in this PR. Include the purpose/scope/impact of the changes -->
 
-- <!-- Add bullet points for changes made -->
+- <!-- Briefly describe the key changes in this PR -->
 
 ---
 
@@ -19,35 +21,27 @@ https://nhsd-jira.digital.nhs.uk/browse/NPA-XXXX
 <!-- Describe what tests (automated/unit/manual etc.) have been done for the ticket. Include: -->
 <!-- - Any tests added/updated -->
 <!-- - Evidence that each acceptance criterion from the Jira ticket is met -->
+<!-- - Evidence of tests running eg. link to github workflow with tests passing or screenshot of tests running locally -->
 
-- <!-- Add bullet points for tests done -->
-
----
-
-## ✅ Developer Checklist
-
-<!-- To be completed by the developer -->
-
-- [ ] I have set the PR title to follow the format: `NPA-XXXX: <short-description>`
-- [ ] My branch name follows the convention: `<type>/NPA-XXXX/<short-description>`
-- [ ] My commit messages follow the template: `NPA-XXXX: <short-description>`
-- [ ] I have updated the documentation accordingly
-- [ ] I have set assignees and added appropriate labels
+- <!-- Briefly describe the testing carried out in this PR -->
 
 ---
 
-## 👀 Reviewer Checklist
+## 📋 PR Principles
 
-<!-- To be completed by the reviewer -->
+<!-- Principles we as a team follow when conducting a PR -->
 
-- [ ] Changes meet the acceptance criteria of the Jira ticket
-- [ ] Code is able to be merged (no conflicts and adheres to coding standards)
-- [ ] Sufficient test evidence is provided (manual and/or automated)
+- Keep PRs Small and Focused: Ensure the PR addresses a single task or feature to make it easier to review.
+- Multiple PRs for one Ticket: When splitting work into multiple PRs, clearly describe what this PR addresses and outline the remaining work to complete the ticket.
+- Ensure Tests Are Included: Add or update unit, integration, or end-to-end tests to cover the changes made.
+- Follow Coding Standards: Ensure the code adheres to the team's coding guidelines and best practices.
+- Resolve Comments Promptly: If you raise a comment, ensure you follow up and resolve it before approving the PR to maintain clarity and ensure comments are addressed.
+- Foster Learning: PR reviews are an opportunity to share knowledge, provide constructive feedback, and encourage a collaborative environment.
 
----
+## 🏷️ Naming Conventions Reminder
 
-## Sensitive Information Declaration
+Please ensure the following naming conventions are followed:
 
-To ensure the utmost confidentiality and protect your and others privacy, we kindly ask you to NOT including [PII (Personal Identifiable Information) / PID (Personal Identifiable Data)](https://digital.nhs.uk/data-and-information/keeping-data-safe-and-benefitting-the-public) or any other sensitive data in this PR (Pull Request) and the codebase changes. We will remove any PR that do contain any sensitive information. We really appreciate your cooperation in this matter.
-
-- [ ] I confirm that neither PII/PID nor sensitive data are included in this PR and the codebase changes.
+- PR title follows the format: `NPA-XXXX: <short-description>`
+- Branch name follows the convention: `<type>/NPA-XXXX/<short-description>`
+- Commit messages follow the template: `NPA-XXXX: <short-description>`
