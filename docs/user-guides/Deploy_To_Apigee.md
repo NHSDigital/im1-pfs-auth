@@ -21,7 +21,7 @@
    Build sandbox container image:
 
    ```shell
-   make sandbox-build PPROXYGEN_DOCKER_REGISTRY_URL="958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth" CONTAINER_TAG=<tag>
+   make sandbox-build PROXYGEN_DOCKER_REGISTRY_URL="958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth" CONTAINER_TAG=<tag>
    ```
 
    Each command builds a Docker image tagged with the specified `CONTAINER_TAG` and pushes it to the specified `PROXYGEN_DOCKER_REGISTRY_URL`. The `<tag>` tag is a placeholder; you can replace it with any meaningful tag for your deployment. Generally, this is the <app/sandbox>-<commit sha>
