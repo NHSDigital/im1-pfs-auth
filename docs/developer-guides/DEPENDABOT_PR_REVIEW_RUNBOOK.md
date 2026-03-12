@@ -68,8 +68,9 @@ is:open is:pr author:app/dependabot
   ```
 
 - Recently updated Dependabot PRs:
+
   ```text
-  is:open is:pr author:app/dependabot sort:updated-desc
+    is:open is:pr author:app/dependabot sort:updated-desc
   ```
 
 **Direct URL**: You can also bookmark this URL to quickly view all open Dependabot PRs:
@@ -237,6 +238,7 @@ Check compatibility with related tools and dependencies:
    ```
 
 6. Build Docker containers:
+
    ```shell
    make app-build CONTAINER_TAG=test EMIS_BASE_URL=test TPP_BASE_URL=test PROXYGEN_DOCKER_REGISTRY_URL=test
    make sandbox-build CONTAINER_TAG=test PROXYGEN_DOCKER_REGISTRY_URL=test
@@ -271,6 +273,7 @@ Check compatibility with related tools and dependencies:
    ```
 
 5. Check for vulnerabilities:
+
    ```shell
    npm audit
    ```
@@ -306,6 +309,7 @@ Check compatibility with related tools and dependencies:
    ```
 
 5. Run unit tests inside the container:
+
    ```shell
    docker run --rm <image_name>:<tag> uv run pytest
    ```
@@ -444,6 +448,7 @@ End-to-end tests require a deployed instance on the NHS API Platform because the
    ```
 
 4. Add a commit to the PR branch:
+
    ```shell
    git add .tool-versions
    git commit -m "Update uv version in .tool-versions to match pyproject.toml requirements"
