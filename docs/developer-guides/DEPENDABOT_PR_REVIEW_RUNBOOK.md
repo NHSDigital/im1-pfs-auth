@@ -297,21 +297,17 @@ Check compatibility with related tools and dependencies:
 3. Run the containers locally:
 
    ```shell
-   make app-docker-run
+   make app-docker-run PROXYGEN_DOCKER_REGISTRY_URL=test CONTAINER_TAG=test
    # Or for sandbox
-   make sandbox-docker-run
+   make sandbox-docker-run PROXYGEN_DOCKER_REGISTRY_URL=test CONTAINER_TAG=test
    ```
+
+   > **Note**: You must use the same `PROXYGEN_DOCKER_REGISTRY_URL` and `CONTAINER_TAG` values that you used in the build commands above, otherwise Docker won't be able to find the images you built.
 
 4. Verify the application starts and responds correctly:
 
    ```shell
    curl http://localhost:9000/health  # Adjust endpoint as needed
-   ```
-
-5. Run unit tests inside the container:
-
-   ```shell
-   docker run --rm <image_name>:<tag> uv run pytest
    ```
 
 ### Manual Deployment and End-to-End Testing
@@ -388,7 +384,7 @@ End-to-end tests require a deployed instance on the NHS API Platform because the
    - Navigate to `Publish` → `Apps`
    - Search for "IM1 PFS Auth Developer Test App"
    - Edit → Add product → Search for your deployment
-   - Add the `IM1 PFS Auth API - IM1 PFS Auth - P9 User Restriced Access (dev) (Internal Development)` product
+   - Add the `IM1 PFS Auth API - IM1 PFS Auth - P9 User Restricted Access (dev) (Internal Development)` product
    - Save
 
 7. **Run end-to-end tests**:

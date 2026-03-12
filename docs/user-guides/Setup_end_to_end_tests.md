@@ -34,7 +34,7 @@ Once added to the `Proxy Dev Team`, the deployment can be associated to the deve
 - Select `Edit` in the top right of the page
 - Under `Credentials` select `Add product`
 - Search for `pr-<pr_number>`
-- Add the `IM1 PFS Auth API - IM1 PFS Auth - P9 User Restriced Access (dev) (Internal Development)` product
+- Add the `IM1 PFS Auth API - IM1 PFS Auth - P9 User Restricted Access (dev) (Internal Development)` product
   - Note: This is **not** the `(Internal Development Sandbox)` product
 - Finalise the change by selecting `Save` in the top right of the page
 

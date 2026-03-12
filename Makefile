@@ -132,7 +132,7 @@ app-debug-run:
 	FLASK_APP=app.api.app flask run --port 8000
 
 app-docker-run:
-	docker run -p 9000:9000 "im1-pfs-auth-app"
+	docker run -p 9000:9000 "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)"
 
 app-unit-test:
 	uv run pytest app --cov=app --cov-fail-under=80
@@ -154,7 +154,7 @@ sandbox-debug-run:
 	FLASK_APP=sandbox.api.app flask run --port 8000
 
 sandbox-docker-run:
-	docker run -p 9000:9000 "im1-pfs-auth"
+	docker run -p 9000:9000 "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)"
 
 sandbox-unit-test:
 	uv run pytest sandbox --cov=sandbox --cov-fail-under=80
