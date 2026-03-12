@@ -403,7 +403,7 @@ End-to-end tests require a deployed instance on the NHS API Platform because the
 
 8. **Clean up after testing**:
 
-   After testing is complete, you should clean up the ephemeral deployment to avoid cluttering the internal-dev environment. This is typically done through the Apigee UI or by using proxygen commands to undeploy the instance.
+   After testing is complete, you should clean up the ephemeral deployment to avoid cluttering the internal-dev environment. This is typically done through the Apigee UI or by using proxygen commands to remove the instance.
 
 **Related Documentation**:
 

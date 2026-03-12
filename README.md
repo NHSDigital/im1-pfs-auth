@@ -52,6 +52,8 @@ The following software packages, or their equivalents, are expected to be instal
 - [yq](https://github.com/mikefarah/yq) command line YAML processor
 - [Node.js](https://nodejs.org/) 22 or later
 
+> **Note on using mise**: If you prefer to use [mise](https://mise.jdx.dev/) instead of asdf, you'll need to manually replace the `asdf` commands in the `./scripts/init.mk` file with `mise` commands. This is necessary because the scripts use a bash non-interactive shell which doesn't automatically use mise as a drop-in replacement for asdf, even if mise is installed and configured on your system.
+
 ### Configuration
 
 Installation of the toolchain dependencies.
