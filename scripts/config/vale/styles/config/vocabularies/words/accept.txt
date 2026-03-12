@@ -23,7 +23,9 @@ Trufflehog
 bot
 idempotence
 mergeable
+npm
 onboarding
+pydantic
 pyproject
 sed
 toolchain

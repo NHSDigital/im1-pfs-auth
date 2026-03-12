@@ -64,16 +64,20 @@ Steps to run Sandbox in a Docker container is as follows:
 Run the following command to build a Docker image tagged with sandbox application name
 
 ```shell
-make sandbox-build
+make sandbox-build PROXYGEN_DOCKER_REGISTRY_URL=im1-pfs-auth-sandbox CONTAINER_TAG=latest
 ```
+
+> **Note**: The `PROXYGEN_DOCKER_REGISTRY_URL` and `CONTAINER_TAG` variables are required. For local development, you can use simple values like shown above. For actual deployments to AWS ECR, use the full registry URL (e.g., `958002497996.dkr.ecr.eu-west-2.amazonaws.com/im1-pfs-auth`) and a meaningful tag (e.g., `sandbox-<commit-sha>`).
 
 #### Run the Docker Container
 
 Run the following command to run the Sandbox application in a Docker container. The make command publishes the containers host port to the hosts machine, meaning you can access services running inside the container form your local machine.
 
 ```shell
-make sandbox-docker-run
+make sandbox-docker-run PROXYGEN_DOCKER_REGISTRY_URL=im1-pfs-auth-sandbox CONTAINER_TAG=latest
 ```
+
+> **Note**: You must use the same `PROXYGEN_DOCKER_REGISTRY_URL` and `CONTAINER_TAG` values that you used in the `sandbox-build` command above, otherwise Docker won't be able to find the image you built.
 
 Test it out by making requests to port 9000
 
