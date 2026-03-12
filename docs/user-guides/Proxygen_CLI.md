@@ -40,11 +40,15 @@ The proxygen CLI is a dedicated command-line interface tool designed to streamli
    **Make proxygen available globally** by creating a wrapper script or adding to your PATH:
 
    ```shell
-   # Option 1: Create a symlink (recommended)
-   sudo ln -s ~/.proxygen-venv/.venv/bin/proxygen /usr/local/bin/proxygen
-
-   # Option 2: Add to PATH in your shell profile (~/.bashrc, ~/.zshrc, etc.)
+   # Option 1: Add to PATH in your shell profile (~/.bashrc, ~/.zshrc, etc.)
    export PATH="$HOME/.proxygen-venv/.venv/bin:$PATH"
+
+   # Option 2: Create a symlink in a user-local bin directory (no sudo)
+   mkdir -p "$HOME/.local/bin"
+   ln -s "$HOME/.proxygen-venv/.venv/bin/proxygen" "$HOME/.local/bin/proxygen"
+
+   # Option 3 (advanced, optional): System-wide symlink (may require admin access)
+   # sudo ln -s "$HOME/.proxygen-venv/.venv/bin/proxygen" /usr/local/bin/proxygen
    ```
 
 2. Confirm the installation by checking the version:
