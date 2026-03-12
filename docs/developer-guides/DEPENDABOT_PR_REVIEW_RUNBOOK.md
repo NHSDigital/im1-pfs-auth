@@ -41,7 +41,7 @@ You can find Dependabot PRs using GitHub's search filters in the Pull Requests t
 
 **Basic filter**:
 
-```
+```text
 is:open is:pr author:app/dependabot
 ```
 
@@ -49,13 +49,13 @@ is:open is:pr author:app/dependabot
 
 - All Dependabot PRs (open and closed):
 
-  ```
+  ```text
   is:pr author:app/dependabot
   ```
 
 - Dependabot PRs by ecosystem (using labels):
 
-  ```
+  ```text
   is:open is:pr author:app/dependabot label:dependencies
   is:open is:pr author:app/dependabot label:github_actions
   is:open is:pr author:app/dependabot label:docker
@@ -63,18 +63,18 @@ is:open is:pr author:app/dependabot
 
 - Dependabot PRs with conflicts:
 
-  ```
+  ```text
   is:open is:pr author:app/dependabot status:failure
   ```
 
 - Recently updated Dependabot PRs:
-  ```
+  ```text
   is:open is:pr author:app/dependabot sort:updated-desc
   ```
 
 **Direct URL**: You can also bookmark this URL to quickly view all open Dependabot PRs:
 
-```
+```text
 https://github.com/NHSDigital/im1-pfs-auth/pulls?q=is%3Aopen+is%3Apr+author%3Aapp%2Fdependabot
 ```
 
