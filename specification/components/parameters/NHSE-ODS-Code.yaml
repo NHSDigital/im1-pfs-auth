@@ -1,6 +1,6 @@
 name: NHSE-ODS-Code
 in: header
-description: The ODS code of practice to start a session with.
+description: The ODS code of the GP practice to start a session with.
 required: true
 schema:
   type: string
