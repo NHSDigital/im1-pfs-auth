@@ -15,7 +15,7 @@ info:
 
     - authenticate a user and initiate a session with the appropriate supplier system for:
       - a specific patient
-      - all patient's that the logged in user has an online account for
+      - all patients that the logged-in user has an online account for
 
     ## Who can use this API
     You can only use this API if you have a valid legal basis.
