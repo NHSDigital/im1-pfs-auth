@@ -1,6 +1,6 @@
 name: NHSE-Application-ID
 in: header
-description: The identity of the subsidiary.
+description: "The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId."
 required: true
 schema:
   type: string

@@ -5,16 +5,17 @@ info:
   description: |
     ## Overview
 
-    IM1 PFS Auth is an interface mechanism that provides authentication for PFS (Patient‑Facing Services).
-    This API lets a proxy act on behalf of a patient, regardless of the patient’s GP practice.
-    It authenticates the proxy using an NHS login proxy token and starts a session with the correct supplier system based on the patient’s ODS code.
-    If the patient’s online account can be matched, the API returns newly created IM1 session details.
+    IM1 PFS Auth provides a means of authenticating a user and establishing an IM1 session to access Patient-Facing Services (PFS).
+    The API authenticates a user via an NHS login token and routes requests to the specified supplier system and ODS code.
+    If the user's account is successfully matched, the API returns the new IM1 session details.
 
     ![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)
 
     You can use this API to:
 
-    - authenticate a proxy user and initiate a session with the appropriate supplier
+    - authenticate a user and initiate a session with the appropriate supplier system for:
+      - a specific patient
+      - all patient's that the logged in user has an online account for
 
     ## Who can use this API
     You can only use this API if you have a valid legal basis.
@@ -101,7 +102,7 @@ paths:
     post:
       tags:
         - sessions
-      summary: Begins a session
+      summary: Create a session
       security:
         - nhs-login-p9: []
       description: |
@@ -111,7 +112,6 @@ paths:
 
         This endpoint:
           - Verifies the user access token
-          - Extracts the NHS number for the user, NHS number and ODS code of the patient
           - Determines which supplier system to forward requests onto
           - Transforms response
 
@@ -139,7 +139,6 @@ paths:
         - $ref: "./components/parameters/NHSE-Forward-To.yaml"
         - $ref: "./components/parameters/NHSE-ODS-Code.yaml"
         - $ref: "./components/parameters/NHSE-Correlation-ID.yaml"
-        - $ref: "./components/parameters/NHSE-Use-Mock.yaml"
       responses:
         "201":
           description: The session was created successfully
