@@ -12,6 +12,10 @@ class Demographics(BaseModel):
     title: str
 
 
+class Permissions(BaseModel):
+    """A data model that encapsulates all the essential permissions data."""
+
+
 class ForwardResponse(BaseModel):
     """All the essential information needed to forward a external backend system response to the client."""  # noqa: E501
 
@@ -19,7 +23,8 @@ class ForwardResponse(BaseModel):
 
     session_id: str
     supplier: str
-    proxy: Demographics
+    user: Demographics
+    permissions: Permissions
     patients: list[Demographics]
 
     @field_validator("patients")

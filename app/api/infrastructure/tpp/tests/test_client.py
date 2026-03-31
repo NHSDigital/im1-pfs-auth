@@ -223,7 +223,7 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
                 statusDescription=ServiceAccessStatusDescription("Other"),
             ),
         ],
-        proxy=Demographics(firstName="Sam", surname="Jones", title="Mr"),
+        user=Demographics(firstName="Sam", surname="Jones", title="Mr"),
         patients=[
             Patient(
                 firstName="Clare",

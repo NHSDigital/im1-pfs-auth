@@ -1,7 +1,11 @@
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Permissions,
+)
 
 
 class Identifier(BaseModel):
@@ -62,7 +66,7 @@ class MedicalRecordPermissions(BaseModel):
     test_results_enabled: bool
 
 
-class Permissions(BaseModel):
+class EffectiveServices(Permissions):
     """Base Model for Permissions."""
 
     model_config = ConfigDict(alias_generator=to_camel)
@@ -82,7 +86,7 @@ class Permissions(BaseModel):
 class Patient(Demographics):
     """Base Model for Patient."""
 
-    permissions: Permissions
+    permissions: EffectiveServices
 
 
 class SessionResponse(ForwardResponse):

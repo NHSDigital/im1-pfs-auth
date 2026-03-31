@@ -20,32 +20,6 @@ logger = getLogger(__name__)
             {
                 "patients": [
                     {
-                        "firstName": "Alex",
-                        "surname": "Taylor",
-                        "title": "Mr",
-                        "permissions": {
-                            "appointmentsEnabled": True,
-                            "demographicsUpdateEnabled": True,
-                            "epsEnabled": True,
-                            "medicalRecordEnabled": True,
-                            "onlineTriageEnabled": False,
-                            "practicePatientCommunicationEnabled": False,
-                            "prescribingEnabled": True,
-                            "recordSharingEnabled": False,
-                            "recordViewAuditEnabled": True,
-                            "medicalRecord": {
-                                "recordAccessScheme": "DetailedCodedCareRecord",
-                                "allergiesEnabled": True,
-                                "consultationsEnabled": True,
-                                "immunisationsEnabled": True,
-                                "documentsEnabled": True,
-                                "medicationEnabled": True,
-                                "problemsEnabled": True,
-                                "testResultsEnabled": True,
-                            },
-                        },
-                    },
-                    {
                         "firstName": "Jane",
                         "surname": "Doe",
                         "title": "Mrs",
@@ -98,7 +72,7 @@ logger = getLogger(__name__)
                         },
                     },
                 ],
-                "proxy": {"firstName": "Alex", "surname": "Taylor", "title": "Mr"},
+                "user": {"firstName": "Alex", "surname": "Taylor", "title": "Mr"},
                 "permissions": {
                     "appointmentsEnabled": True,
                     "demographicsUpdateEnabled": True,
@@ -211,7 +185,7 @@ logger = getLogger(__name__)
                         ],
                     },
                 ],
-                "proxy": {"firstName": "Sam", "surname": "Jones", "title": "Mr"},
+                "user": {"firstName": "Sam", "surname": "Jones", "title": "Mr"},
                 "permissions": [
                     {
                         "description": "Full Clinical Record",

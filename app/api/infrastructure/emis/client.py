@@ -12,10 +12,10 @@ from app.api.domain.exception import (
 )
 from app.api.domain.forward_response_model import Demographics
 from app.api.infrastructure.emis.models import (
+    EffectiveServices,
     Identifier,
     MedicalRecordPermissions,
     Patient,
-    Permissions,
     SessionRequestData,
     SessionRequestHeaders,
     SessionResponse,
@@ -117,7 +117,7 @@ class EmisClient(BaseClient):
                 if self_patient_links
                 else {}
             ),
-            proxy=Demographics(
+            user=Demographics(
                 firstName=response.get("FirstName"),
                 surname=response.get("Surname"),
                 title=response.get("Title"),
@@ -156,8 +156,8 @@ class EmisClient(BaseClient):
             )
         return parsed_patients
 
-    def _parse_permissions(self, raw_permissions: dict) -> Permissions:
-        return Permissions(
+    def _parse_permissions(self, raw_permissions: dict) -> EffectiveServices:
+        return EffectiveServices(
             appointmentsEnabled=raw_permissions.get("AppointmentsEnabled"),
             demographicsUpdateEnabled=raw_permissions.get("DemographicsUpdateEnabled"),
             epsEnabled=raw_permissions.get("EpsEnabled"),

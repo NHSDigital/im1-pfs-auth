@@ -213,7 +213,7 @@ components:
           endUserSessionId
           supplier
           permissions
-          proxy
+          user
           patients
       type: object
       properties:
@@ -227,7 +227,7 @@ components:
           type: string
         permissions:
           $ref: "#/components/schemas/EMISPermissionsModel"
-        proxy:
+        user:
           $ref: "#/components/schemas/DemographicsModel"
         patients:
           type: array
@@ -240,7 +240,7 @@ components:
         - sessionId
           supplier
           permissions
-          proxy
+          user
           patients
       type: object
       properties:
@@ -252,7 +252,7 @@ components:
           type: string
         permissions:
           $ref: "#/components/schemas/TPPSPermissionsModel"
-        proxy:
+        user:
           $ref: "#/components/schemas/DemographicsModel"
         patients:
           type: array

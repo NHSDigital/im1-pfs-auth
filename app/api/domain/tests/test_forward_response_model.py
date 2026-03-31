@@ -1,4 +1,8 @@
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Permissions,
+)
 
 
 def test_forward_response() -> None:
@@ -7,6 +11,7 @@ def test_forward_response() -> None:
     ForwardResponse(
         sessionId="some session id",
         supplier="some supplier",
-        proxy=Demographics(firstName="Betty", surname="Jones", title="Ms"),
+        user=Demographics(firstName="Betty", surname="Jones", title="Ms"),
+        permissions=Permissions(),
         patients=[Demographics(firstName="John", surname="Jones", title="Mr")],
     )

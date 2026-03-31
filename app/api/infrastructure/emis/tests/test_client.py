@@ -16,9 +16,9 @@ from app.api.domain.forward_request_model import ForwardRequest
 from app.api.domain.forward_response_model import Demographics
 from app.api.infrastructure.emis.client import EmisClient
 from app.api.infrastructure.emis.models import (
+    EffectiveServices,
     MedicalRecordPermissions,
     Patient,
-    Permissions,
     SessionResponse,
 )
 
@@ -139,8 +139,8 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
         sessionId="SID_2qZ9yJpVxHq4N3b",
         endUserSessionId="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
-        proxy=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
-        permissions=Permissions(
+        user=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
+        permissions=EffectiveServices(
             appointmentsEnabled=True,
             demographicsUpdateEnabled=True,
             epsEnabled=True,
@@ -166,7 +166,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 firstName="Jane",
                 surname="Doe",
                 title="Mrs",
-                permissions=Permissions(
+                permissions=EffectiveServices(
                     appointmentsEnabled=False,
                     demographicsUpdateEnabled=True,
                     epsEnabled=False,
@@ -192,7 +192,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 firstName="Ella",
                 surname="Taylor",
                 title="Ms",
-                permissions=Permissions(
+                permissions=EffectiveServices(
                     appointmentsEnabled=True,
                     demographicsUpdateEnabled=True,
                     epsEnabled=False,

@@ -107,7 +107,7 @@ class TPPClient(BaseClient):
             permissions=self._parse_permissions(
                 proxy_person.get("EffectiveServiceAccess", [])
             ),
-            proxy=Demographics(
+            user=Demographics(
                 firstName=proxy_person.get("PersonName", {}).get("@firstName"),
                 surname=proxy_person.get("PersonName", {}).get("@surname"),
                 title=proxy_person.get("PersonName", {}).get("@title"),

@@ -4,7 +4,11 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict
 from pydantic.alias_generators import to_camel
 
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import (
+    Demographics,
+    ForwardResponse,
+    Permissions,
+)
 
 
 class Application(BaseModel):
@@ -102,7 +106,7 @@ class ServiceAccessStatusDescription(Enum):
     OTHER = "Other"
 
 
-class ServiceAccess(BaseModel):
+class ServiceAccess(Permissions):
     """Base Model for Service Access which holds data per permission."""
 
     model_config = ConfigDict(alias_generator=to_camel)
