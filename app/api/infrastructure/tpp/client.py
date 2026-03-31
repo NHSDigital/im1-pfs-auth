@@ -104,6 +104,9 @@ class TPPClient(BaseClient):
         return SessionResponse(
             sessionId=response.get("@suid"),
             supplier=self.supplier,
+            permissions=self._parse_permissions(
+                proxy_person.get("EffectiveServiceAccess", [])
+            ),
             proxy=Demographics(
                 firstName=proxy_person.get("PersonName", {}).get("@firstName"),
                 surname=proxy_person.get("PersonName", {}).get("@surname"),
@@ -143,9 +146,7 @@ class TPPClient(BaseClient):
         parsed_patients = []
         for patient in patient_links:
             person = patient["Person"]
-            raw_permissions = person.get("EffectiveServiceAccess", []).get(
-                "ServiceAccess", []
-            )
+            raw_permissions = person.get("EffectiveServiceAccess", [])
             parsed_patients.append(
                 Patient(
                     firstName=person.get("PersonName", {}).get("@firstName"),
@@ -157,6 +158,11 @@ class TPPClient(BaseClient):
         return parsed_patients
 
     def _parse_permissions(self, raw_permissions: dict) -> list[ServiceAccess]:
+        service_access = (
+            [permission.get("ServiceAccess", {}) for permission in raw_permissions]
+            if isinstance(raw_permissions, list)
+            else raw_permissions.get("ServiceAccess", {})
+        )
         return [
             ServiceAccess(
                 description=ServiceAccessDescription(service["@description"]),
@@ -166,5 +172,5 @@ class TPPClient(BaseClient):
                     service["@statusDesc"]
                 ),
             )
-            for service in raw_permissions
+            for service in service_access
         ]

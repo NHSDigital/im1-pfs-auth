@@ -9,6 +9,20 @@
       <NationalIdentifiers>
         <Identifier value="1111111111" type="NhsNumber"/>
       </NationalIdentifiers>
+      <EffectiveServiceAccess>
+        <ServiceAccess serviceIdentifier="1" description="Full Clinical Record" status="U" statusDesc="Unavailable"/>
+        <ServiceAccess serviceIdentifier="2" description="Appointments" status="A" statusDesc="Available"/>
+        <ServiceAccess serviceIdentifier="4" description="Request Medication" status="A" statusDesc="Available"/>
+        <ServiceAccess serviceIdentifier="8" description="Questionnaires" status="N" statusDesc="Not offered by unit"/>
+        <ServiceAccess serviceIdentifier="64" description="Summary Record" status="A" statusDesc="Available"/>
+        <ServiceAccess serviceIdentifier="128" description="Detailed Coded Record" status="U" statusDesc="Unavailable"/>
+        <ServiceAccess serviceIdentifier="512" description="Messaging" status="A" statusDesc="Available"/>
+        <ServiceAccess serviceIdentifier="1024" description="View Sharing Status" status="N" statusDesc="Not offered by unit"/>
+        <ServiceAccess serviceIdentifier="2048" description="Record Audit" status="A" statusDesc="Available"/>
+        <ServiceAccess serviceIdentifier="4096" description="Change Pharmacy" status="N" statusDesc="Not offered by unit"/>
+        <ServiceAccess serviceIdentifier="8192" description="Manage Sharing Rules And Requests" status="G" statusDesc="Only available to GMS registered patients"/>
+        <ServiceAccess serviceIdentifier="65536" description="Access SystmConnect" status="O" statusDesc="Other"/>
+      </EffectiveServiceAccess>
     </Person>
   </User>
 

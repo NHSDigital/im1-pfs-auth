@@ -212,6 +212,7 @@ components:
         - sessionId
           endUserSessionId
           supplier
+          permissions
           proxy
           patients
       type: object
@@ -224,6 +225,8 @@ components:
         supplier:
           enum: [EMIS]
           type: string
+        permissions:
+          $ref: "#/components/schemas/EMISPermissionsModel"
         proxy:
           $ref: "#/components/schemas/DemographicsModel"
         patients:
@@ -236,6 +239,7 @@ components:
       required:
         - sessionId
           supplier
+          permissions
           proxy
           patients
       type: object
@@ -246,6 +250,8 @@ components:
         supplier:
           enum: [TPP]
           type: string
+        permissions:
+          $ref: "#/components/schemas/TPPSPermissionsModel"
         proxy:
           $ref: "#/components/schemas/DemographicsModel"
         patients:
@@ -357,50 +363,50 @@ components:
           type: object
           properties:
             permissions:
-              type: array
-              items:
-                $ref: "#/components/schemas/TPPServiceAccess"
+              $ref: "#/components/schemas/TPPSPermissionsModel"
 
-    TPPServiceAccess:
-      required:
-        - description
-          serviceIdentifier
-          status
-          statusDescription
-      type: object
-      properties:
-        description:
-          type: string
-          enum:
-            [
-              "Full Clinical Record",
-              "Appointments",
-              "Request Medication",
-              "Questionnaires",
-              "Summary Record",
-              "Detailed Coded Record",
-              "Messaging",
-              "View Sharing Status",
-              "Record Audit",
-              "Change Pharmacy",
-              "Manage Sharing Rules And Requests",
-              "Access SystmConnect",
-            ]
-        serviceIdentifier:
-          type: integer
-        status:
-          type: string
-          enum: ["A", "U", "N", "G", "O"]
-        statusDescription:
-          type: string
-          enum:
-            [
-              "Available",
-              "Unavailable",
-              "Not offered by unit",
-              "Only available to GMS registered patients",
-              "Other",
-            ]
+    TPPSPermissionsModel:
+      type: array
+      items:
+        required:
+          - description
+            serviceIdentifier
+            status
+            statusDescription
+        type: object
+        properties:
+          description:
+            type: string
+            enum:
+              [
+                "Full Clinical Record",
+                "Appointments",
+                "Request Medication",
+                "Questionnaires",
+                "Summary Record",
+                "Detailed Coded Record",
+                "Messaging",
+                "View Sharing Status",
+                "Record Audit",
+                "Change Pharmacy",
+                "Manage Sharing Rules And Requests",
+                "Access SystmConnect",
+              ]
+          serviceIdentifier:
+            type: integer
+          status:
+            type: string
+            enum: ["A", "U", "N", "G", "O"]
+          statusDescription:
+            type: string
+            enum:
+              [
+                "Available",
+                "Unavailable",
+                "Not offered by unit",
+                "Only available to GMS registered patients",
+                "Other",
+              ]
 
     OperationOutcome:
       type: object
