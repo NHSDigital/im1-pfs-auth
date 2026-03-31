@@ -124,4 +124,5 @@ class SessionResponse(ForwardResponse):
 
     model_config = ConfigDict(alias_generator=to_camel)
 
+    permissions: list[ServiceAccess]
     patients: list[Patient]

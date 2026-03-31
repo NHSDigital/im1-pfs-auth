@@ -135,7 +135,7 @@ app-docker-run:
 	docker run -p 9000:9000 "$(PROXYGEN_DOCKER_REGISTRY_URL):$(CONTAINER_TAG)"
 
 app-unit-test:
-	uv run pytest app --cov=app --cov-fail-under=80
+	uv run pytest app --cov=app --cov-fail-under=80 $(PYTEST_ARGS)
 
 # ==============================================================================
 # Sandbox Commands

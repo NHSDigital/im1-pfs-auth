@@ -91,4 +91,5 @@ class SessionResponse(ForwardResponse):
     model_config = ConfigDict(alias_generator=to_camel)
 
     end_user_session_id: str
+    permissions: Permissions
     patients: list[Patient]

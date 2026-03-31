@@ -96,16 +96,33 @@ class EmisClient(BaseClient):
         Returns:
             SessionResponse: Homogenised response with other clients
         """
+        self_patient_links = [
+            patient_link
+            for patient_link in response.get("UserPatientLinks", [])
+            if patient_link.get("AssociationType") == "Self"
+        ]
+
+        proxy_patient_links = [
+            patient_link
+            for patient_link in response.get("UserPatientLinks", [])
+            if patient_link.get("AssociationType") == "Proxy"
+        ]
+
         return SessionResponse(
             sessionId=response.get("SessionId"),
             endUserSessionId=response.get("EndUserSessionId"),
             supplier=self.supplier,
+            permissions=self._parse_permissions(
+                self_patient_links[0].get("EffectiveServices", {})
+                if self_patient_links
+                else {}
+            ),
             proxy=Demographics(
                 firstName=response.get("FirstName"),
                 surname=response.get("Surname"),
                 title=response.get("Title"),
             ),
-            patients=self._parse_patients(response),
+            patients=self._parse_patients(proxy_patient_links),
         )
 
     def _mock_response(self) -> dict:
@@ -117,17 +134,15 @@ class EmisClient(BaseClient):
         with Path((BASE_DIR) / "data" / "mocked_response.json").open("r") as f:
             return load(f)
 
-    def _parse_patients(self, data: dict) -> list[Patient]:
+    def _parse_patients(self, patient_links: list) -> list[Patient]:
         """Parsing raw data from Client into structual model.
 
         Args:
-            data (dict): Raw data containing information about multiple patients
+            patient_links (dict): Raw data containing information about patients
 
         Returns:
-            list[Patient]: Parsed information about multiple patients
+            list[Patient]: Parsed information about patients
         """
-        # Extra Patient data
-        patient_links = data.get("UserPatientLinks", [])
         parsed_patients = []
         for patient in patient_links:
             raw_permissions = patient.get("EffectiveServices", {})
