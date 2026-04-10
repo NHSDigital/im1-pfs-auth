@@ -10,7 +10,7 @@ from app.api.domain.exception import (
     InvalidValueError,
     NotFoundError,
 )
-from app.api.domain.forward_response_model import Demographics, ForwardResponse
+from app.api.domain.forward_response_model import ForwardResponse
 from app.api.infrastructure.tpp.models import (
     Application,
     Identifier,
@@ -101,16 +101,24 @@ class TPPClient(BaseClient):
         response = response.get("CreateSessionReply", {})
         proxy_link = response.get("User", {})
         proxy_person = proxy_link.get("Person", {})
+
         return SessionResponse(
             sessionId=response.get("@suid"),
             supplier=self.supplier,
-            permissions=self._parse_permissions(
-                proxy_person.get("EffectiveServiceAccess", [])
-            ),
-            user=Demographics(
+            odsCode=self.request.patient_ods_code,
+            onlineUserId=proxy_link.get("@onlineUserId"),
+            user=Patient(
                 firstName=proxy_person.get("PersonName", {}).get("@firstName"),
                 surname=proxy_person.get("PersonName", {}).get("@surname"),
                 title=proxy_person.get("PersonName", {}).get("@title"),
+                dateOfBirth=proxy_person.get("@dateOfBirth"),
+                patientId=proxy_person.get("@patientId"),
+                patientIdentifiers=self._parse_identifiers(
+                    proxy_person.get("NationalIdentifiers", [])
+                ),
+                permissions=self._parse_permissions(
+                    proxy_person.get("EffectiveServiceAccess", [])
+                ),
             ),
             patients=self._parse_patients(response),
         )
@@ -152,12 +160,17 @@ class TPPClient(BaseClient):
                     firstName=person.get("PersonName", {}).get("@firstName"),
                     surname=person.get("PersonName", {}).get("@surname"),
                     title=person.get("PersonName", {}).get("@title"),
+                    dateOfBirth=person.get("@dateOfBirth"),
+                    patientId=person.get("@patientId"),
+                    patientIdentifiers=self._parse_identifiers(
+                        person.get("NationalIdentifiers", [])
+                    ),
                     permissions=self._parse_permissions(raw_permissions),
                 )
             )
         return parsed_patients
 
-    def _parse_permissions(self, raw_permissions: dict) -> list[ServiceAccess]:
+    def _parse_permissions(self, raw_permissions: list) -> list[ServiceAccess]:
         service_access = (
             [permission.get("ServiceAccess", {}) for permission in raw_permissions]
             if isinstance(raw_permissions, list)
@@ -173,4 +186,16 @@ class TPPClient(BaseClient):
                 ),
             )
             for service in service_access
+        ]
+
+    def _parse_identifiers(self, raw_identifiers: list) -> list[Identifier]:
+        if isinstance(raw_identifiers, dict):
+            # if only one identifier xmltodict will not register this an array
+            raw_identifiers = [raw_identifiers]
+        return [
+            Identifier(
+                value=identifier.get("Identifier", {}).get("@value"),
+                type=identifier.get("Identifier", {}).get("@type"),
+            )
+            for identifier in raw_identifiers
         ]

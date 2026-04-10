@@ -84,8 +84,12 @@ class EffectiveServices(Permissions):
 
 
 class Patient(Demographics):
-    """Base Model for Patient."""
+    """Base Model for User and Patient."""
 
+    model_config = ConfigDict(alias_generator=to_camel)
+
+    user_patient_link_token: str
+    patient_identifiers: list[Identifier]
     permissions: EffectiveServices
 
 
@@ -95,5 +99,5 @@ class SessionResponse(ForwardResponse):
     model_config = ConfigDict(alias_generator=to_camel)
 
     end_user_session_id: str
-    permissions: Permissions
+    user: Patient
     patients: list[Patient]

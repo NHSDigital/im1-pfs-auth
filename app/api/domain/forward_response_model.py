@@ -2,6 +2,10 @@ from pydantic import BaseModel, ConfigDict, field_validator
 from pydantic.alias_generators import to_camel
 
 
+class Permissions(BaseModel):
+    """A data model that encapsulates all the essential permissions data."""
+
+
 class Demographics(BaseModel):
     """A data model that encapsulates all the essential demographic data."""
 
@@ -10,10 +14,8 @@ class Demographics(BaseModel):
     first_name: str
     surname: str
     title: str
-
-
-class Permissions(BaseModel):
-    """A data model that encapsulates all the essential permissions data."""
+    date_of_birth: str
+    permissions: Permissions
 
 
 class ForwardResponse(BaseModel):
@@ -23,8 +25,8 @@ class ForwardResponse(BaseModel):
 
     session_id: str
     supplier: str
+    ods_code: str
     user: Demographics
-    permissions: Permissions
     patients: list[Demographics]
 
     @field_validator("patients")

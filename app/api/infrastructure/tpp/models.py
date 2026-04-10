@@ -118,8 +118,12 @@ class ServiceAccess(Permissions):
 
 
 class Patient(Demographics):
-    """Base Model for Patient."""
+    """Base Model for User and Patient."""
 
+    model_config = ConfigDict(alias_generator=to_camel)
+
+    patient_id: str | None  # Not necessary for the user in cross practice proxy roles
+    patient_identifiers: list[Identifier]
     permissions: list[ServiceAccess]
 
 
@@ -128,5 +132,6 @@ class SessionResponse(ForwardResponse):
 
     model_config = ConfigDict(alias_generator=to_camel)
 
-    permissions: list[ServiceAccess]
+    online_user_id: str
+    user: Patient
     patients: list[Patient]

@@ -11,7 +11,21 @@ def test_forward_response() -> None:
     ForwardResponse(
         sessionId="some session id",
         supplier="some supplier",
-        user=Demographics(firstName="Betty", surname="Jones", title="Ms"),
-        permissions=Permissions(),
-        patients=[Demographics(firstName="John", surname="Jones", title="Mr")],
+        odsCode="some ods code",
+        user=Demographics(
+            firstName="Betty",
+            surname="Jones",
+            title="Ms",
+            dateOfBirth="12/03/1965",
+            permissions=Permissions(),
+        ),
+        patients=[
+            Demographics(
+                firstName="John",
+                surname="Jones",
+                title="Mr",
+                dateOfBirth="18/05/1966",
+                permissions=Permissions(),
+            ),
+        ],
     )

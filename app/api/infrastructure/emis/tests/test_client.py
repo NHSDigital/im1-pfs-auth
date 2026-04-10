@@ -13,10 +13,10 @@ from app.api.domain.exception import (
     NotFoundError,
 )
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import Demographics
 from app.api.infrastructure.emis.client import EmisClient
 from app.api.infrastructure.emis.models import (
     EffectiveServices,
+    Identifier,
     MedicalRecordPermissions,
     Patient,
     SessionResponse,
@@ -139,26 +139,34 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
         sessionId="SID_2qZ9yJpVxHq4N3b",
         endUserSessionId="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
-        user=Demographics(firstName="Alex", surname="Taylor", title="Mr"),
-        permissions=EffectiveServices(
-            appointmentsEnabled=True,
-            demographicsUpdateEnabled=True,
-            epsEnabled=True,
-            medicalRecordEnabled=True,
-            onlineTriageEnabled=False,
-            practicePatientCommunicationEnabled=False,
-            prescribingEnabled=True,
-            recordSharingEnabled=False,
-            recordViewAuditEnabled=True,
-            medicalRecord=MedicalRecordPermissions(
-                recordAccessScheme="DetailedCodedCareRecord",
-                allergiesEnabled=True,
-                consultationsEnabled=True,
-                immunisationsEnabled=True,
-                documentsEnabled=True,
-                medicationEnabled=True,
-                problemsEnabled=True,
-                testResultsEnabled=True,
+        odsCode="some patient ods code",
+        user=Patient(
+            firstName="Alex",
+            surname="Taylor",
+            title="Mr",
+            dateOfBirth="1985-06-25",
+            userPatientLinkToken="link_self_9aLw3G7kVQ",
+            patientIdentifiers=[Identifier(value="9434765919", type="NhsNumber")],
+            permissions=EffectiveServices(
+                appointmentsEnabled=True,
+                demographicsUpdateEnabled=True,
+                epsEnabled=True,
+                medicalRecordEnabled=True,
+                onlineTriageEnabled=False,
+                practicePatientCommunicationEnabled=False,
+                prescribingEnabled=True,
+                recordSharingEnabled=False,
+                recordViewAuditEnabled=True,
+                medicalRecord=MedicalRecordPermissions(
+                    recordAccessScheme="DetailedCodedCareRecord",
+                    allergiesEnabled=True,
+                    consultationsEnabled=True,
+                    immunisationsEnabled=True,
+                    documentsEnabled=True,
+                    medicationEnabled=True,
+                    problemsEnabled=True,
+                    testResultsEnabled=True,
+                ),
             ),
         ),
         patients=[
@@ -166,6 +174,11 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 firstName="Jane",
                 surname="Doe",
                 title="Mrs",
+                dateOfBirth="1979-01-15",
+                userPatientLinkToken="link_proxy_jane_5QJw7r2m",
+                patientIdentifiers=[
+                    Identifier(value="2222222222", type="NhsNumber"),
+                ],
                 permissions=EffectiveServices(
                     appointmentsEnabled=False,
                     demographicsUpdateEnabled=True,
@@ -192,6 +205,11 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                 firstName="Ella",
                 surname="Taylor",
                 title="Ms",
+                dateOfBirth="2010-03-02",
+                userPatientLinkToken="link_proxy_ella_Z01r8yPa",
+                patientIdentifiers=[
+                    Identifier(value="3333333333", type="NhsNumber"),
+                ],
                 permissions=EffectiveServices(
                     appointmentsEnabled=True,
                     demographicsUpdateEnabled=True,

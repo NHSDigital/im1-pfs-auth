@@ -13,9 +13,9 @@ from app.api.domain.exception import (
     NotFoundError,
 )
 from app.api.domain.forward_request_model import ForwardRequest
-from app.api.domain.forward_response_model import Demographics
 from app.api.infrastructure.tpp.client import TPPClient
 from app.api.infrastructure.tpp.models import (
+    Identifier,
     Patient,
     ServiceAccess,
     ServiceAccessDescription,
@@ -145,90 +145,111 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
     assert actual_result == SessionResponse(
         sessionId="xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",
         supplier="TPP",
-        permissions=[
-            ServiceAccess(
-                description=ServiceAccessDescription("Full Clinical Record"),
-                serviceIdentifier=1,
-                status=ServiceAccessStatus("U"),
-                statusDescription=ServiceAccessStatusDescription("Unavailable"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=2,
-                description=ServiceAccessDescription("Appointments"),
-                status=ServiceAccessStatus("A"),
-                statusDescription=ServiceAccessStatusDescription("Available"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=4,
-                description=ServiceAccessDescription("Request Medication"),
-                status=ServiceAccessStatus("A"),
-                statusDescription=ServiceAccessStatusDescription("Available"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=8,
-                description=ServiceAccessDescription("Questionnaires"),
-                status=ServiceAccessStatus("N"),
-                statusDescription=ServiceAccessStatusDescription("Not offered by unit"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=64,
-                description=ServiceAccessDescription("Summary Record"),
-                status=ServiceAccessStatus("A"),
-                statusDescription=ServiceAccessStatusDescription("Available"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=128,
-                description=ServiceAccessDescription("Detailed Coded Record"),
-                status=ServiceAccessStatus("U"),
-                statusDescription=ServiceAccessStatusDescription("Unavailable"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=512,
-                description=ServiceAccessDescription("Messaging"),
-                status=ServiceAccessStatus("A"),
-                statusDescription=ServiceAccessStatusDescription("Available"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=1024,
-                description=ServiceAccessDescription("View Sharing Status"),
-                status=ServiceAccessStatus("N"),
-                statusDescription=ServiceAccessStatusDescription("Not offered by unit"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=2048,
-                description=ServiceAccessDescription("Record Audit"),
-                status=ServiceAccessStatus("A"),
-                statusDescription=ServiceAccessStatusDescription("Available"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=4096,
-                description=ServiceAccessDescription("Change Pharmacy"),
-                status=ServiceAccessStatus("N"),
-                statusDescription=ServiceAccessStatusDescription("Not offered by unit"),
-            ),
-            ServiceAccess(
-                serviceIdentifier=8192,
-                description=ServiceAccessDescription(
-                    "Manage Sharing Rules And Requests"
+        odsCode="some patient ods code",
+        onlineUserId="9cbf400000000000",
+        user=Patient(
+            firstName="Sam",
+            surname="Jones",
+            title="Mr",
+            dateOfBirth="1990-11-05",
+            permissions=[
+                ServiceAccess(
+                    description=ServiceAccessDescription("Full Clinical Record"),
+                    serviceIdentifier=1,
+                    status=ServiceAccessStatus("U"),
+                    statusDescription=ServiceAccessStatusDescription("Unavailable"),
                 ),
-                status=ServiceAccessStatus("G"),
-                statusDescription=ServiceAccessStatusDescription(
-                    "Only available to GMS registered patients"
+                ServiceAccess(
+                    serviceIdentifier=2,
+                    description=ServiceAccessDescription("Appointments"),
+                    status=ServiceAccessStatus("A"),
+                    statusDescription=ServiceAccessStatusDescription("Available"),
                 ),
-            ),
-            ServiceAccess(
-                serviceIdentifier=65536,
-                description=ServiceAccessDescription("Access SystmConnect"),
-                status=ServiceAccessStatus("O"),
-                statusDescription=ServiceAccessStatusDescription("Other"),
-            ),
-        ],
-        user=Demographics(firstName="Sam", surname="Jones", title="Mr"),
+                ServiceAccess(
+                    serviceIdentifier=4,
+                    description=ServiceAccessDescription("Request Medication"),
+                    status=ServiceAccessStatus("A"),
+                    statusDescription=ServiceAccessStatusDescription("Available"),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=8,
+                    description=ServiceAccessDescription("Questionnaires"),
+                    status=ServiceAccessStatus("N"),
+                    statusDescription=ServiceAccessStatusDescription(
+                        "Not offered by unit"
+                    ),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=64,
+                    description=ServiceAccessDescription("Summary Record"),
+                    status=ServiceAccessStatus("A"),
+                    statusDescription=ServiceAccessStatusDescription("Available"),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=128,
+                    description=ServiceAccessDescription("Detailed Coded Record"),
+                    status=ServiceAccessStatus("U"),
+                    statusDescription=ServiceAccessStatusDescription("Unavailable"),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=512,
+                    description=ServiceAccessDescription("Messaging"),
+                    status=ServiceAccessStatus("A"),
+                    statusDescription=ServiceAccessStatusDescription("Available"),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=1024,
+                    description=ServiceAccessDescription("View Sharing Status"),
+                    status=ServiceAccessStatus("N"),
+                    statusDescription=ServiceAccessStatusDescription(
+                        "Not offered by unit"
+                    ),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=2048,
+                    description=ServiceAccessDescription("Record Audit"),
+                    status=ServiceAccessStatus("A"),
+                    statusDescription=ServiceAccessStatusDescription("Available"),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=4096,
+                    description=ServiceAccessDescription("Change Pharmacy"),
+                    status=ServiceAccessStatus("N"),
+                    statusDescription=ServiceAccessStatusDescription(
+                        "Not offered by unit"
+                    ),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=8192,
+                    description=ServiceAccessDescription(
+                        "Manage Sharing Rules And Requests"
+                    ),
+                    status=ServiceAccessStatus("G"),
+                    statusDescription=ServiceAccessStatusDescription(
+                        "Only available to GMS registered patients"
+                    ),
+                ),
+                ServiceAccess(
+                    serviceIdentifier=65536,
+                    description=ServiceAccessDescription("Access SystmConnect"),
+                    status=ServiceAccessStatus("O"),
+                    statusDescription=ServiceAccessStatusDescription("Other"),
+                ),
+            ],
+            patientId=None,
+            patientIdentifiers=[
+                Identifier(
+                    value="1111111111",
+                    type="NhsNumber",
+                )
+            ],
+        ),
         patients=[
             Patient(
                 firstName="Clare",
                 surname="Jones",
                 title="Mrs",
+                dateOfBirth="1975-04-21",
                 permissions=[
                     ServiceAccess(
                         description=ServiceAccessDescription("Full Clinical Record"),
@@ -312,6 +333,13 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
                         status=ServiceAccessStatus("O"),
                         statusDescription=ServiceAccessStatusDescription("Other"),
                     ),
+                ],
+                patientId="82f3500000000000",
+                patientIdentifiers=[
+                    Identifier(
+                        value="2222222222",
+                        type="NhsNumber",
+                    )
                 ],
             )
         ],
