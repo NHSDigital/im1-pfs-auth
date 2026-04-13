@@ -402,47 +402,45 @@ components:
                 $ref: "#/components/schemas/TPPPermissionsModel"
 
     TPPPermissionsModel:
-      type: array
-      items:
-        required:
-          - description
-          - serviceIdentifier
-          - status
-          - statusDescription
-        type: object
-        properties:
-          description:
-            type: string
-            enum:
-              [
-                "Full Clinical Record",
-                "Appointments",
-                "Request Medication",
-                "Questionnaires",
-                "Summary Record",
-                "Detailed Coded Record",
-                "Messaging",
-                "View Sharing Status",
-                "Record Audit",
-                "Change Pharmacy",
-                "Manage Sharing Rules And Requests",
-                "Access SystmConnect",
-              ]
-          serviceIdentifier:
-            type: integer
-          status:
-            type: string
-            enum: ["A", "U", "N", "G", "O"]
-          statusDescription:
-            type: string
-            enum:
-              [
-                "Available",
-                "Unavailable",
-                "Not offered by unit",
-                "Only available to GMS registered patients",
-                "Other",
-              ]
+      required:
+        - description
+        - serviceIdentifier
+        - status
+        - statusDescription
+      type: object
+      properties:
+        description:
+          type: string
+          enum:
+            [
+              "Full Clinical Record",
+              "Appointments",
+              "Request Medication",
+              "Questionnaires",
+              "Summary Record",
+              "Detailed Coded Record",
+              "Messaging",
+              "View Sharing Status",
+              "Record Audit",
+              "Change Pharmacy",
+              "Manage Sharing Rules And Requests",
+              "Access SystmConnect",
+            ]
+        serviceIdentifier:
+          type: integer
+        status:
+          type: string
+          enum: ["A", "U", "N", "G", "O"]
+        statusDescription:
+          type: string
+          enum:
+            [
+              "Available",
+              "Unavailable",
+              "Not offered by unit",
+              "Only available to GMS registered patients",
+              "Other",
+            ]
 
     OperationOutcome:
       type: object
