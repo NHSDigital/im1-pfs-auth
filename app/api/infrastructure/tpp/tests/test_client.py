@@ -16,7 +16,7 @@ from app.api.domain.forward_request_model import ForwardRequest
 from app.api.infrastructure.tpp.client import TPPClient
 from app.api.infrastructure.tpp.models import (
     Identifier,
-    Patient,
+    Person,
     ServiceAccess,
     ServiceAccessDescription,
     ServiceAccessStatus,
@@ -147,7 +147,7 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
         supplier="TPP",
         odsCode="some patient ods code",
         onlineUserId="9cbf400000000000",
-        user=Patient(
+        user=Person(
             firstName="Sam",
             surname="Jones",
             title="Mr",
@@ -245,7 +245,7 @@ def test_tpp_client_transform_response(client: TPPClient) -> None:
             ],
         ),
         patients=[
-            Patient(
+            Person(
                 firstName="Clare",
                 surname="Jones",
                 title="Mrs",

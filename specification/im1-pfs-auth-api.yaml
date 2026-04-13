@@ -228,11 +228,11 @@ components:
         odsCode:
           type: string
         user:
-          $ref: "#/components/schemas/EMISPatientModel"
+          $ref: "#/components/schemas/EMISPersonModel"
         patients:
           type: array
           items:
-            $ref: "#/components/schemas/EMISPatientModel"
+            $ref: "#/components/schemas/EMISPersonModel"
       additionalProperties: false
 
     TPPResponseModel:
@@ -256,11 +256,11 @@ components:
         onlineUserId:
           type: string
         user:
-          $ref: "#/components/schemas/TPPPatientModel"
+          $ref: "#/components/schemas/TPPPersonModel"
         patients:
           type: array
           items:
-            $ref: "#/components/schemas/TPPPatientModel"
+            $ref: "#/components/schemas/TPPPersonModel"
       additionalProperties: false
 
     DemographicsModel:
@@ -291,7 +291,7 @@ components:
         type:
           type: string
 
-    EMISPatientModel:
+    EMISPersonModel:
       allOf:
         - $ref: "#/components/schemas/DemographicsModel"
         - required:
@@ -380,7 +380,7 @@ components:
         testResultsEnabled:
           type: boolean
 
-    TPPPatientModel:
+    TPPPersonModel:
       allOf:
         - $ref: "#/components/schemas/DemographicsModel"
         - required:

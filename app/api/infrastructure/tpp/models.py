@@ -117,7 +117,7 @@ class ServiceAccess(Permissions):
     status_description: ServiceAccessStatusDescription
 
 
-class Patient(Demographics):
+class Person(Demographics):
     """Base Model for User and Patient."""
 
     model_config = ConfigDict(alias_generator=to_camel)
@@ -133,5 +133,5 @@ class SessionResponse(ForwardResponse):
     model_config = ConfigDict(alias_generator=to_camel)
 
     online_user_id: str
-    user: Patient
-    patients: list[Patient]
+    user: Person
+    patients: list[Person]

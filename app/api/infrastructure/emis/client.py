@@ -95,13 +95,15 @@ class EmisClient(BaseClient):
         Returns:
             SessionResponse: Homogenised response with other clients
         """
-        self_patient_links = [
+        # UserPatientLinks relating the user to their patient details
+        user_self_links = [
             patient_link
             for patient_link in response.get("UserPatientLinks", [])
             if patient_link.get("AssociationType") == "Self"
         ]
 
-        proxy_patient_links = [
+        # UserPatientLinks relating the user to patients they can act on behalf of
+        user_patient_links = [
             patient_link
             for patient_link in response.get("UserPatientLinks", [])
             if patient_link.get("AssociationType") == "Proxy"
@@ -116,22 +118,22 @@ class EmisClient(BaseClient):
                 firstName=response.get("FirstName"),
                 surname=response.get("Surname"),
                 title=response.get("Title"),
-                dateOfBirth=self_patient_links[0].get("DateOfBirth")
-                if self_patient_links
+                dateOfBirth=user_self_links[0].get("DateOfBirth")
+                if user_self_links
                 else None,
-                userPatientLinkToken=self_patient_links[0].get("UserPatientLinkToken")
-                if self_patient_links
+                userPatientLinkToken=user_self_links[0].get("UserPatientLinkToken")
+                if user_self_links
                 else None,
                 patientIdentifiers=self._parse_identifiers(
                     response.get("UserPatientIdentifiers", [])
                 ),
                 permissions=self._parse_permissions(
-                    self_patient_links[0].get("EffectiveServices", {})
-                    if self_patient_links
+                    user_self_links[0].get("EffectiveServices", {})
+                    if user_self_links
                     else {}
                 ),
             ),
-            patients=self._parse_patients(proxy_patient_links),
+            patients=self._parse_patients(user_patient_links),
         )
 
     def _mock_response(self) -> dict:

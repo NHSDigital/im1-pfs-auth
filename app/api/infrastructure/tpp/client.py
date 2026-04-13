@@ -14,7 +14,7 @@ from app.api.domain.forward_response_model import ForwardResponse
 from app.api.infrastructure.tpp.models import (
     Application,
     Identifier,
-    Patient,
+    Person,
     ServiceAccess,
     ServiceAccessDescription,
     ServiceAccessStatus,
@@ -99,25 +99,25 @@ class TPPClient(BaseClient):
             ForwardResponse: Homogenised response with other clients
         """
         response = response.get("CreateSessionReply", {})
-        proxy_link = response.get("User", {})
-        proxy_person = proxy_link.get("Person", {})
+        user_link = response.get("User", {})
+        user_person = user_link.get("Person", {})
 
         return SessionResponse(
             sessionId=response.get("@suid"),
             supplier=self.supplier,
             odsCode=self.request.patient_ods_code,
-            onlineUserId=proxy_link.get("@onlineUserId"),
-            user=Patient(
-                firstName=proxy_person.get("PersonName", {}).get("@firstName"),
-                surname=proxy_person.get("PersonName", {}).get("@surname"),
-                title=proxy_person.get("PersonName", {}).get("@title"),
-                dateOfBirth=proxy_person.get("@dateOfBirth"),
-                patientId=proxy_person.get("@patientId"),
+            onlineUserId=user_link.get("@onlineUserId"),
+            user=Person(
+                firstName=user_person.get("PersonName", {}).get("@firstName"),
+                surname=user_person.get("PersonName", {}).get("@surname"),
+                title=user_person.get("PersonName", {}).get("@title"),
+                dateOfBirth=user_person.get("@dateOfBirth"),
+                patientId=user_person.get("@patientId"),
                 patientIdentifiers=self._parse_identifiers(
-                    proxy_person.get("NationalIdentifiers", [])
+                    user_person.get("NationalIdentifiers", [])
                 ),
                 permissions=self._parse_permissions(
-                    proxy_person.get("EffectiveServiceAccess", [])
+                    user_person.get("EffectiveServiceAccess", [])
                 ),
             ),
             patients=self._parse_patients(response),
@@ -135,7 +135,7 @@ class TPPClient(BaseClient):
             mocked_response = f.read()
         return xmltodict.parse(mocked_response)
 
-    def _parse_patients(self, data: dict) -> list[Patient]:
+    def _parse_patients(self, data: dict) -> list[Person]:
         """Parsing raw data from Client into structual model.
 
         Args:
@@ -156,7 +156,7 @@ class TPPClient(BaseClient):
             person = patient["Person"]
             raw_permissions = person.get("EffectiveServiceAccess", [])
             parsed_patients.append(
-                Patient(
+                Person(
                     firstName=person.get("PersonName", {}).get("@firstName"),
                     surname=person.get("PersonName", {}).get("@surname"),
                     title=person.get("PersonName", {}).get("@title"),
