@@ -170,12 +170,21 @@ class TPPClient(BaseClient):
             )
         return parsed_patients
 
-    def _parse_permissions(self, raw_permissions: list) -> list[ServiceAccess]:
+    def _parse_permissions(self, raw_permissions: dict | list) -> list[ServiceAccess]:
+        if not raw_permissions:
+            return []
+        # xmltodict gives us {"ServiceAccess": {...}} for one element and
+        # {"ServiceAccess": [{...}, {...}]} for multiple — extract the inner value first
         service_access = (
-            [permission.get("ServiceAccess", {}) for permission in raw_permissions]
-            if isinstance(raw_permissions, list)
-            else raw_permissions.get("ServiceAccess", {})
+            raw_permissions.get("ServiceAccess")
+            if isinstance(raw_permissions, dict)
+            else []
         )
+        if not service_access:
+            return []
+        if isinstance(service_access, dict):
+            # Single <ServiceAccess> element — normalise to a list
+            service_access = [service_access]
         return [
             ServiceAccess(
                 description=ServiceAccessDescription(service["@description"]),
@@ -188,14 +197,25 @@ class TPPClient(BaseClient):
             for service in service_access
         ]
 
-    def _parse_identifiers(self, raw_identifiers: list) -> list[Identifier]:
-        if isinstance(raw_identifiers, dict):
-            # if only one identifier xmltodict will not register this an array
-            raw_identifiers = [raw_identifiers]
+    def _parse_identifiers(self, raw_identifiers: dict | list) -> list[Identifier]:
+        if not raw_identifiers:
+            return []
+        # xmltodict gives us {"Identifier": {...}} for one element and
+        # {"Identifier": [{...}, {...}]} for multiple — extract the inner value first
+        identifiers = (
+            raw_identifiers.get("Identifier")
+            if isinstance(raw_identifiers, dict)
+            else []
+        )
+        if not identifiers:
+            return []
+        if isinstance(identifiers, dict):
+            # Single <Identifier> element — normalise to a list
+            identifiers = [identifiers]
         return [
             Identifier(
-                value=identifier.get("Identifier", {}).get("@value"),
-                type=identifier.get("Identifier", {}).get("@type"),
+                value=identifier.get("@value"),
+                type=identifier.get("@type"),
             )
-            for identifier in raw_identifiers
+            for identifier in identifiers
         ]
