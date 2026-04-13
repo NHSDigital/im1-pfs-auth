@@ -213,7 +213,6 @@ components:
         - endUserSessionId
         - supplier
         - odsCode
-        - permissions
         - user
         - patients
       type: object
