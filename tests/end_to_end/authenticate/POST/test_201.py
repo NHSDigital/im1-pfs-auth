@@ -18,11 +18,51 @@ logger = getLogger(__name__)
         (
             "https://nhs70apptest.emishealth.com",
             {
+                "sessionId": "SID_2qZ9yJpVxHq4N3b",
+                "endUserSessionId": "SESS_mDq6nE2b8R7KQ0v",
+                "supplier": "EMIS",
+                "odsCode": "ODS123",
+                "user": {
+                    "firstName": "Alex",
+                    "surname": "Taylor",
+                    "title": "Mr",
+                    "dateOfBirth": "1985-06-25",
+                    "userPatientLinkToken": "link_self_9aLw3G7kVQ",
+                    "patientIdentifiers": [
+                        {"value": "9434765919", "type": "NhsNumber"},
+                    ],
+                    "permissions": {
+                        "appointmentsEnabled": True,
+                        "demographicsUpdateEnabled": True,
+                        "epsEnabled": True,
+                        "medicalRecordEnabled": True,
+                        "onlineTriageEnabled": False,
+                        "practicePatientCommunicationEnabled": False,
+                        "prescribingEnabled": True,
+                        "recordSharingEnabled": False,
+                        "recordViewAuditEnabled": True,
+                        "medicalRecord": {
+                            "recordAccessScheme": "DetailedCodedCareRecord",
+                            "allergiesEnabled": True,
+                            "consultationsEnabled": True,
+                            "immunisationsEnabled": True,
+                            "documentsEnabled": True,
+                            "medicationEnabled": True,
+                            "problemsEnabled": True,
+                            "testResultsEnabled": True,
+                        },
+                    },
+                },
                 "patients": [
                     {
                         "firstName": "Jane",
                         "surname": "Doe",
                         "title": "Mrs",
+                        "dateOfBirth": "1979-01-15",
+                        "userPatientLinkToken": "link_proxy_jane_5QJw7r2m",
+                        "patientIdentifiers": [
+                            {"value": "2222222222", "type": "NhsNumber"},
+                        ],
                         "permissions": {
                             "appointmentsEnabled": False,
                             "demographicsUpdateEnabled": True,
@@ -49,6 +89,11 @@ logger = getLogger(__name__)
                         "firstName": "Ella",
                         "surname": "Taylor",
                         "title": "Ms",
+                        "dateOfBirth": "2010-03-02",
+                        "userPatientLinkToken": "link_proxy_ella_Z01r8yPa",
+                        "patientIdentifiers": [
+                            {"value": "3333333333", "type": "NhsNumber"},
+                        ],
                         "permissions": {
                             "appointmentsEnabled": True,
                             "demographicsUpdateEnabled": True,
@@ -72,41 +117,111 @@ logger = getLogger(__name__)
                         },
                     },
                 ],
-                "user": {"firstName": "Alex", "surname": "Taylor", "title": "Mr"},
-                "permissions": {
-                    "appointmentsEnabled": True,
-                    "demographicsUpdateEnabled": True,
-                    "epsEnabled": True,
-                    "medicalRecordEnabled": True,
-                    "onlineTriageEnabled": False,
-                    "practicePatientCommunicationEnabled": False,
-                    "prescribingEnabled": True,
-                    "recordSharingEnabled": False,
-                    "recordViewAuditEnabled": True,
-                    "medicalRecord": {
-                        "recordAccessScheme": "DetailedCodedCareRecord",
-                        "allergiesEnabled": True,
-                        "consultationsEnabled": True,
-                        "immunisationsEnabled": True,
-                        "documentsEnabled": True,
-                        "medicationEnabled": True,
-                        "problemsEnabled": True,
-                        "testResultsEnabled": True,
-                    },
-                },
-                "sessionId": "SID_2qZ9yJpVxHq4N3b",
-                "endUserSessionId": "SESS_mDq6nE2b8R7KQ0v",
-                "supplier": "EMIS",
             },
         ),
         (
             "https://systmonline2.tpp-uk.com",
             {
+                "sessionId": "xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",  # noqa: E501
+                "supplier": "TPP",
+                "odsCode": "ODS123",
+                "onlineUserId": "9cbf400000000000",
+                "user": {
+                    "firstName": "Sam",
+                    "surname": "Jones",
+                    "title": "Mr",
+                    "dateOfBirth": "1990-11-05",
+                    "patientId": None,
+                    "patientIdentifiers": [
+                        {"value": "1111111111", "type": "NhsNumber"},
+                    ],
+                    "permissions": [
+                        {
+                            "description": "Full Clinical Record",
+                            "statusDescription": "Unavailable",
+                            "serviceIdentifier": 1,
+                            "status": "U",
+                        },
+                        {
+                            "serviceIdentifier": 2,
+                            "statusDescription": "Available",
+                            "description": "Appointments",
+                            "status": "A",
+                        },
+                        {
+                            "serviceIdentifier": 4,
+                            "statusDescription": "Available",
+                            "description": "Request Medication",
+                            "status": "A",
+                        },
+                        {
+                            "serviceIdentifier": 8,
+                            "description": "Questionnaires",
+                            "status": "N",
+                            "statusDescription": "Not offered by unit",
+                        },
+                        {
+                            "serviceIdentifier": 64,
+                            "statusDescription": "Available",
+                            "description": "Summary Record",
+                            "status": "A",
+                        },
+                        {
+                            "serviceIdentifier": 128,
+                            "statusDescription": "Unavailable",
+                            "description": "Detailed Coded Record",
+                            "status": "U",
+                        },
+                        {
+                            "serviceIdentifier": 512,
+                            "statusDescription": "Available",
+                            "description": "Messaging",
+                            "status": "A",
+                        },
+                        {
+                            "serviceIdentifier": 1024,
+                            "statusDescription": "Not offered by unit",
+                            "description": "View Sharing Status",
+                            "status": "N",
+                        },
+                        {
+                            "serviceIdentifier": 2048,
+                            "statusDescription": "Available",
+                            "description": "Record Audit",
+                            "status": "A",
+                        },
+                        {
+                            "serviceIdentifier": 4096,
+                            "statusDescription": "Not offered by unit",
+                            "description": "Change Pharmacy",
+                            "status": "N",
+                        },
+                        {
+                            "serviceIdentifier": 8192,
+                            "statusDescription": (
+                                "Only available to GMS registered patients"
+                            ),
+                            "description": "Manage Sharing Rules And Requests",
+                            "status": "G",
+                        },
+                        {
+                            "serviceIdentifier": 65536,
+                            "statusDescription": "Other",
+                            "description": "Access SystmConnect",
+                            "status": "O",
+                        },
+                    ],
+                },
                 "patients": [
                     {
                         "firstName": "Clare",
                         "surname": "Jones",
                         "title": "Mrs",
+                        "dateOfBirth": "1975-04-21",
+                        "patientId": "82f3500000000000",
+                        "patientIdentifiers": [
+                            {"value": "2222222222", "type": "NhsNumber"},
+                        ],
                         "permissions": [
                             {
                                 "description": "Full Clinical Record",
@@ -185,85 +300,6 @@ logger = getLogger(__name__)
                         ],
                     },
                 ],
-                "user": {"firstName": "Sam", "surname": "Jones", "title": "Mr"},
-                "permissions": [
-                    {
-                        "description": "Full Clinical Record",
-                        "statusDescription": "Unavailable",
-                        "serviceIdentifier": 1,
-                        "status": "U",
-                    },
-                    {
-                        "serviceIdentifier": 2,
-                        "statusDescription": "Available",
-                        "description": "Appointments",
-                        "status": "A",
-                    },
-                    {
-                        "serviceIdentifier": 4,
-                        "statusDescription": "Available",
-                        "description": "Request Medication",
-                        "status": "A",
-                    },
-                    {
-                        "serviceIdentifier": 8,
-                        "description": "Questionnaires",
-                        "status": "N",
-                        "statusDescription": "Not offered by unit",
-                    },
-                    {
-                        "serviceIdentifier": 64,
-                        "statusDescription": "Available",
-                        "description": "Summary Record",
-                        "status": "A",
-                    },
-                    {
-                        "serviceIdentifier": 128,
-                        "statusDescription": "Unavailable",
-                        "description": "Detailed Coded Record",
-                        "status": "U",
-                    },
-                    {
-                        "serviceIdentifier": 512,
-                        "statusDescription": "Available",
-                        "description": "Messaging",
-                        "status": "A",
-                    },
-                    {
-                        "serviceIdentifier": 1024,
-                        "statusDescription": "Not offered by unit",
-                        "description": "View Sharing Status",
-                        "status": "N",
-                    },
-                    {
-                        "serviceIdentifier": 2048,
-                        "statusDescription": "Available",
-                        "description": "Record Audit",
-                        "status": "A",
-                    },
-                    {
-                        "serviceIdentifier": 4096,
-                        "statusDescription": "Not offered by unit",
-                        "description": "Change Pharmacy",
-                        "status": "N",
-                    },
-                    {
-                        "serviceIdentifier": 8192,
-                        "statusDescription": (
-                            "Only available to GMS registered patients"
-                        ),
-                        "description": "Manage Sharing Rules And Requests",
-                        "status": "G",
-                    },
-                    {
-                        "serviceIdentifier": 65536,
-                        "statusDescription": "Other",
-                        "description": "Access SystmConnect",
-                        "status": "O",
-                    },
-                ],
-                "sessionId": "xhvE9/jCjdafytcXBq8LMKMgc4wA/w5k/O5C4ip0Fs9GPbIQ/WRIZi4Och1Spmg7aYJR2CZVLHfu6cRVv84aEVrRE8xahJbT4TPAr8N/CYix6TBquQsZibYXYMxJktXcYKwDhBH8yr3iJYnyevP3hV76oTjVmKieBtYzSSZAOu4=",  # noqa: E501
-                "supplier": "TPP",
             },
         ),
     ],
