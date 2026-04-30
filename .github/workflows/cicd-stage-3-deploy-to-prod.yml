@@ -28,7 +28,3 @@ jobs:
           PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
       - name: Deploy Specification to Production
         run: make deploy-spec-prod-ci
-        env:
-          # Variables are necessary for spec generation, but aren't used in compiled spec
-          PROXYGEN_URL_PATH: "im1-pfs-auth"
-          CONTAINER_TAG: "latest"
