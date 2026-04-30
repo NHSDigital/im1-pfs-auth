@@ -22,7 +22,7 @@ jobs:
       - name: Setup proxygen
         uses: ./.github/actions/setup-proxygen-prod
         with:
-          ENVIRONMENT: "prod"
+          ENVIRONMENT: "production"
           PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
           PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
           PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
@@ -30,6 +30,6 @@ jobs:
         run: make deploy-spec-prod-ci
         env:
           # Variables are necessary for spec generation, but aren't used in compiled spec
-          ENVIRONMENT: "prod"
+          ENVIRONMENT: "production"
           PROXYGEN_URL_PATH: "im1-pfs-auth"
           CONTAINER_TAG: "latest"
