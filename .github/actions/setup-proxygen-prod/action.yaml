@@ -2,9 +2,6 @@ name: "Setup Proxygen CLI (Prod)"
 description: "Setup Proxygen CLI for production deployments"
 
 inputs:
-  ENVIRONMENT:
-    description: "The environment to configure Proxygen for"
-    required: true
   PROXYGEN_CLIENT_ID:
     description: "Client ID for Proxygen CLI (Prod)"
     required: true
