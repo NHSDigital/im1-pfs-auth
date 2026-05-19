@@ -11,6 +11,7 @@ jobs:
   deploy-prod-spec:
     name: "Deploy Specification to Production"
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -22,14 +23,8 @@ jobs:
       - name: Setup proxygen
         uses: ./.github/actions/setup-proxygen-prod
         with:
-          ENVIRONMENT: "prod"
           PROXYGEN_CLIENT_ID: ${{ secrets.PROXYGEN_CLIENT_ID }}
           PROXYGEN_KEY_ID: ${{ secrets.PROXYGEN_KEY_ID }}
           PROXYGEN_PRIVATE_KEY: ${{ secrets.PROXYGEN_PRIVATE_KEY }}
       - name: Deploy Specification to Production
         run: make deploy-spec-prod-ci
-        env:
-          # Variables are necessary for spec generation, but aren't used in compiled spec
-          ENVIRONMENT: "prod"
-          PROXYGEN_URL_PATH: "im1-pfs-auth"
-          CONTAINER_TAG: "latest"
