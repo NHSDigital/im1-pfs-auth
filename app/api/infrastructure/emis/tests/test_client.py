@@ -18,7 +18,7 @@ from app.api.infrastructure.emis.models import (
     EffectiveServices,
     Identifier,
     MedicalRecordPermissions,
-    Patient,
+    Person,
     SessionResponse,
 )
 
@@ -140,7 +140,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
         endUserSessionId="SESS_mDq6nE2b8R7KQ0v",
         supplier="EMIS",
         odsCode="some patient ods code",
-        user=Patient(
+        user=Person(
             firstName="Alex",
             surname="Taylor",
             title="Mr",
@@ -170,7 +170,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
             ),
         ),
         patients=[
-            Patient(
+            Person(
                 firstName="Jane",
                 surname="Doe",
                 title="Mrs",
@@ -201,7 +201,7 @@ def test_emis_client_transform_response(client: EmisClient) -> None:
                     ),
                 ),
             ),
-            Patient(
+            Person(
                 firstName="Ella",
                 surname="Taylor",
                 title="Ms",

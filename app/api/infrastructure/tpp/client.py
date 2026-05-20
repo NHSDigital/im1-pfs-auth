@@ -136,7 +136,7 @@ class TPPClient(BaseClient):
         return xmltodict.parse(mocked_response)
 
     def _parse_patients(self, data: dict) -> list[Person]:
-        """Parsing raw data from Client into structual model.
+        """Parsing raw data from Client into structural model.
 
         Args:
             data (dict): Raw data containing information about multiple patients

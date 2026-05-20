@@ -83,7 +83,7 @@ class EffectiveServices(Permissions):
     medical_record: MedicalRecordPermissions
 
 
-class Patient(Demographics):
+class Person(Demographics):
     """Base Model for User and Patient."""
 
     model_config = ConfigDict(alias_generator=to_camel)
@@ -99,5 +99,5 @@ class SessionResponse(ForwardResponse):
     model_config = ConfigDict(alias_generator=to_camel)
 
     end_user_session_id: str
-    user: Patient
-    patients: list[Patient]
+    user: Person
+    patients: list[Person]

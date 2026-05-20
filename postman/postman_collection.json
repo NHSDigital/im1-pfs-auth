@@ -1,10 +1,10 @@
 {
   "_": {
-    "postman_id": "70ba2b8a-5ba5-43a3-8163-93fc86b0faf6"
+    "postman_id": "82590680-5764-40a0-b643-84b8bc8f1a7b"
   },
   "item": [
     {
-      "id": "89e70426-dc25-42ad-ae62-3417f07f202d",
+      "id": "a7aa5f2e-b7e8-4520-8bed-f710c7921b28",
       "name": "sessions",
       "description": {
         "content": "",
@@ -12,17 +12,17 @@
       },
       "item": [
         {
-          "id": "f9d648b9-2b04-4d82-960e-4300b43b0e4c",
-          "name": "Begins a session",
+          "id": "fe5b345c-568a-4662-9f76-4cf4bee5c65c",
+          "name": "Create a session",
           "request": {
-            "name": "Begins a session",
+            "name": "Create a session",
             "description": {
-              "content": "## Overview\n\nA user can authenticate and establish a session with GPIT supplier systems.\n\nThis endpoint:\n  - Verifies the user access token\n  - Extracts the NHS number for the user, NHS number and ODS code of the patient\n  - Determines which supplier system to forward requests onto\n  - Transforms response\n\n## Access modes\n\nThis endpoint supports the following access modes:\n- Patient access\n\n## Sandbox test scenarios\n\nSee the postman collection for example requests.\n\n| Scenario               | Request                                                                                     | Response                                                    |\n| ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |\n| Successful request     | Valid request with forward to value of https://example.com and ods code value of A29929     | HTTP Status 201 Success response                            |\n\n### Sandbox constraints\n  - Headers that are not required for the scenario are not validated and are disregarded.\n\nOr perhaps you'd like to try out the sandbox using our 'Try it out' feature.\n",
+              "content": "## Overview\n\nA user can authenticate and establish a session with GPIT supplier systems.\n\nThis endpoint:\n  - Verifies the user access token\n  - Determines which supplier system to forward requests onto\n  - Transforms response\n\n## Access modes\n\nThis endpoint supports the following access modes:\n- Patient access\n\n## Sandbox test scenarios\n\nSee the postman collection for example requests.\n\n| Scenario               | Request                                                                                     | Response                                                    |\n| ---------------------- | ------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |\n| Successful request     | Valid request with forward to value of https://example.com and ods code value of A29929     | HTTP Status 201 Success response                            |\n\n### Sandbox constraints\n  - Headers that are not required for the scenario are not validated and are disregarded.\n\nOr perhaps you'd like to try out the sandbox using our 'Try it out' feature.\n",
               "type": "text/plain"
             },
             "url": {
               "path": [
-                "authentication"
+                "authenticate"
               ],
               "host": [
                 "{{baseUrl}}"
@@ -43,11 +43,11 @@
               {
                 "disabled": false,
                 "description": {
-                  "content": "(Required) The identity of the subsidiary.",
+                  "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                   "type": "text/plain"
                 },
-                "key": "X-Application-ID",
-                "value": "anim cillum"
+                "key": "NHSE-Application-ID",
+                "value": "ea"
               },
               {
                 "disabled": false,
@@ -55,25 +55,25 @@
                   "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                   "type": "text/plain"
                 },
-                "key": "X-Request-ID",
+                "key": "NHSE-Request-ID",
                 "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
               },
               {
                 "disabled": false,
                 "description": {
-                  "content": "(Required) The base URL to forward requests to.",
+                  "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                   "type": "text/plain"
                 },
-                "key": "X-Forward-To",
-                "value": "https://example.com"
+                "key": "NHSE-Forward-To",
+                "value": "ea"
               },
               {
                 "disabled": false,
                 "description": {
-                  "content": "(Required) The ODS code of the user to start a session with.",
+                  "content": "(Required) The ODS code of the GP practice to start a session with.",
                   "type": "text/plain"
                 },
-                "key": "X-ODS-Code",
+                "key": "NHSE-ODS-Code",
                 "value": "A29929"
               },
               {
@@ -82,7 +82,7 @@
                   "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                   "type": "text/plain"
                 },
-                "key": "X-Correlation-ID",
+                "key": "NHSE-Correlation-ID",
                 "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
               },
               {
@@ -118,12 +118,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "c8735fef-ab9b-480b-8294-0aaec70746b6",
+              "id": "a2445e93-6833-476b-9283-31407774c2ab",
               "name": "The session was created successfully",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -144,11 +144,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -156,25 +156,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -183,7 +183,7 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -210,19 +210,19 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"sessionId\": \"in laboru\",\n  \"userPatientLinkToken\": \"fugiat anim\",\n  \"suid\": \"commodo reprehenderit\",\n  \"onlineUserId\": \"deserunt Lorem magna\",\n  \"patientId\": \"Excepteur aute reprehenderit in laborum\"\n}",
+              "body": "{\n  \"sessionId\": \"irure\",\n  \"endUserSessionId\": \"irure anim veniam voluptate\",\n  \"supplier\": \"EMIS\",\n  \"odsCode\": \"enim magna qui nul\",\n  \"user\": {\n    \"dateOfBirth\": \"esse magna commodo incididunt\",\n    \"firstName\": \"mollit sint occaecat dolo\",\n    \"patientIdentifiers\": [\n      {\n        \"value\": \"consectetur reprehenderit eiusmod\",\n        \"type\": \"id consectetur nulla\"\n      },\n      {\n        \"value\": \"sit nulla quis\",\n        \"type\": \"qui dolor consectetur Exce\"\n      }\n    ],\n    \"permissions\": {\n      \"appointmentsEnabled\": false,\n      \"demographicsUpdateEnabled\": true,\n      \"epsEnabled\": true,\n      \"medicalRecordEnabled\": false,\n      \"onlineTriageEnabled\": false,\n      \"practicePatientCommunicationEnabled\": false,\n      \"prescribingEnabled\": false,\n      \"recordSharingEnabled\": false,\n      \"recordViewAuditEnabled\": true,\n      \"medicalRecord\": {\n        \"recordAccessScheme\": \"DetailedCodedCareRecord\",\n        \"allergiesEnabled\": false,\n        \"consultationsEnabled\": false,\n        \"immunisationsEnabled\": false,\n        \"documentsEnabled\": false,\n        \"medicationEnabled\": true,\n        \"problemsEnabled\": true,\n        \"testResultsEnabled\": true\n      }\n    },\n    \"surname\": \"magna et aliquip laborum\",\n    \"title\": \"in Ut qui quis\",\n    \"userPatientLinkToken\": \"deserunt do\"\n  },\n  \"patients\": [\n    {\n      \"dateOfBirth\": \"aliqua Duis eiusmod\",\n      \"firstName\": \"aliquip sit\",\n      \"patientIdentifiers\": [\n        {\n          \"value\": \"dolore ut\",\n          \"type\": \"cupidatat ullamco\"\n        },\n        {\n          \"value\": \"do qui voluptate tempor\",\n          \"type\": \"est\"\n        }\n      ],\n      \"permissions\": {\n        \"appointmentsEnabled\": true,\n        \"demographicsUpdateEnabled\": true,\n        \"epsEnabled\": false,\n        \"medicalRecordEnabled\": true,\n        \"onlineTriageEnabled\": true,\n        \"practicePatientCommunicationEnabled\": false,\n        \"prescribingEnabled\": true,\n        \"recordSharingEnabled\": false,\n        \"recordViewAuditEnabled\": false,\n        \"medicalRecord\": {\n          \"recordAccessScheme\": \"DetailedCodedCareRecord\",\n          \"allergiesEnabled\": false,\n          \"consultationsEnabled\": true,\n          \"immunisationsEnabled\": true,\n          \"documentsEnabled\": false,\n          \"medicationEnabled\": true,\n          \"problemsEnabled\": true,\n          \"testResultsEnabled\": true\n        }\n      },\n      \"surname\": \"enim adipisicing voluptate est\",\n      \"title\": \"tempor qui Duis anim\",\n      \"userPatientLinkToken\": \"anim cupidatat velit ad\"\n    },\n    {\n      \"dateOfBirth\": \"laborum fugiat ullamco\",\n      \"firstName\": \"ut fugiat ea magna\",\n      \"patientIdentifiers\": [\n        {\n          \"value\": \"magn\",\n          \"type\": \"ullamco deserunt\"\n        },\n        {\n          \"value\": \"occa\",\n          \"type\": \"in dolore\"\n        }\n      ],\n      \"permissions\": {\n        \"appointmentsEnabled\": false,\n        \"demographicsUpdateEnabled\": false,\n        \"epsEnabled\": true,\n        \"medicalRecordEnabled\": true,\n        \"onlineTriageEnabled\": false,\n        \"practicePatientCommunicationEnabled\": true,\n        \"prescribingEnabled\": false,\n        \"recordSharingEnabled\": true,\n        \"recordViewAuditEnabled\": true,\n        \"medicalRecord\": {\n          \"recordAccessScheme\": \"CoreSummaryCareRecord\",\n          \"allergiesEnabled\": true,\n          \"consultationsEnabled\": true,\n          \"immunisationsEnabled\": true,\n          \"documentsEnabled\": false,\n          \"medicationEnabled\": false,\n          \"problemsEnabled\": true,\n          \"testResultsEnabled\": false\n        }\n      },\n      \"surname\": \"veniam sed Duis\",\n      \"title\": \"sint cillum\",\n      \"userPatientLinkToken\": \"dolore fugia\"\n    }\n  ]\n}",
               "cookie": []
             },
             {
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "ffba3bb4-3d3c-4c7a-927a-6b269de42549",
+              "id": "04b527b7-fe3d-447d-88e9-e2c672695aa5",
               "name": "missingValueError",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -243,11 +243,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -255,25 +255,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -282,7 +282,7 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -316,12 +316,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "e511f239-d22d-4936-8684-09f8b1c96f9e",
+              "id": "80f96935-a5d7-4ac5-82a6-96ba574e7d01",
               "name": "invalidValueError",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -342,11 +342,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -354,25 +354,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -381,7 +381,7 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -415,12 +415,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "0a429ad4-82ab-47df-aa42-88b4dec0274f",
-              "name": "accessDeniedError",
+              "id": "48f1fa62-9db0-4aaf-b881-f8bb5a4f2449",
+              "name": "notFoundError",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -441,11 +441,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -453,25 +453,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -480,7 +480,7 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -507,19 +507,19 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/AccessDeniedError\"\n}",
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/NotFoundError\"\n}",
               "cookie": []
             },
             {
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "faedfcd9-a404-440f-a6f9-9e0181bee0e6",
-              "name": "forbiddenError",
+              "id": "b0b1c0fc-56e6-4341-88fb-ce1c43ffd8c7",
+              "name": "accessDeniedError",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -540,11 +540,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -552,25 +552,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -579,7 +579,106 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/AccessDeniedErrorError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "a397c448-1337-46b2-a74f-4a5a2c3276b4",
+              "name": "forbiddenError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -613,12 +712,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "05b40f8a-bea2-4f3b-8087-bf64c5c56771",
+              "id": "f59d88a7-962c-40e2-9877-a4621516b4f9",
               "name": "timeoutError",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -639,11 +738,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -651,25 +750,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -678,7 +777,7 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -712,12 +811,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "db71ab20-cf87-46d8-b493-6c7834daad27",
+              "id": "4c527457-8013-43ea-8c06-e7d5ea2f92ef",
               "name": "throttledError",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -738,11 +837,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -750,25 +849,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -777,7 +876,7 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -811,12 +910,12 @@
               "_": {
                 "postman_previewlanguage": "json"
               },
-              "id": "28945647-79bf-4b1d-86a0-5399420ed35c",
-              "name": "Errors will be returned for the first error encountered in the request. An error occurred as follows:\n\n| HTTP status | Error code              | Description                                       |\n| ----------- | ----------------------- | ------------------------------------------------- |\n| 500         | `SERVER_ERROR`          | An unexpected internal server error has occurred. |\n",
+              "id": "5d9e2081-b839-4bc5-8065-dddff43f9172",
+              "name": "serverError",
               "originalRequest": {
                 "url": {
                   "path": [
-                    "authentication"
+                    "authenticate"
                   ],
                   "host": [
                     "{{baseUrl}}"
@@ -837,11 +936,11 @@
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The identity of the subsidiary.",
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
                       "type": "text/plain"
                     },
-                    "key": "X-Application-ID",
-                    "value": "anim cillum"
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
@@ -849,25 +948,25 @@
                       "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Request-ID",
+                    "key": "NHSE-Request-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The base URL to forward requests to.",
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
                       "type": "text/plain"
                     },
-                    "key": "X-Forward-To",
-                    "value": "https://example.com"
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
                   },
                   {
                     "disabled": false,
                     "description": {
-                      "content": "(Required) The ODS code of the user to start a session with.",
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
                       "type": "text/plain"
                     },
-                    "key": "X-ODS-Code",
+                    "key": "NHSE-ODS-Code",
                     "value": "A29929"
                   },
                   {
@@ -876,7 +975,7 @@
                       "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
                       "type": "text/plain"
                     },
-                    "key": "X-Correlation-ID",
+                    "key": "NHSE-Correlation-ID",
                     "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
                   },
                   {
@@ -903,7 +1002,106 @@
                   "value": "application/json"
                 }
               ],
-              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/ServerError\"\n}",
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/InternalServerError\"\n}",
+              "cookie": []
+            },
+            {
+              "_": {
+                "postman_previewlanguage": "json"
+              },
+              "id": "a361c42f-3038-4116-8974-678259a11acf",
+              "name": "downstreamError",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "authenticate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An [OAuth 2.0 bearer token](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis).",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer g1112R_ccQ1Ebbb4gtHBP1aaaNM"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The identifier of the calling application e.g. EMIS:  X-API-ApplicationId, and TPP: providerId.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Application-ID",
+                    "value": "ea"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) An ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Request-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The GPIT Supplier base URL to forward requests to.\n\nTPP:\n| Environment | Allowed URLs                    |\n|-------------|---------------------------------|\n| Integration | https://systmonline2.tpp-uk.com |\n| Production  | https://systmonline.tpp-uk.com  |\n\nEMIS:\n| Environment | Allowed URLs                        |\n|-------------|-------------------------------------|\n| Integration | https://nhs70apptest.emishealth.com |\n| Production  | https://api.pfs.emis-x.uk           |\n",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Forward-To",
+                    "value": "ea"
+                  },
+                  {
+                    "disabled": false,
+                    "description": {
+                      "content": "(Required) The ODS code of the GP practice to start a session with.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-ODS-Code",
+                    "value": "A29929"
+                  },
+                  {
+                    "disabled": true,
+                    "description": {
+                      "content": "An optional ID which you can use to track transactions across multiple systems. Must be a universally unique identifier (UUID) (ideally version 4). Mirrored back in a response header.",
+                      "type": "text/plain"
+                    },
+                    "key": "NHSE-Correlation-ID",
+                    "value": "11C46F5F-CDEF-4865-94B2-0EE0EDCC26DA"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"externalValue\": \"./examples/errors.yaml#/DownstreamError\"\n}",
               "cookie": []
             }
           ],
@@ -925,11 +1123,11 @@
     }
   ],
   "info": {
-    "_postman_id": "70ba2b8a-5ba5-43a3-8163-93fc86b0faf6",
+    "_postman_id": "82590680-5764-40a0-b643-84b8bc8f1a7b",
     "name": "IM1 PFS Auth API",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": {
-      "content": "## Overview\n![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)\n\nAn intermediary service to allow a proxy to act on behalf of their patient, regardless of GP practice they are registered to. Use this API to authenticate a user using an NHS login issued \"proxy token\" and initiate a session with the appropriate supplier system based on ODS code where an online account will be matched. A successful match would return newly established IM1 session details.\n\nYou can:\n\n- Authenticate a user and initiate a session with the approporiate supplier\n\n## Who can use this API\nThis API can only be used where there is a legal basis to do so. Make sure you have this and a valid use case before\nyou go too far with your development by [contacting us](https://digital.nhs.uk/developer/help-and-support)\n\nYou must do this before you can go live (see 'Onboarding' below).\n\n## API status and roadmap\nThis API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses), meaning:\n- we will be making breaking changes\n\n## Technology\nThis API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).\n\n## Network access\nThis API is available on the internet.\n\nFor more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).\n\n## Security and authorisation\n\nThis API supports [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis) access type with the following access modes:\n\n| Access mode                   | Access type            |\n|-------------------------------|------------------------|\n| Patient access                | User-restricted        |\n\nFor more information on access modes and how to use them, see the developer [security and authorisation guide](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation).\n\n### User-restricted access\n\nUser-restricted access meaning an end user must be present, authenticated and authorised.\n\n#### Patient access mode\nIf the end user is a patient then you must use this access mode.\n\n[Review all patient access modes](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#patient-access-mode)\n\nValidated Relationships Service API checks the patient is P9 verified and has a high [vector of trust](https://nhsconnect.github.io/nhslogin/vectors-of-trust/) (VOT).\n\nAllowed vectors of trust are:\n- `P9.Cp.Cd`\n- `P9.Cp.Ck`\n- `P9.Cm`\n\n## Headers\nThis API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. (e.g. X-Request-Id, x-request-id are treated the same). When sending headers back in the response, we preserve the exact casing as received in the original request.\n\n## Errors\nWe use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:\n\n* 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action\n* 400 to 499 if it failed because of a client error by your application\n* 500 to 599 if it failed because of an error on our server\n\nErrors specific to each API are shown in the Endpoints section, under Response. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.\n\n## Open source\nYou might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:\n\n| Resource         | Description                                               | Links                                                     |\n| ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |\n| IM1 PFS Auth API | Source code for the API proxy, sandbox and specification. | [GitHub repo](https://github.com/NHSDigital/im1-pfs-auth) |\n\n## Environments and testing\n| Environment       | Base URL                                           |\n| ----------------- | -------------------------------------------------- |\n| Sandbox           | `https://sandbox.api.service.nhs.uk/im1-pfs-auth/` |\n| Integration test  | `https://int.api.service.nhs.uk/im1-pfs-auth/`     |\n\n### Sandbox testing\nOur [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing)\n\n* is for early developer testing\n* only covers a limited set of scenarios\n* is open access, so does not allow you to test authorisation\n\n[![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/postman/postman_collection.json)\n\nImport the  postman collection to run requests against sandbox.\n\n## Onboarding\nYou must get your software onboarded before it can go live.\n\nFor more details, contact us at [england.vrs-team@nhs.net](mailto:england.vrs-team@nhs.net).\n\n## Contact us\nFor help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).\n",
+      "content": "## Overview\n\nIM1 PFS Auth provides a means of authenticating a user and establishing an IM1 session to access Patient-Facing Services (PFS).\nThe API authenticates a user via an NHS login token and routes requests to the specified supplier system and ODS code.\nIf the user's account is successfully matched, the API returns the new IM1 session details.\n\n![IM1 PFS Auth API High-level Diagram](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/specification/assets/overview.drawio.svg)\n\nYou can use this API to:\n\n- authenticate a user and initiate a session with the appropriate supplier system for:\n  - a specific patient\n  - all patients that the logged-in user has an online account for\n\n## Who can use this API\nYou can only use this API if you have a valid legal basis.\nBefore investing significant time in development, confirm that your use case is appropriate by [contacting us](https://digital.nhs.uk/developer/help-and-support).\n\nYou must do this before you can go live.\n\n## API status and roadmap\nThis API is [in development](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#statuses).\n\n## Technology\nThis API is [RESTful](https://digital.nhs.uk/developer/guides-and-documentation/our-api-technologies#basic-rest).\n\n## Network access\nThis API is available on the internet.\n\nFor more details see [Network access for APIs](https://digital.nhs.uk/developer/guides-and-documentation/network-access-for-apis).\n\n## Security and authorisation\n\nThis API supports [user-restricted](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#user-restricted-apis) access type with the following access modes:\n\n| Access mode                   | Access type            |\n|-------------------------------|------------------------|\n| Patient access                | User-restricted        |\n\nFor more information on access modes and how to use them, see the developer [security and authorisation guide](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation).\n\n### User-restricted access\n\nThis API has user-restricted access, meaning an end user must be present, authenticated and authorised.\n\n#### Patient access mode\nIf the end user is a patient then you must use this access mode.\n\n[Review all patient access modes](https://digital.nhs.uk/developer/guides-and-documentation/security-and-authorisation#patient-access-mode)\n\n\n## Headers\nThis API is case-insensitive when processing request headers, meaning it will accept headers regardless of the letter casing used. For example, NHSE-Request-Id, nhse-request-id are treated the same.\n\n## Errors\nWe use standard HTTP status codes to show whether an API request succeeded or not. They are usually in the range:\n\n* 200 to 299 if it succeeded, including code 202 if it was accepted by an API that needs to wait for further action\n* 400 to 499 if it failed because of a client error by your application\n* 500 to 599 if it failed because of an error on our server\n\nEach endpoint lists its own specific errors in the Responses section. See our [reference guide](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#http-status-codes) for more on errors.\n\n## Open source\nYou might find the following [open source](https://digital.nhs.uk/developer/guides-and-documentation/reference-guide#open-source) resources useful:\n\n| Resource         | Description                                               | Links                                                     |\n| ---------------- | --------------------------------------------------------- | --------------------------------------------------------- |\n| IM1 PFS Auth API | Source code for the API proxy, sandbox and specification. | [GitHub repo](https://github.com/NHSDigital/im1-pfs-auth) |\n\n## Environments and testing\n| Environment       | Base URL                                           |\n| ----------------- | -------------------------------------------------- |\n| Sandbox           | `https://sandbox.api.service.nhs.uk/im1-pfs-auth/` |\n| Integration test  | `https://int.api.service.nhs.uk/im1-pfs-auth/`     |\n\n### Sandbox testing\nOur [sandbox environment](https://digital.nhs.uk/developer/guides-and-documentation/testing#sandbox-testing)\n\n* is for early developer testing\n* only covers a limited set of scenarios\n* is open access, so does not allow you to test authorisation\n\n[![Import Postman Collection](https://img.shields.io/badge/Import-Postman%20Collection-orange?logo=postman)](https://raw.githubusercontent.com/NHSDigital/im1-pfs-auth/main/postman/postman_collection.json)\n\nImport the  postman collection to run requests against sandbox.\n\n## Contact us\nFor help and support connecting to our APIs and to join our developer community, see [Help and support building healthcare software](https://digital.nhs.uk/developer/help-and-support).\n",
       "type": "text/plain"
     }
   }

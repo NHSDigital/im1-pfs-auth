@@ -87,3 +87,5 @@ Secrets used for machine access are stored in Validated Relationships Service's 
 
 As well secrets are held in GitHub Secrets for the project. The secrets are used to authenticate the workflows to deploy the API to the NHS API Platform. The secrets are:
 the private key is available in GitHub Secrets under the names `PROXYGEN_CLIENT_ID`, `PROXYGEN_KEY_ID`, and `PROXYGEN_PRIVATE_KEY`.
+
+For production, these are stored as environment level secrets, and for PTL these are stored as repository level secrets - this way the default is PTL, and if it's a prod specific workflow/action, it will use the production variables.

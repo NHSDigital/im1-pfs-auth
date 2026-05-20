@@ -1,15 +1,15 @@
-name: "Setup Proxygen CLI"
-description: "Setup Proxygen CLI for the project"
+name: "Setup Proxygen CLI (Prod)"
+description: "Setup Proxygen CLI for production deployments"
 
 inputs:
   PROXYGEN_CLIENT_ID:
-    description: "Client ID for Proxygen CLI"
+    description: "Client ID for Proxygen CLI (Prod)"
     required: true
   PROXYGEN_KEY_ID:
-    description: "Key ID for Proxygen CLI"
+    description: "Key ID for Proxygen CLI (Prod)"
     required: true
   PROXYGEN_PRIVATE_KEY:
-    description: "Private key for Proxygen CLI"
+    description: "Private key for Proxygen CLI (Prod)"
     required: true
 
 runs:
@@ -24,7 +24,7 @@ runs:
       shell: bash
 
     - name: Copy Proxygen credentials
-      run: cp proxygen/credentials-ptl.yaml ~/.proxygen/credentials.yaml
+      run: cp proxygen/credentials-prod.yaml ~/.proxygen/credentials.yaml
       shell: bash
 
     - name: Create Proxygen private key file
@@ -41,5 +41,5 @@ runs:
       shell: bash
 
     - name: Copy Proxygen settings
-      run: cp proxygen/settings-ptl.yaml ~/.proxygen/settings.yaml
+      run: cp proxygen/settings-prod.yaml ~/.proxygen/settings.yaml
       shell: bash

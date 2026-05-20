@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, SerializeAsAny, field_validator
 from pydantic.alias_generators import to_camel
 
 
@@ -26,8 +26,8 @@ class ForwardResponse(BaseModel):
     session_id: str
     supplier: str
     ods_code: str
-    user: Demographics
-    patients: list[Demographics]
+    user: SerializeAsAny[Demographics]
+    patients: list[SerializeAsAny[Demographics]]
 
     @field_validator("patients")
     def patients_must_not_be_empty(cls, v: list) -> list:  # noqa: N805
