@@ -11,7 +11,7 @@
   "homepage": "https://github.com/NHSDigital/im1-pfs-auth-api",
   "overrides": {
     "postman-runtime": "7.54.0",
-    "flatted": "3.4.0",
+    "flatted": "3.4.2",
     "underscore": "1.13.8"
   },
   "devDependencies": {
