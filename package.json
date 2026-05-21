@@ -10,8 +10,7 @@
   "license": "MIT",
   "homepage": "https://github.com/NHSDigital/im1-pfs-auth-api",
   "overrides": {
-    "handlebars": "4.7.9",
-    "node-forge": "1.4.0"
+    "postman-runtime": "7.54.0"
   },
   "devDependencies": {
     "@apideck/portman": "~1.34.0",
