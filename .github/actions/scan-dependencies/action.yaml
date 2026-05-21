@@ -30,6 +30,13 @@ runs:
       run: |
         curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh \
           | sudo sh -s -- -b /usr/bin
+    - name: "Display vulnerabilities table"
+      uses: anchore/scan-action@v7
+      with:
+        sbom: ./sbom-repository-report.json
+        severity-cutoff: high
+        output-format: table
+        fail-build: false
     - name: "Scan vulnerabilities"
       shell: bash
       run: |
