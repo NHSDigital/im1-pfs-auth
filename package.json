@@ -12,7 +12,8 @@
   "overrides": {
     "postman-runtime": "7.54.0",
     "flatted": "3.4.2",
-    "underscore": "1.13.8"
+    "underscore": "1.13.8",
+    "lodash": "4.18.1"
   },
   "devDependencies": {
     "@apideck/portman": "~1.34.0",
