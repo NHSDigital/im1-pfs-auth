@@ -11,15 +11,15 @@ app = [
   "pydantic==2.9.2",
   "gunicorn~=25.3.0",
   "requests~=2.33.0",
-  "pyjwt~=2.8.0",
-  "cryptography~=42.0.0",
+  "pyjwt~=2.12.0",
+  "cryptography~=46.0.5",
   "xmltodict>=1.0.2",
 ]
 sandbox = ["flask~=3.1.2", "gunicorn~=25.3.0"]
 dev = [
   "coverage==7.13.4",
   "pytest-cov==7.0.0",
-  "pytest-nhsd-apim==5.0.14",
+  "pytest-nhsd-apim==6.0.10",
   "pytest==8.2.0",
   "requests==2.33.0",
   "ruff==0.15.5",
